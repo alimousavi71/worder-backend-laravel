@@ -1,0 +1,10 @@
+Route::controller($CLASS_NAME$Controller::class)->group(function () {
+    Route::get('/$NAME$', 'index')->name('$NAME$.index');
+    Route::get('/$NAME$/data', 'data')->name('$NAME$.data');
+    Route::get('/$NAME$/create', 'create')->name('$NAME$.create');
+    Route::post('/$NAME$/store', 'store')->name('$NAME$.store');
+    Route::get('/$NAME$/edit/{$NAME$}', 'edit')->name('$NAME$.edit');
+    Route::get('/$NAME$/show/{$NAME$}', 'show')->name('$NAME$.show');
+    Route::patch('/$NAME$/update/{$NAME$}', 'update')->name('$NAME$.update');
+    Route::delete('/$NAME$/destroy/{$NAME$}', 'destroy')->name('$NAME$.destroy');
+});

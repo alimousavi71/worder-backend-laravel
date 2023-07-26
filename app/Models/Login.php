@@ -1,0 +1,43 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
+
+class Login extends Model
+{
+    use HasFactory;
+
+    protected $fillable = [
+        'id',
+        'user_type',
+        'user_id',
+        'login_at',
+        'agent',
+        'ip',
+    ];
+
+    protected $casts = [
+        'login_at'=>'datetime'
+    ];
+
+    public function user()
+    {
+        return $this->morphTo();
+    }
+
+    /**
+     * @param Admin|User $user
+     */
+    public function userLogin(Admin|User $user)
+    {
+        $user->logins()->create([
+            'id' => Str::uuid(),
+            'ip' => request()->ip(),
+            'agent' => request()->userAgent(),
+            'login_at' => now(),
+        ]);
+    }
+}

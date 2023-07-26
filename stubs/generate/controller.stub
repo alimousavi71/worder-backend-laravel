@@ -1,0 +1,120 @@
+<?php
+
+namespace App\Http\Controllers\Admin;
+
+use App\Enums\General\BtnType;
+use App\Helper\Helper;
+use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\$CLASS_NAME$\StoreRequest;
+use App\Http\Requests\Admin\$CLASS_NAME$\UpdateRequest;
+use App\Models\$CLASS_NAME$;
+use Exception;
+use Illuminate\Http\Request;
+use Yajra\DataTables\Facades\DataTables;
+
+class $CLASS_NAME$Controller extends Controller
+{
+    public function index()
+    {
+        $title = '$APP_NAME$ - $CLASS_NAME$ - List';
+        $routeData = route('admin.$ROUTE_NAME$.data');
+        $selects = ['id', 'created_at'];
+        return view('admin.$VIEW_NAME$.index', compact('title', 'routeData', 'selects'));
+    }
+
+    public function data()
+    {
+
+        try {
+            $$NAME_PLURAL$ = $CLASS_NAME$::query();
+            return DataTables::of($$NAME_PLURAL$)
+                ->editColumn('created_at', function ($$MODEL_VAR_NAME$) {
+                    return $$MODEL_VAR_NAME$->created_at->toJalali()->format('h:i Y-m-d');
+                })
+                ->addColumn('action', function ($$MODEL_VAR_NAME$) {
+                    $actions = Helper::btnMaker(BtnType::Warning, route('admin.$ROUTE_NAME$.edit', $$MODEL_VAR_NAME$->id), 'ویرایش');
+                    $actions .= Helper::btnMaker(BtnType::Info, route('admin.$ROUTE_NAME$.show', $$MODEL_VAR_NAME$->id), 'اطلاعات');
+                    return $actions;
+                })
+                ->make();
+        } catch (Exception $e) {
+            return $e->getMessage();
+        }
+    }
+
+    public function create()
+    {
+        $title = '$APP_NAME$ - $CLASS_NAME$ - Create';
+        $routeStore = route('admin.$ROUTE_NAME$.store');
+        return view('admin.$VIEW_NAME$.create', compact('title', 'routeStore'));
+    }
+
+    public function store(StoreRequest $request)
+    {
+        try {
+            $$MODEL_VAR_NAME$ = new $CLASS_NAME$();
+            $this->setData($request, $$MODEL_VAR_NAME$);
+            $$MODEL_VAR_NAME$->save();
+            return response()->json([
+                'result' => 'success',
+                'message' => 'با موفقیت ایجاد شد.'
+            ]);
+        } catch (Exception $exception) {
+            return response()->json([
+                'result' => 'exception',
+                'message' => $exception->getMessage()
+            ], 500);
+        }
+    }
+
+    public function edit($CLASS_NAME$ $$MODEL_VAR_NAME$)
+    {
+        $title = '$APP_NAME$ - $CLASS_NAME$ - Edit';
+        $routeUpdate = route('admin.$ROUTE_NAME$.update', $$MODEL_VAR_NAME$->id);
+        $routeDestroy = route('admin.$ROUTE_NAME$.destroy', $$MODEL_VAR_NAME$->id);
+        return view('admin.$VIEW_NAME$.edit', compact('title', 'routeUpdate','routeDestroy', '$MODEL_VAR_NAME$'));
+    }
+
+    public function show($CLASS_NAME$ $$MODEL_VAR_NAME$)
+    {
+        $title = '$APP_NAME$ - $CLASS_NAME$ - Show';
+        return view('admin.$VIEW_NAME$.show', compact('title', '$MODEL_VAR_NAME$'));
+    }
+
+    public function update(UpdateRequest $request, $CLASS_NAME$ $$MODEL_VAR_NAME$)
+    {
+        try {
+            $this->setData($request, $$MODEL_VAR_NAME$);
+
+            $$MODEL_VAR_NAME$->update();
+            return response()->json([
+                'result' => 'success',
+                'message' => 'با موفقیت به روز رسانی شد.'
+            ]);
+        } catch (Exception $exception) {
+            return response()->json([
+                'result' => 'exception',
+                'message' => $exception->getMessage()
+            ], 500);
+        }
+    }
+
+    public function destroy($CLASS_NAME$ $$MODEL_VAR_NAME$)
+    {
+        try {
+            $$MODEL_VAR_NAME$->delete();
+            return redirect(route('admin.$ROUTE_NAME$.index'))->with('success', 'با موفقیت حذف شد.');
+        } catch (Exception $e) {
+            return redirect(route('admin.$ROUTE_NAME$.index'))->with('danger', 'خطایی در سرور به وجود امده است لطفا بعدا تلاش کنید!');
+        }
+    }
+
+    /**
+     * @param Request $request
+     * @param $CLASS_NAME$ $$MODEL_VAR_NAME$
+     */
+    protected function setData(Request $request, $CLASS_NAME$ $$MODEL_VAR_NAME$): void
+    {
+        $$MODEL_VAR_NAME$->title = $request->get('title');
+    }
+}

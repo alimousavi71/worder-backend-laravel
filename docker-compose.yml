@@ -6,7 +6,7 @@ services:
             context: .
             dockerfile: Dockerfile
         image: php8.2
-        container_name: php_admittedz
+        container_name: php_worder
         restart: unless-stopped
         tty: true
         working_dir: /var/www
@@ -14,12 +14,12 @@ services:
             - ./:/var/www
             - ./docker/php/local.ini:/usr/local/etc/php/conf.d/local.ini
         networks:
-            - admittedz-network
+            - worder-network
 
     #Nginx Service
     webserver:
         image: nginx:1.24.0
-        container_name: webserver_admittedz
+        container_name: webserver_worder
         restart: unless-stopped
         tty: true
         ports:
@@ -28,12 +28,12 @@ services:
             - ./:/var/www
             - ./docker/nginx/conf.d/:/etc/nginx/conf.d/
         networks:
-            - admittedz-network
+            - worder-network
 
     #MySQL Service
     db:
         image: mysql:8.0.33
-        container_name: db_admittedz
+        container_name: db_worder
         restart: always
         tty: true
         ports:
@@ -47,51 +47,28 @@ services:
             - dbdata:/var/lib/mysql/
             - ./docker/mysql/my.cnf:/etc/mysql/my.cnf
         networks:
-            - admittedz-network
+            - worder-network
     #PHPMYADMIN
     phpmyadmin:
         image: phpmyadmin:5
-        container_name: phpmyadmin_admittedz
+        container_name: phpmyadmin_worder
         restart: always
         depends_on:
             - db
         ports:
             - "8081:80"
         environment:
-            PMA_HOST: db_admittedz
+            PMA_HOST: db_worder
             UPLOAD_LIMIT: 20M
             MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
             MYSQL_USER: ${DB_USERNAME}
             MYSQL_PASSWORD: ${DB_USERNAME}
         networks:
-            - admittedz-network
-    #ElasticSearch Service
-    elastic:
-        image: elasticsearch:7.17.9
-        container_name: elastic_admittedz
-        environment:
-            - xpack.security.enabled=false
-            - discovery.type=single-node
-        ulimits:
-            memlock:
-                soft: -1
-                hard: -1
-            nofile:
-                soft: 65536
-                hard: 65536
-        cap_add:
-            - IPC_LOCK
-        ports:
-            - "9200:9200"
-            - "9300:9300"
-        volumes:
-            - elasticsearch-data:/usr/share/elasticsearch/data
-        networks:
-            - admittedz-network
+            - worder-network
 
 #Docker Networks
 networks:
-    admittedz-network:
+    worder-network:
         driver: bridge
 
 #Volumes
