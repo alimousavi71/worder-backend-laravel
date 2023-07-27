@@ -49,8 +49,6 @@ Route::group(['middleware' => ['admin.auth'/*,'acl'*/], 'guard' => 'admin'], fun
         Route::delete('/admin/destroy/{admin}', 'destroy')->name('admin.destroy');
     });
 
-
-
     Route::controller(RoleController::class)->group(function () {
         Route::get('/role', 'index')->name('role.index');
         Route::get('/role/data', 'data')->name('role.data');
@@ -128,6 +126,8 @@ Route::group(['middleware' => ['admin.auth'/*,'acl'*/], 'guard' => 'admin'], fun
     Route::controller(ContactController::class)->group(function () {
         Route::get('/contact', 'index')->name('contact.index');
         Route::get('/contact/data', 'data')->name('contact.data');
+        Route::get('/contact/edit/{contact}', 'edit')->name('contact.edit');
+        Route::patch('/contact/update/{contact}', 'update')->name('contact.update');
         Route::get('/contact/show/{contact}', 'show')->name('contact.show');
         Route::delete('/contact/destroy/{contact}', 'destroy')->name('contact.destroy');
     });

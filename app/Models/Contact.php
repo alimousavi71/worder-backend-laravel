@@ -10,11 +10,12 @@ class Contact extends Model
     use HasFactory;
 
     protected $fillable = [
+        'comment',
+        'user_id',
+        'rate',
         'is_seen',
-        'email',
-        'figma_link',
-        'dribble_link',
-        'agent'
+        'is_public',
+        'is_collaboration',
     ];
 
     public function user()

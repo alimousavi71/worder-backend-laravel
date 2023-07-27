@@ -46,6 +46,12 @@
                                 <td>{{ trans('fields.admin.last_name') }}</td>
                                 <td>{{ $admin->last_name }}</td>
                             </tr>
+
+                            <tr>
+                                <td>{{ trans('fields.admin.has_access') }}</td>
+                                <td>@include('admin.partial.bool_badge',['value'=>$admin->has_access])</td>
+                            </tr>
+
                             <tr>
                                 <td>{{ trans('fields.admin.role') }}</td>
                                 <td>{{ $admin->roles()->get()->implode('name',',') }}</td>

@@ -11,4 +11,9 @@ return [
     'logins_count'=>'تعداد ورود',
     'name'=>'نام',
     'permissions_count'=>'تعداد مجوزها',
+    'user.email'=>'ایمیل',
+    'rate'=>'امتیاز',
+    'is_seen'=>'دیده شده',
+    'is_public'=>'منتشر شده',
+    'is_collaboration'=>'جهت همکاری',
 ];

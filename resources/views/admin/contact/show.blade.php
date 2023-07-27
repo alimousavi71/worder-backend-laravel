@@ -4,13 +4,14 @@
 
 @endsection
 @section('content')
+
     <div class="page-header">
-        <h1 class="page-title">نمایش تماس</h1>
+        <h1 class="page-title">{{ trans('panel.contact.title') }}</h1>
         <div>
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">داشبورد</a></li>
-                <li class="breadcrumb-item"><a href="{{ route('admin.contact.index') }}">تماس ها</a></li>
-                <li class="breadcrumb-item active">نمایش تماس</li>
+                <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">{{ trans('panel.dashboard.title') }}</a></li>
+                <li class="breadcrumb-item active"><a href="{{ route('admin.contact.index') }}">{{ trans('panel.contact.title') }}</a></li>
+                <li class="breadcrumb-item active">{{ trans('panel.contact.show') }}</li>
             </ol>
         </div>
     </div>
@@ -23,34 +24,45 @@
                         <table class="table table-hover">
                             <tbody>
                             <tr>
-                                <td width="25%">شناسه</td>
+                                <td width="25%">{{ trans('fields.contact.id') }}</td>
                                 <td>{{ $contact->id }}</td>
                             </tr>
 
                             <tr>
-                                <td>ایمیل</td>
-                                <td>{{ $contact->email }}</td>
+                                <td>{{ trans('fields.contact.email') }}</td>
+                                <td><a href="mailto:{{ $contact->user->email }}">{{ $contact->user->email }}</a></td>
                             </tr>
 
                             <tr>
-                                <td>فیگما</td>
-                                <td><a href="{{ $contact->figma_link }}">{{ $contact->figma_link }}</a></td>
+                                <td>{{ trans('fields.contact.is_seen') }}</td>
+                                <td>@include('admin.partial.bool_badge',['value'=>$contact->is_seen])</td>
                             </tr>
 
                             <tr>
-                                <td>دریبل</td>
-                                <td><a href="{{ $contact->dribble_link }}">{{ $contact->dribble_link }}</a></td>
+                                <td>{{ trans('fields.contact.is_public') }}</td>
+                                <td>@include('admin.partial.bool_badge',['value'=>$contact->is_public])</td>
                             </tr>
 
                             <tr>
-                                <td>Agent</td>
+                                <td>{{ trans('fields.contact.is_collaboration') }}</td>
+                                <td>@include('admin.partial.bool_badge',['value'=>$contact->is_collaboration])</td>
+                            </tr>
+
+                            <tr>
+                                <td>{{ trans('fields.contact.comment') }}</td>
+                                <td>{{ $contact->comment }}</td>
+                            </tr>
+
+                            <tr>
+                                <td>{{ trans('fields.contact.agent') }}</td>
                                 <td>{{ $contact->agent }}</td>
                             </tr>
 
                             <tr>
-                                <td>تاریخ ایجاد</td>
+                                <td>{{ trans('fields.contact.created_at') }}</td>
                                 <td>{{$contact->created_at->toJalali()->format('Y-m-d H:i')}}</td>
                             </tr>
+
                             </tbody>
                         </table>
                     </div>

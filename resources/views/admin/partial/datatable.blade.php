@@ -61,13 +61,13 @@
                 },
                 @endif
 
-                @if($select == 'is_publish')
+                @if($select == 'is_publish' || $select == 'is_public')
                 {
                     "targets": parseInt({{$loop->index}}),
                     "data": "{{ $select }}",
                     "render": function (data, type, row, meta) {
                         if (data === 0) {
-                            return '<span class="badge bg-danger">عدم انتشار</span>';
+                            return '<span class="badge bg-info">عدم انتشار</span>';
                         } else {
                             return '<span class="badge bg-success">منتشر شده</span>';
                         }

@@ -117,5 +117,6 @@ class PermissionService
         }
         $content .= '];';
         File::put(lang_path('en/permission.php'), $content);
+        File::put(lang_path('fa/permission.php'), $content);
     }
 }

@@ -9,12 +9,12 @@
 @section('content')
 
     <div class="page-header">
-        <h1 class="page-title">Contact</h1>
+        <h1 class="page-title">{{ trans('panel.contact.title') }}</h1>
         <div>
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">داشبورد</a></li>
-                <li class="breadcrumb-item"><a href="{{ route('admin.contact.index') }}">Contact</a></li>
-                <li class="breadcrumb-item active">ویرایش</li>
+                <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">{{ trans('panel.dashboard.title') }}</a></li>
+                <li class="breadcrumb-item active"><a href="{{ route('admin.contact.index') }}">{{ trans('panel.contact.title') }}</a></li>
+                <li class="breadcrumb-item active">{{ trans('panel.contact.edit') }}</li>
             </ol>
         </div>
     </div>
@@ -28,12 +28,9 @@
                         @csrf
                         @method('PATCH')
 
-                        <x-admin.input identify="message" title="message" type="text" placeholder="Enter message" :old="$contact->message"/>
-                        <x-admin.checkbox identify="is_seen" description="is_seen" :old="$contact->is_seen"/>
-                        <x-admin.input identify="agent" title="agent" type="text" placeholder="Enter agent" :old="$contact->agent"/>
+                        <x-admin.checkbox identify="is_public" :description="trans('fields.contact.is_public')" :old="$contact->is_public" />
 
-
-                        <x-admin.button-submit title="ویرایش"/>
+                        <x-admin.button-submit title="{{ trans('panel.update') }}"/>
                         <x-admin.button-delete/>
 
                     </form>

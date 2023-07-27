@@ -40,4 +40,15 @@ return [
         'select_all' => 'انتخاب همه',
         'remove_selected' => 'حذف انتخاب ها',
     ],
+    'contact' => [
+        'id' => 'شناسه',
+        'created_at' => 'تاریخ ایجاد',
+        'email' => 'ایمیل',
+        'is_seen' => 'دیده شده',
+        'is_public' => 'منتشر شده',
+        'is_collaboration' => 'درخواست همکاری',
+        'comment' => 'متن پیام',
+        'agent' => 'عامل',
+        'delete' => 'حذف',
+    ],
 ];

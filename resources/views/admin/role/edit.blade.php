@@ -33,7 +33,7 @@
 
                         <x-admin.input identify="name" :title="trans('fields.role.name')" type="text" :old="$role->name" />
 
-                        <x-admin.select-model class="multiple" identify="permissions[]" :title="trans('fields.role.permissions')" :items="$permissions" key="id" value="name" multiple="multiple"/>
+                        <x-admin.select-permission class="multiple" identify="permissions[]" :title="trans('fields.role.permissions')" :items="$permissions" key="id" value="name" multiple="multiple"/>
 
                         <div class="d-flex align-items-center gap-10 my-3">
                             <button id="btn-select" class="btn btn-sm btn-outline-info" type="button">{{ trans('fields.role.select_all') }}</button>
