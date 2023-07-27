@@ -8,4 +8,12 @@ use Illuminate\Database\Eloquent\Model;
 class Sentence extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'title',
+        'sentence',
+        'translate',
+        'category_id',
+        'status',
+    ];
 }

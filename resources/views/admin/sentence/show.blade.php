@@ -5,12 +5,12 @@
 @endsection
 @section('content')
     <div class="page-header">
-        <h1 class="page-title">Sentence</h1>
+        <h1 class="page-title">{{ trans('panel.sentence.title') }}</h1>
         <div>
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">داشبورد</a></li>
-                <li class="breadcrumb-item"><a href="{{ route('admin.sentence.index') }}">Sentence</a></li>
-                <li class="breadcrumb-item active">نمایش</li>
+                <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">{{ trans('panel.dashboard.title') }}</a></li>
+                <li class="breadcrumb-item"><a href="{{ route('admin.sentence.index') }}">{{ trans('panel.sentence.title') }}</a></li>
+                <li class="breadcrumb-item active">{{ trans('panel.sentence.show') }}</li>
             </ol>
         </div>
     </div>
@@ -23,8 +23,28 @@
                         <table class="table table-hover">
                             <tbody>
                             <tr>
-                                <td>شناسه</td>
+                                <td>{{ trans('fields.sentence.id') }}</td>
                                 <td><a href="{{ route('admin.sentence.edit',$sentence->id) }}">{{ $sentence->id }}</a></td>
+                            </tr>
+
+                            <tr>
+                                <td>{{ trans('fields.sentence.title') }}</td>
+                                <td>{{ $sentence->title }}</td>
+                            </tr>
+
+                            <tr>
+                                <td>{{ trans('fields.sentence.sentence') }}</td>
+                                <td>{{ $sentence->sentence }}</td>
+                            </tr>
+
+                            <tr>
+                                <td>{{ trans('fields.sentence.translate') }}</td>
+                                <td>{{ $sentence->translate }}</td>
+                            </tr>
+
+                            <tr>
+                                <td>{{ trans('fields.sentence.status') }}</td>
+                                <td>{!! \App\Helper\Helper::renderSentenceStatus($sentence->status) !!}</td>
                             </tr>
 
                             <tr>

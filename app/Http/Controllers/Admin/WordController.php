@@ -32,8 +32,8 @@ class WordController extends Controller
                     return $word->created_at->toJalali()->format('h:i Y-m-d');
                 })
                 ->addColumn('action', function ($word) {
-                    $actions = Helper::btnMaker(BtnType::Warning, route('admin.word.edit', $word->id), 'ویرایش');
-                    $actions .= Helper::btnMaker(BtnType::Info, route('admin.word.show', $word->id), 'اطلاعات');
+                    $actions = Helper::btnMaker(BtnType::Warning, route('admin.word.edit', $word->id), trans('panel.action.edit'));
+                    $actions .= Helper::btnMaker(BtnType::Info, route('admin.word.show', $word->id), trans('panel.action.info'));
                     return $actions;
                 })
                 ->make();
@@ -52,17 +52,18 @@ class WordController extends Controller
     public function store(StoreRequest $request)
     {
         try {
-            $word = new Word();
-            $this->setData($request, $word);
-            $word->save();
+            $item = $this->itemProvider($request);
+            Word::create($item);
+
             return response()->json([
                 'result' => 'success',
                 'message' => trans('panel.success_store')
             ]);
-        } catch (Exception $exception) {
+        } catch (Exception $e) {
+            report($e);
             return response()->json([
                 'result' => 'exception',
-                'message' => $exception->getMessage()
+                'message' => trans('panel.error_store')
             ], 500);
         }
     }
@@ -75,28 +76,29 @@ class WordController extends Controller
         return view('admin.word.edit', compact('title', 'routeUpdate','routeDestroy', 'word'));
     }
 
-    public function show(Word $word)
-    {
-         $title = trans('panel.word.show');
-        return view('admin.word.show', compact('title', 'word'));
-    }
-
     public function update(UpdateRequest $request, Word $word)
     {
         try {
-            $this->setData($request, $word);
+            $item = $this->itemProvider($request);
+            $word->update($item);
 
-            $word->update();
             return response()->json([
                 'result' => 'success',
                 'message' => trans('panel.success_update')
             ]);
-        } catch (Exception $exception) {
+        } catch (Exception $e) {
+            report($e);
             return response()->json([
                 'result' => 'exception',
-                'message' => $exception->getMessage()
+                'message' => trans('panel.error_update')
             ], 500);
         }
+    }
+
+    public function show(Word $word)
+    {
+        $title = trans('panel.word.show');
+        return view('admin.word.show', compact('title', 'word'));
     }
 
     public function destroy(Word $word)
@@ -105,16 +107,19 @@ class WordController extends Controller
             $word->delete();
             return redirect(route('admin.word.index'))->with('success', trans('panel.success_delete'));
         } catch (Exception $e) {
+            report($e);
             return redirect(route('admin.word.index'))->with('danger', trans('panel.error_delete'));
         }
     }
 
     /**
      * @param Request $request
-     * @param Word $word
+     * @param bool $editMode
+     * @return array
      */
-    protected function setData(Request $request, Word $word): void
+    protected function itemProvider(Request $request, bool $editMode = false): array
     {
-        $word->title = $request->get('title');
+        $item['title'] = $request->get('title');
+        return $item;
     }
 }

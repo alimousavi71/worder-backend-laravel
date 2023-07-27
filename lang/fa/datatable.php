@@ -16,4 +16,5 @@ return [
     'is_seen'=>'دیده شده',
     'is_public'=>'منتشر شده',
     'is_collaboration'=>'جهت همکاری',
+    'status'=>'وضعیت',
 ];

@@ -9,7 +9,7 @@
         <h1 class="page-title">{{ trans('panel.word.title') }}</h1>
         <div>
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">{{ trans('panel.dashboard') }}</a></li>
+                <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">{{ trans('panel.dashboard.title') }}</a></li>
                 <li class="breadcrumb-item active">{{ trans('panel.word.title') }}</li>
             </ol>
         </div>

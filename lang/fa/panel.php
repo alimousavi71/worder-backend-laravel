@@ -28,6 +28,9 @@ return [
         'edit'=>'ویرایش',
         'info'=>'جزئیات',
     ],
+    'setting'=>[
+        'title'=>'تنظیمات',
+    ],
     'category'=>[
         'index'=>'دسته بندی ها',
         'title'=>'دسته بندی ها',
@@ -37,6 +40,17 @@ return [
         'type'=>[
             'word'=>'کلمه',
             'sentence'=>'جمله'
+        ]
+    ],
+    'sentence'=>[
+        'index'=>'جمله ها',
+        'title'=>'جمله ها',
+        'edit'=>'ویرایش جمله',
+        'create'=>'ایجاد جمله',
+        'show'=>'نمایش جمله',
+        'status'=>[
+            'publish'=>'منتشر شده',
+            'pending'=>'در انتظار',
         ]
     ],
     'admin'=>[

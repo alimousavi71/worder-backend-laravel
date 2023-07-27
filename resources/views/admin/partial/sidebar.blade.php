@@ -22,7 +22,7 @@
                     </a>
                 </li>
                 <li class="sub-category">
-                    <h3>تنظیمات</h3>
+                    <h3>{{ trans('panel.setting.title') }}</h3>
                 </li>
 
                 <li class="slide">
@@ -32,8 +32,8 @@
                     </a>
 
                     <ul class="slide-menu">
-                        <li><a href="{{ route('admin.admin.index') }}" class="slide-item">لیست</a></li>
-                        <li><a href="{{ route('admin.admin.create') }}" class="slide-item"> ایجاد</a></li>
+                        <li><a href="{{ route('admin.admin.index') }}" class="slide-item">{{ trans('panel.admin.index') }}</a></li>
+                        <li><a href="{{ route('admin.admin.create') }}" class="slide-item">{{ trans('panel.create') }}</a></li>
                     </ul>
                 </li>
 
@@ -46,7 +46,7 @@
                     <ul class="slide-menu">
                         <li><a href="{{ route('admin.permission.sync') }}" class="slide-item">{{ trans('panel.permission.sync') }}</a></li>
                         <li><a href="{{ route('admin.role.index') }}" class="slide-item">{{ trans('panel.list') }}</a></li>
-                        <li><a href="{{ route('admin.role.create') }}" class="slide-item"> {{ trans('panel.create') }}</a></li>
+                        <li><a href="{{ route('admin.role.create') }}" class="slide-item">{{ trans('panel.create') }}</a></li>
                     </ul>
                 </li>
 
@@ -63,17 +63,28 @@
                 </li>
 
 
+                <li class="slide">
+                    <a class="side-menu__item" data-bs-toggle="slide" href="javascript:void(0)" id="navSentence">
+                        <i class="side-menu__icon fe fe-clock"></i>
+                        <span class="side-menu__label">{{ trans('panel.sentence.index') }}</span><i class="angle fe fe-chevron-right"></i>
+                    </a>
 
+                    <ul class="slide-menu">
+                        <li><a href="{{ route('admin.sentence.index') }}" class="slide-item">{{ trans('panel.list') }}</a></li>
+                        <li><a href="{{ route('admin.sentence.create') }}" class="slide-item">{{ trans('panel.create') }}</a></li>
+
+                    </ul>
+                </li>
 
 
                 <li class="slide">
                     <a class="side-menu__item" data-bs-toggle="slide" href="javascript:void(0)" id="navContact">
                         <i class="side-menu__icon fe fe-phone"></i>
-                        <span class="side-menu__label">تماس ها</span><i class="angle fe fe-chevron-right"></i>
+                        <span class="side-menu__label">{{ trans('panel.contact.index') }}</span><i class="angle fe fe-chevron-right"></i>
                     </a>
 
                     <ul class="slide-menu">
-                        <li><a href="{{ route('admin.contact.index') }}" class="slide-item">لیست</a></li>
+                        <li><a href="{{ route('admin.contact.index') }}" class="slide-item">{{ trans('panel.list') }}</a></li>
                     </ul>
                 </li>
 

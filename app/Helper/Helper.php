@@ -3,6 +3,7 @@
 namespace App\Helper;
 
 use App\Enums\Database\Category\CategoryType;
+use App\Enums\Database\Sentence\SentenceStatus;
 use App\Enums\General\BtnType;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
@@ -15,6 +16,15 @@ class Helper
         return match ($type) {
             CategoryType::Word => '<span class="badge bg-success">'.trans('panel.category.type.word').'</span>',
             CategoryType::Sentence => '<span class="badge bg-info">'.trans('panel.category.type.sentence').'</span>',
+            default => '<span class="badge bg-danger">Not Found</span>',
+        };
+    }
+
+    public static function renderSentenceStatus($status)
+    {
+        return match ($status) {
+            SentenceStatus::Pending => '<span class="badge bg-success">'.trans('panel.sentence.status.pending').'</span>',
+            SentenceStatus::Publish => '<span class="badge bg-info">'.trans('panel.sentence.status.publish').'</span>',
             default => '<span class="badge bg-danger">Not Found</span>',
         };
     }

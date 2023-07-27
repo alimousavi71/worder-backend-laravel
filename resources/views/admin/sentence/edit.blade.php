@@ -9,12 +9,12 @@
 @section('content')
 
     <div class="page-header">
-        <h1 class="page-title">Sentence</h1>
+        <h1 class="page-title">{{ trans('panel.sentence.title') }}</h1>
         <div>
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">داشبورد</a></li>
-                <li class="breadcrumb-item"><a href="{{ route('admin.sentence.index') }}">Sentence</a></li>
-                <li class="breadcrumb-item active">ویرایش</li>
+                <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">{{ trans('panel.dashboard.title') }}</a></li>
+                <li class="breadcrumb-item"><a href="{{ route('admin.sentence.index') }}">{{ trans('panel.sentence.title') }}</a></li>
+                <li class="breadcrumb-item active">{{ trans('panel.sentence.edit') }}</li>
             </ol>
         </div>
     </div>
@@ -28,12 +28,18 @@
                         @csrf
                         @method('PATCH')
 
-                        <x-admin.input identify="category_id" title="category_id" type="text" placeholder="Enter category_id" :old="$sentence->category_id"/>
-<x-admin.input identify="sentence" title="sentence" type="text" placeholder="Enter sentence" :old="$sentence->sentence"/>
-<x-admin.input identify="translate" title="translate" type="text" placeholder="Enter translate" :old="$sentence->translate"/>
+                        <x-admin.input identify="title" :title="trans('fields.sentence.title')" type="text" :old="$sentence->title" />
 
+                        <x-admin.select-model identify="category_id" :title="trans('fields.sentence.category_id')" type="text" key="id" value="title" :items="$categories" :old="$sentence->category_id" />
 
-                        <x-admin.button-submit title="ویرایش"/>
+                        <x-admin.textarea identify="sentence" :title="trans('fields.sentence.sentence')" type="text" :old="$sentence->sentence"/>
+
+                        <x-admin.textarea identify="translate" :title="trans('fields.sentence.translate')" type="text" :old="$sentence->translate"/>
+
+                        <x-admin.select-enum identify="status" :title="trans('fields.sentence.status')" :enum-class="\App\Enums\Database\Sentence\SentenceStatus::class" :old="$sentence->status"  />
+
+                        <x-admin.button-submit title="{{ trans('panel.update') }}"/>
+
                         <x-admin.button-delete/>
 
                     </form>

@@ -9,9 +9,9 @@ use App\Http\Controllers\Admin\HomeController;
 use App\Http\Controllers\Admin\PermissionController;
 use App\Http\Controllers\Admin\ProfileController;
 use App\Http\Controllers\Admin\RoleController;
+use App\Http\Controllers\Admin\SentenceController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\WordController;
-use App\Http\Controllers\Api\SentenceController;
 use Illuminate\Support\Facades\Route;
 
 Route::group(['namespace'=>'App\Http\Controllers\Admin'],function (){
@@ -121,6 +121,17 @@ Route::group(['middleware' => ['admin.auth'/*,'acl'*/], 'guard' => 'admin'], fun
         Route::get('/profile/password', 'password')->name('profile.password');
         Route::patch('/profile', 'update')->name('profile.update');
         Route::patch('/profile/password', 'updatePassword')->name('profile.password.update');
+    });
+
+    Route::controller(SentenceController::class)->group(function () {
+        Route::get('/sentence', 'index')->name('sentence.index');
+        Route::get('/sentence/data', 'data')->name('sentence.data');
+        Route::get('/sentence/create', 'create')->name('sentence.create');
+        Route::post('/sentence/store', 'store')->name('sentence.store');
+        Route::get('/sentence/edit/{sentence}', 'edit')->name('sentence.edit');
+        Route::get('/sentence/show/{sentence}', 'show')->name('sentence.show');
+        Route::patch('/sentence/update/{sentence}', 'update')->name('sentence.update');
+        Route::delete('/sentence/destroy/{sentence}', 'destroy')->name('sentence.destroy');
     });
 
     Route::controller(ContactController::class)->group(function () {

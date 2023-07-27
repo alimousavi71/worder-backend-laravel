@@ -51,4 +51,13 @@ return [
         'agent' => 'عامل',
         'delete' => 'حذف',
     ],
+    'sentence' => [
+        'id' => 'شناسه',
+        'created_at' => 'تاریخ ایجاد',
+        'category_id' => 'دسته بندی',
+        'sentence' => 'جمله',
+        'status' => 'وضعیت',
+        'title' => 'عنوان',
+        'translate' => 'ترجمه',
+    ],
 ];
