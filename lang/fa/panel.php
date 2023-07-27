@@ -51,6 +51,9 @@ return [
         'status'=>[
             'publish'=>'منتشر شده',
             'pending'=>'در انتظار',
+        ],
+        'analytics'=>[
+            'total_view'=>'تعداد کاربران'
         ]
     ],
     'word'=>[

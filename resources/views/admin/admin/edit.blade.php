@@ -24,7 +24,7 @@
             <div class="card">
                 <div class="card-body pb-3">
                     @include('admin.partial.message')
-                    <form class="request-form forms-sample" method="post" action="{{ $routeUpdate }}">
+                    <form class="request-form forms-sample" enctype="multipart/form-data" method="post" action="{{ $routeUpdate }}">
                         @csrf
                         @method('PATCH')
 

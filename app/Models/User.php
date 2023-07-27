@@ -47,4 +47,9 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Word::class,'user_word','user_id');
     }
+
+    public function sentence()
+    {
+        return $this->belongsToMany(Sentence::class,'user_sentence','user_id');
+    }
 }

@@ -27,8 +27,9 @@ class UpdateRequest extends FormRequest
             'first_name'=>'required|max:255',
             'last_name'=>'required|max:255',
             'password'=>'nullable|min:8|max:255',
-            'avatar'=>'nullable|image|mimes:png,jpg,jpeg|max:255',
+            'avatar'=>'nullable|mimes:png,jpg,jpeg|max:2000',
             'role'=>'required|exists:roles,id'
         ];
     }
 }
+

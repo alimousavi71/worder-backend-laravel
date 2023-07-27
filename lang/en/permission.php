@@ -11,6 +11,7 @@ return [
 	'category_destroy'=>'Category Destroy',
 	'category_show'=>'Category Show',
 	'contact_index'=>'Contact Index',
+	'contact_edit'=>'Contact Edit',
 	'contact_show'=>'Contact Show',
 	'contact_destroy'=>'Contact Destroy',
 	'exam_index'=>'Exam Index',

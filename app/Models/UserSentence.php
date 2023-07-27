@@ -8,5 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class UserSentence extends Model
 {
+    protected $table = 'user_sentence';
+
     use HasFactory,HasUlids;
 }

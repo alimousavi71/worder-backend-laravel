@@ -16,6 +16,25 @@
     </div>
 
     <div class="row">
+
+        <div class="col-sm-6 col-md-6 col-lg-6 col-xl-3">
+            <div class="card bg-success img-card box-success-shadow">
+                <div class="card-body">
+                    <div class="d-flex">
+                        <div class="text-white">
+                            <h2 class="mb-0 number-font">{{ number_format($sentence->users->count()) }}</h2>
+                            <p class="text-white mb-0">{{ trans('panel.sentence.analytics.total_view') }}</p>
+                        </div>
+                        <div class="ms-auto"> <i class="fa fa-check-circle text-white fs-30 me-2 mt-2"></i> </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- COL END -->
+
+    </div>
+
+    <div class="row">
         <div class="col-xl-6 col-lg-6 col-md-6 col-12">
             <div class="card">
                 <div class="card-body pb-2">
@@ -23,7 +42,7 @@
                         <table class="table table-hover">
                             <tbody>
                             <tr>
-                                <td>{{ trans('fields.sentence.id') }}</td>
+                                <td width="25%">{{ trans('fields.sentence.id') }}</td>
                                 <td><a href="{{ route('admin.sentence.edit',$sentence->id) }}">{{ $sentence->id }}</a></td>
                             </tr>
 

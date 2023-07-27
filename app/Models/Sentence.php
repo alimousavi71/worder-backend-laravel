@@ -21,4 +21,9 @@ class Sentence extends Model
     {
         return $this->belongsTo(Category::class);
     }
+
+    public function users()
+    {
+        return $this->belongsToMany(User::class,'user_sentence','sentence_id');
+    }
 }

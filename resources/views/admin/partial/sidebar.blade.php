@@ -65,7 +65,7 @@
 
                 <li class="slide">
                     <a class="side-menu__item" data-bs-toggle="slide" href="javascript:void(0)" id="navSentence">
-                        <i class="side-menu__icon fe fe-clock"></i>
+                        <i class="side-menu__icon fa fa-language"></i>
                         <span class="side-menu__label">{{ trans('panel.sentence.index') }}</span><i class="angle fe fe-chevron-right"></i>
                     </a>
 
@@ -77,7 +77,7 @@
 
                 <li class="slide">
                     <a class="side-menu__item" data-bs-toggle="slide" href="javascript:void(0)" id="navWord">
-                        <i class="side-menu__icon fe fe-clock"></i>
+                        <i class="side-menu__icon fa fa-language"></i>
                         <span class="side-menu__label">{{ trans('panel.word.index') }}</span><i class="angle fe fe-chevron-right"></i>
                     </a>
 

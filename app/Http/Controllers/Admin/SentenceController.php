@@ -109,6 +109,7 @@ class SentenceController extends Controller
     public function show(Sentence $sentence)
     {
         $title = trans('panel.sentence.show');
+        $sentence->load('users');
         return view('admin.sentence.show', compact('title', 'sentence'));
     }
 
