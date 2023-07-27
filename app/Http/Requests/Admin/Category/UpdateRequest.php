@@ -24,7 +24,7 @@ class UpdateRequest extends FormRequest
     public function rules()
     {
         return [
-             'title'=>'required'
+            'title' => 'bail|required|alpha|unique:categories,title,' . $this->get('id')
         ];
     }
 }

@@ -2,10 +2,11 @@
 
 namespace Database\Factories;
 
+use App\Models\WordExam;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\WordExam>
+ * @extends Factory
  */
 class WordExamFactory extends Factory
 {
@@ -17,7 +18,8 @@ class WordExamFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'word_id' => rand(1,500),
+            'exam_id' => rand(1,10)
         ];
     }
 }

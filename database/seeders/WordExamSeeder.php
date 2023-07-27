@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\WordExam;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -12,6 +13,6 @@ class WordExamSeeder extends Seeder
      */
     public function run(): void
     {
-        //
+        WordExam::factory(100)->create();
     }
 }

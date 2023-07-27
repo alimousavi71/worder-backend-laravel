@@ -15,7 +15,7 @@ return new class extends Migration
             $table->ulid('id');
             $table->unsignedBigInteger('word_id');
             $table->unsignedBigInteger('user_id');
-            $table->boolean('i_knew')->default(0);
+            $table->boolean('is_knew')->default(0);
             $table->unsignedInteger('correct_answer')->default(0);
             $table->unsignedInteger('wrong_answer')->default(0);
             $table->unsignedInteger('repeat')->default(0);

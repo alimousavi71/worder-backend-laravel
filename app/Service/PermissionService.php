@@ -23,7 +23,7 @@ class PermissionService
         $this->langKeys = [];
 
         $this->scan('app/Http/Controllers/Admin');
-        $this->scan('app/Http/Controllers/Admin/Website', 'website_');
+        //$this->scan('app/Http/Controllers/Admin/Website', 'website_');
 
         $this->writeLangFile($this->langKeys);
     }

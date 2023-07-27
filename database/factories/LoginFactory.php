@@ -2,6 +2,8 @@
 
 namespace Database\Factories;
 
+use App\Models\Admin;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class LoginFactory extends Factory
@@ -14,10 +16,11 @@ class LoginFactory extends Factory
     public function definition()
     {
         return [
-            'id'=>$this->faker->uuid(),
-            'login_at'=>$this->faker->date(),
-            'agent'=>$this->faker->userAgent(),
-            'ip'=>$this->faker->ipv4(),
+            'user_type' => $this->faker->randomElement([Admin::class, User::class]),
+            'user_id' => rand(1, 10),
+            'login_at' => $this->faker->date,
+            'agent' => $this->faker->userAgent,
+            'ip' => $this->faker->ipv4,
         ];
     }
 }

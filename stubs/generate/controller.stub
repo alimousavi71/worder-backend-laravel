@@ -16,7 +16,7 @@ class $CLASS_NAME$Controller extends Controller
 {
     public function index()
     {
-        $title = '$APP_NAME$ - $CLASS_NAME$ - List';
+        $title = trans('panel.$ROUTE_NAME$.index');
         $routeData = route('admin.$ROUTE_NAME$.data');
         $selects = ['id', 'created_at'];
         return view('admin.$VIEW_NAME$.index', compact('title', 'routeData', 'selects'));
@@ -32,8 +32,8 @@ class $CLASS_NAME$Controller extends Controller
                     return $$MODEL_VAR_NAME$->created_at->toJalali()->format('h:i Y-m-d');
                 })
                 ->addColumn('action', function ($$MODEL_VAR_NAME$) {
-                    $actions = Helper::btnMaker(BtnType::Warning, route('admin.$ROUTE_NAME$.edit', $$MODEL_VAR_NAME$->id), 'ویرایش');
-                    $actions .= Helper::btnMaker(BtnType::Info, route('admin.$ROUTE_NAME$.show', $$MODEL_VAR_NAME$->id), 'اطلاعات');
+                    $actions = Helper::btnMaker(BtnType::Warning, route('admin.$ROUTE_NAME$.edit', $$MODEL_VAR_NAME$->id), trans('panel.action.edit'));
+                    $actions .= Helper::btnMaker(BtnType::Info, route('admin.$ROUTE_NAME$.show', $$MODEL_VAR_NAME$->id), trans('panel.action.info'));
                     return $actions;
                 })
                 ->make();
@@ -44,7 +44,7 @@ class $CLASS_NAME$Controller extends Controller
 
     public function create()
     {
-        $title = '$APP_NAME$ - $CLASS_NAME$ - Create';
+        $title = trans('panel.$ROUTE_NAME$.create');
         $routeStore = route('admin.$ROUTE_NAME$.store');
         return view('admin.$VIEW_NAME$.create', compact('title', 'routeStore'));
     }
@@ -52,69 +52,74 @@ class $CLASS_NAME$Controller extends Controller
     public function store(StoreRequest $request)
     {
         try {
-            $$MODEL_VAR_NAME$ = new $CLASS_NAME$();
-            $this->setData($request, $$MODEL_VAR_NAME$);
-            $$MODEL_VAR_NAME$->save();
+            $item = $this->itemProvider($request);
+            $CLASS_NAME$::create($item);
+
             return response()->json([
                 'result' => 'success',
-                'message' => 'با موفقیت ایجاد شد.'
+                'message' => trans('panel.success_store')
             ]);
-        } catch (Exception $exception) {
+        } catch (Exception $e) {
+            report($e);
             return response()->json([
                 'result' => 'exception',
-                'message' => $exception->getMessage()
+                'message' => trans('panel.error_store')
             ], 500);
         }
     }
 
     public function edit($CLASS_NAME$ $$MODEL_VAR_NAME$)
     {
-        $title = '$APP_NAME$ - $CLASS_NAME$ - Edit';
+        $title = trans('panel.$ROUTE_NAME$.edit');
         $routeUpdate = route('admin.$ROUTE_NAME$.update', $$MODEL_VAR_NAME$->id);
         $routeDestroy = route('admin.$ROUTE_NAME$.destroy', $$MODEL_VAR_NAME$->id);
         return view('admin.$VIEW_NAME$.edit', compact('title', 'routeUpdate','routeDestroy', '$MODEL_VAR_NAME$'));
     }
 
-    public function show($CLASS_NAME$ $$MODEL_VAR_NAME$)
-    {
-        $title = '$APP_NAME$ - $CLASS_NAME$ - Show';
-        return view('admin.$VIEW_NAME$.show', compact('title', '$MODEL_VAR_NAME$'));
-    }
-
     public function update(UpdateRequest $request, $CLASS_NAME$ $$MODEL_VAR_NAME$)
     {
         try {
-            $this->setData($request, $$MODEL_VAR_NAME$);
+            $item = $this->itemProvider($request);
+            $$MODEL_VAR_NAME$->update($item);
 
-            $$MODEL_VAR_NAME$->update();
             return response()->json([
                 'result' => 'success',
-                'message' => 'با موفقیت به روز رسانی شد.'
+                'message' => trans('panel.success_update')
             ]);
-        } catch (Exception $exception) {
+        } catch (Exception $e) {
+            report($e);
             return response()->json([
                 'result' => 'exception',
-                'message' => $exception->getMessage()
+                'message' => trans('panel.error_update')
             ], 500);
         }
+    }
+
+    public function show($CLASS_NAME$ $$MODEL_VAR_NAME$)
+    {
+        $title = trans('panel.$ROUTE_NAME$.show');
+        return view('admin.$VIEW_NAME$.show', compact('title', '$MODEL_VAR_NAME$'));
     }
 
     public function destroy($CLASS_NAME$ $$MODEL_VAR_NAME$)
     {
         try {
             $$MODEL_VAR_NAME$->delete();
-            return redirect(route('admin.$ROUTE_NAME$.index'))->with('success', 'با موفقیت حذف شد.');
+            return redirect(route('admin.$ROUTE_NAME$.index'))->with('success', trans('panel.success_delete'));
         } catch (Exception $e) {
-            return redirect(route('admin.$ROUTE_NAME$.index'))->with('danger', 'خطایی در سرور به وجود امده است لطفا بعدا تلاش کنید!');
+            report($e);
+            return redirect(route('admin.$ROUTE_NAME$.index'))->with('danger', trans('panel.error_delete'));
         }
     }
 
     /**
      * @param Request $request
-     * @param $CLASS_NAME$ $$MODEL_VAR_NAME$
+     * @param bool $editMode
+     * @return array
      */
-    protected function setData(Request $request, $CLASS_NAME$ $$MODEL_VAR_NAME$): void
+    protected function itemProvider(Request $request, bool $editMode = false): array
     {
-        $$MODEL_VAR_NAME$->title = $request->get('title');
+        $item['title'] = $request->get('title');
+        return $item;
     }
 }

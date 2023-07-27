@@ -1,5 +1,6 @@
 <?php
 
+use App\Enums\Database\Exam\ExamType;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -13,7 +14,7 @@ return new class extends Migration {
         Schema::create('exams', function (Blueprint $table) {
             $table->id();
             $table->string('title');
-            $table->unsignedTinyInteger('type')->default(0);
+            $table->unsignedTinyInteger('type')->default(ExamType::Random);
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('grade')->default(0);
             $table->boolean('is_timer_on')->default(true);

@@ -5,12 +5,12 @@
 @endsection
 @section('content')
     <div class="page-header">
-        <h1 class="page-title">Word</h1>
+        <h1 class="page-title">{{ trans('panel.word.title') }}</h1>
         <div>
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">داشبورد</a></li>
-                <li class="breadcrumb-item"><a href="{{ route('admin.word.index') }}">Word</a></li>
-                <li class="breadcrumb-item active">نمایش</li>
+                <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">{{ trans('panel.dashboard') }}</a></li>
+                <li class="breadcrumb-item"><a href="{{ route('admin.word.index') }}">{{ trans('panel.word.title') }}</a></li>
+                <li class="breadcrumb-item active">{{ trans('panel.word.show') }}</li>
             </ol>
         </div>
     </div>

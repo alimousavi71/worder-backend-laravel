@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Enums\Database\Contact\Rate;
 use App\Models\Contact;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -18,10 +19,13 @@ class ContactFactory extends Factory
     public function definition()
     {
         return [
-            'email'=>$this->faker->email,
-            'figma_link'=>$this->faker->url,
-            'dribble_link'=>$this->faker->url,
-            'is_seen'=>$this->faker->boolean,
+            'comment' => $this->faker->sentence,
+            'user_id' => rand(1,10),
+            'rate' => Rate::getRandomValue(),
+            'is_seen' => $this->faker->boolean,
+            'is_public' => $this->faker->boolean,
+            'is_collaboration' => $this->faker->boolean,
+            'agent' => $this->faker->userAgent,
         ];
     }
 }

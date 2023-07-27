@@ -26,33 +26,9 @@
                 </li>
 
                 <li class="slide">
-                    <a class="side-menu__item" data-bs-toggle="slide" href="javascript:void(0)" id="navRole">
-                        <i class="side-menu__icon fe fe-lock"></i>
-                        <span class="side-menu__label">نقش کاربری</span><i class="angle fe fe-chevron-right"></i>
-                    </a>
-
-                    <ul class="slide-menu">
-                        <li><a href="{{ route('admin.role.index') }}" class="slide-item">لیست</a></li>
-                        <li><a href="{{ route('admin.role.create') }}" class="slide-item"> ایجاد</a></li>
-                    </ul>
-                </li>
-
-                <li class="slide">
-                    <a class="side-menu__item" data-bs-toggle="slide" href="javascript:void(0)" id="navRole">
-                        <i class="side-menu__icon fe fe-lock"></i>
-                        <span class="side-menu__label">نقش کاربری</span><i class="angle fe fe-chevron-right"></i>
-                    </a>
-
-                    <ul class="slide-menu">
-                        <li><a href="{{ route('admin.category.index') }}" class="slide-item">لیست</a></li>
-                        <li><a href="{{ route('admin.category.create') }}" class="slide-item"> ایجاد</a></li>
-                    </ul>
-                </li>
-
-                <li class="slide">
                     <a class="side-menu__item" data-bs-toggle="slide" href="javascript:void(0)" id="navAdmin">
                         <i class="side-menu__icon fe fe-user"></i>
-                        <span class="side-menu__label">مدیران</span><i class="angle fe fe-chevron-right"></i>
+                        <span class="side-menu__label">{{ trans('panel.admin.index') }}</span><i class="angle fe fe-chevron-right"></i>
                     </a>
 
                     <ul class="slide-menu">
@@ -60,6 +36,33 @@
                         <li><a href="{{ route('admin.admin.create') }}" class="slide-item"> ایجاد</a></li>
                     </ul>
                 </li>
+
+                <li class="slide">
+                    <a class="side-menu__item" data-bs-toggle="slide" href="javascript:void(0)" id="navRole">
+                        <i class="side-menu__icon fe fe-lock"></i>
+                        <span class="side-menu__label">{{ trans('panel.role.index') }}</span><i class="angle fe fe-chevron-right"></i>
+                    </a>
+
+                    <ul class="slide-menu">
+                        <li><a href="{{ route('admin.permission.sync') }}" class="slide-item">{{ trans('panel.permission.sync') }}</a></li>
+                        <li><a href="{{ route('admin.role.index') }}" class="slide-item">{{ trans('panel.list') }}</a></li>
+                        <li><a href="{{ route('admin.role.create') }}" class="slide-item"> {{ trans('panel.create') }}</a></li>
+                    </ul>
+                </li>
+
+                <li class="slide">
+                    <a class="side-menu__item" data-bs-toggle="slide" href="javascript:void(0)" id="navCategory">
+                        <i class="side-menu__icon fe fe-list"></i>
+                        <span class="side-menu__label">{{ trans('panel.category.index') }}</span><i class="angle fe fe-chevron-right"></i>
+                    </a>
+
+                    <ul class="slide-menu">
+                        <li><a href="{{ route('admin.category.index') }}" class="slide-item">{{ trans('panel.list') }}</a></li>
+                        <li><a href="{{ route('admin.category.create') }}" class="slide-item">{{ trans('panel.create') }}</a></li>
+                    </ul>
+                </li>
+
+
 
 
 
@@ -77,13 +80,13 @@
                 <li class="slide">
                     <a class="side-menu__item" data-bs-toggle="slide" href="javascript:void(0)" id="navProfile">
                         <i class="side-menu__icon fe fe-user-check"></i>
-                        <span class="side-menu__label">پروفایل</span><i class="angle fe fe-chevron-right"></i>
+                        <span class="side-menu__label">{{ trans('panel.profile.index') }}</span><i class="angle fe fe-chevron-right"></i>
                     </a>
 
                     <ul class="slide-menu">
-                        <li><a href="{{ route('admin.profile.index') }}" class="slide-item">ویرایش پروفایل</a></li>
-                        <li><a href="{{ route('admin.profile.password') }}" class="slide-item"> تغییر گذرواژه</a></li>
-                        <li><a href="{{ route('admin.profile.logout') }}" class="slide-item"> خروج</a></li>
+                        <li><a href="{{ route('admin.profile.index') }}" class="slide-item">{{ trans('panel.profile.edit') }}</a></li>
+                        <li><a href="{{ route('admin.profile.password') }}" class="slide-item">{{ trans('panel.profile.password-change') }}</a></li>
+                        <li><a href="{{ route('admin.profile.logout') }}" class="slide-item">{{ trans('panel.profile.sign-out') }}</a></li>
                     </ul>
                 </li>
             </ul>

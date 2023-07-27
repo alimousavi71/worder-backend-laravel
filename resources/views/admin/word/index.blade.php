@@ -6,11 +6,11 @@
 @section('content')
 
     <div class="page-header">
-        <h1 class="page-title">Word List</h1>
+        <h1 class="page-title">{{ trans('panel.word.title') }}</h1>
         <div>
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">داشبورد</a></li>
-                <li class="breadcrumb-item active">Word</li>
+                <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">{{ trans('panel.dashboard') }}</a></li>
+                <li class="breadcrumb-item active">{{ trans('panel.word.title') }}</li>
             </ol>
         </div>
     </div>
@@ -27,7 +27,7 @@
                                 @foreach($selects as $select)
                                     <th>{{ trans('datatable.'.$select)}}</th>
                                 @endforeach
-                                <th>عملیات</th>
+                                <th>{{ trans('datatable.action') }}</th>
                             </tr>
                             </thead>
                             <tfoot>
@@ -35,7 +35,7 @@
                                 @foreach($selects as $select)
                                     <th>{{ trans('datatable.'.$select)}}</th>
                                 @endforeach
-                                <th>عملیات</th>
+                                <th>{{ trans('datatable.action') }}</th>
                             </tr>
                             </tfoot>
                             <tbody>

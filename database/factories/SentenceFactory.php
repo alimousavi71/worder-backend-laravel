@@ -2,10 +2,12 @@
 
 namespace Database\Factories;
 
+use App\Enums\Database\Sentence\SentenceStatus;
+use App\Models\Sentence;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Sentence>
+ * @extends Factory
  */
 class SentenceFactory extends Factory
 {
@@ -17,7 +19,11 @@ class SentenceFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'title'=> $this->faker->sentence,
+            'sentence'=> $this->faker->text,
+            'translate'=> $this->faker->text,
+            'status'=> SentenceStatus::getRandomValue(),
+            'category_id'=> rand(1,10),
         ];
     }
 }

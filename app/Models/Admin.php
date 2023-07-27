@@ -15,13 +15,19 @@ class Admin extends Authenticatable
     use Notifiable;
     use SoftDeletes;
     use HasRoles;
+
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'avatar',
+        'first_name',
+        'last_name',
+        'email',
+        'password',
+        'has_access',
     ];
 
     /**
@@ -45,7 +51,7 @@ class Admin extends Authenticatable
     /**
      * Send the password reset notification.
      *
-     * @param  string  $token
+     * @param string $token
      * @return void
      */
     public function sendPasswordResetNotification($token)
@@ -55,7 +61,7 @@ class Admin extends Authenticatable
 
     public function logins()
     {
-        return $this->morphMany(Login::class,'user');
+        return $this->morphMany(Login::class, 'user');
     }
 
 

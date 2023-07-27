@@ -8,12 +8,12 @@
 @section('content')
 
     <div class="page-header">
-        <h1 class="page-title">Category</h1>
+        <h1 class="page-title">{{ trans('panel.category.title') }}</h1>
         <div>
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">داشبورد</a></li>
-                <li class="breadcrumb-item"><a href="{{ route('admin.category.index') }}">Category</a></li>
-                <li class="breadcrumb-item active">Category - Create</li>
+                <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">{{ trans('panel.dashboard.title') }}</a></li>
+                <li class="breadcrumb-item"><a href="{{ route('admin.category.index') }}">{{ trans('panel.category.title') }}</a></li>
+                <li class="breadcrumb-item active">{{ trans('panel.category.create') }}</li>
             </ol>
         </div>
     </div>
@@ -26,10 +26,13 @@
                     <form class="request-form forms-sample" method="post" action="{{ $routeStore }}">
                         @csrf
 
-                        <x-admin.input identify="description" title="description" type="text" placeholder="Enter description" />
-<x-admin.input identify="icon" title="icon" type="text" placeholder="Enter icon" />
-<x-admin.input identify="title" title="title" type="text" placeholder="Enter title" />
+                        <x-admin.select-enum identify="type" :title="trans('fields.category.type')" :enum-class="\App\Enums\Database\Category\CategoryType::class"  />
 
+                        <x-admin.input identify="title" :title="trans('fields.category.title')" type="text" />
+
+                        <x-admin.textarea identify="description" :title="trans('fields.category.description')" />
+
+                        <x-admin.input identify="icon" :title="trans('fields.category.icon')" type="text" />
 
                         <x-admin.button-submit/>
                     </form>

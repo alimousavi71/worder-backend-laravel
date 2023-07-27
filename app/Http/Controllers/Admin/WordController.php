@@ -16,7 +16,7 @@ class WordController extends Controller
 {
     public function index()
     {
-        $title = 'Worder - Word - List';
+        $title = trans('panel.word.index');
         $routeData = route('admin.word.data');
         $selects = ['id', 'created_at'];
         return view('admin.word.index', compact('title', 'routeData', 'selects'));
@@ -44,7 +44,7 @@ class WordController extends Controller
 
     public function create()
     {
-        $title = 'Worder - Word - Create';
+        $title = trans('panel.word.create');
         $routeStore = route('admin.word.store');
         return view('admin.word.create', compact('title', 'routeStore'));
     }
@@ -57,7 +57,7 @@ class WordController extends Controller
             $word->save();
             return response()->json([
                 'result' => 'success',
-                'message' => 'با موفقیت ایجاد شد.'
+                'message' => trans('panel.success_store')
             ]);
         } catch (Exception $exception) {
             return response()->json([
@@ -69,7 +69,7 @@ class WordController extends Controller
 
     public function edit(Word $word)
     {
-        $title = 'Worder - Word - Edit';
+        $title = trans('panel.word.edit');
         $routeUpdate = route('admin.word.update', $word->id);
         $routeDestroy = route('admin.word.destroy', $word->id);
         return view('admin.word.edit', compact('title', 'routeUpdate','routeDestroy', 'word'));
@@ -77,7 +77,7 @@ class WordController extends Controller
 
     public function show(Word $word)
     {
-        $title = 'Worder - Word - Show';
+         $title = trans('panel.word.show');
         return view('admin.word.show', compact('title', 'word'));
     }
 
@@ -89,7 +89,7 @@ class WordController extends Controller
             $word->update();
             return response()->json([
                 'result' => 'success',
-                'message' => 'با موفقیت به روز رسانی شد.'
+                'message' => trans('panel.success_update')
             ]);
         } catch (Exception $exception) {
             return response()->json([
@@ -103,9 +103,9 @@ class WordController extends Controller
     {
         try {
             $word->delete();
-            return redirect(route('admin.word.index'))->with('success', 'با موفقیت حذف شد.');
+            return redirect(route('admin.word.index'))->with('success', trans('panel.success_delete'));
         } catch (Exception $e) {
-            return redirect(route('admin.word.index'))->with('danger', 'خطایی در سرور به وجود امده است لطفا بعدا تلاش کنید!');
+            return redirect(route('admin.word.index'))->with('danger', trans('panel.error_delete'));
         }
     }
 

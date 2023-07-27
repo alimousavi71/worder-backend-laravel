@@ -16,9 +16,9 @@ class CategoryController extends Controller
 {
     public function index()
     {
-        $title = 'Worder - Category - List';
+        $title = trans('panel.category.index');
         $routeData = route('admin.category.data');
-        $selects = ['id', 'created_at'];
+        $selects = ['id', 'title', 'type', 'words_count', 'created_at'];
         return view('admin.category.index', compact('title', 'routeData', 'selects'));
     }
 
@@ -26,16 +26,20 @@ class CategoryController extends Controller
     {
 
         try {
-            $categories = Category::query();
+            $categories = Category::query()->withCount('words');
             return DataTables::of($categories)
+                ->editColumn('type', function ($category) {
+                    return Helper::renderCategoryType($category->type);
+                })
                 ->editColumn('created_at', function ($category) {
                     return $category->created_at->toJalali()->format('h:i Y-m-d');
                 })
                 ->addColumn('action', function ($category) {
-                    $actions = Helper::btnMaker(BtnType::Warning, route('admin.category.edit', $category->id), 'ویرایش');
-                    $actions .= Helper::btnMaker(BtnType::Info, route('admin.category.show', $category->id), 'اطلاعات');
+                    $actions = Helper::btnMaker(BtnType::Warning, route('admin.category.edit', $category->id), trans('panel.action.edit'));
+                    $actions .= Helper::btnMaker(BtnType::Info, route('admin.category.show', $category->id), trans('panel.action.info'));
                     return $actions;
                 })
+                ->rawColumns(['action','type'])
                 ->make();
         } catch (Exception $e) {
             return $e->getMessage();
@@ -44,7 +48,7 @@ class CategoryController extends Controller
 
     public function create()
     {
-        $title = 'Worder - Category - Create';
+        $title = trans('panel.category.create');
         $routeStore = route('admin.category.store');
         return view('admin.category.create', compact('title', 'routeStore'));
     }
@@ -52,49 +56,43 @@ class CategoryController extends Controller
     public function store(StoreRequest $request)
     {
         try {
-            $category = new Category();
-            $this->setData($request, $category);
-            $category->save();
+            $item = $this->itemProvider($request);
+            Category::create($item);
             return response()->json([
                 'result' => 'success',
-                'message' => 'با موفقیت ایجاد شد.'
+                'message' => trans('panel.success_store')
             ]);
-        } catch (Exception $exception) {
+        } catch (Exception $e) {
+            report($e);
             return response()->json([
                 'result' => 'exception',
-                'message' => $exception->getMessage()
+                'message' => trans('panel.error_store')
             ], 500);
         }
     }
 
     public function edit(Category $category)
     {
-        $title = 'Worder - Category - Edit';
+        $title = trans('panel.category.edit');
         $routeUpdate = route('admin.category.update', $category->id);
         $routeDestroy = route('admin.category.destroy', $category->id);
-        return view('admin.category.edit', compact('title', 'routeUpdate','routeDestroy', 'category'));
-    }
-
-    public function show(Category $category)
-    {
-        $title = 'Worder - Category - Show';
-        return view('admin.category.show', compact('title', 'category'));
+        return view('admin.category.edit', compact('title', 'routeUpdate', 'routeDestroy', 'category'));
     }
 
     public function update(UpdateRequest $request, Category $category)
     {
         try {
-            $this->setData($request, $category);
-
-            $category->update();
+            $item = $this->itemProvider($request);
+            $category->update($item);
             return response()->json([
                 'result' => 'success',
-                'message' => 'با موفقیت به روز رسانی شد.'
+                'message' => trans('panel.success_update')
             ]);
-        } catch (Exception $exception) {
+        } catch (Exception $e) {
+            report($e);
             return response()->json([
                 'result' => 'exception',
-                'message' => $exception->getMessage()
+                'message' => trans('panel.error_update')
             ], 500);
         }
     }
@@ -103,18 +101,31 @@ class CategoryController extends Controller
     {
         try {
             $category->delete();
-            return redirect(route('admin.category.index'))->with('success', 'با موفقیت حذف شد.');
+            return redirect(route('admin.category.index'))->with('success', trans('panel.success_delete'));
         } catch (Exception $e) {
-            return redirect(route('admin.category.index'))->with('danger', 'خطایی در سرور به وجود امده است لطفا بعدا تلاش کنید!');
+            report($e);
+            return redirect(route('admin.category.index'))->with('danger', trans('panel.error_delete'));
         }
+    }
+
+    public function show(Category $category)
+    {
+        $title = trans('panel.category.show');
+        return view('admin.category.show', compact('title', 'category'));
     }
 
     /**
      * @param Request $request
-     * @param Category $category
+     * @param bool $editMode
+     * @return array
      */
-    protected function setData(Request $request, Category $category): void
+    protected function itemProvider(Request $request, bool $editMode = false): array
     {
-        $category->title = $request->get('title');
+        $item['title'] = $request->get('title');
+        $item['description'] = $request->get('description');
+        $item['type'] = $request->get('type');
+        $item['icon'] = $request->get('icon');
+
+        return $item;
     }
 }

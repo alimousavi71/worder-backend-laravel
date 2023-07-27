@@ -35,7 +35,7 @@ Route::group(['middleware' => ['admin.auth'/*,'acl'*/], 'guard' => 'admin'], fun
     /* this function for help to route ui dashboard */
     Route::get('/', [HomeController::class,'redirect'])->name('home');
     Route::get('/dashboard', [HomeController::class,'index'])->name('dashboard');
-    Route::get('/permission/sync',[PermissionController::class,'sync']);
+    Route::get('/permission/sync',[PermissionController::class,'sync'])->name('permission.sync');
 
 
     Route::controller(AdminController::class)->group(function () {

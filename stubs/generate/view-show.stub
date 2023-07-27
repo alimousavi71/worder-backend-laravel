@@ -5,12 +5,12 @@
 @endsection
 @section('content')
     <div class="page-header">
-        <h1 class="page-title">$CLASS_NAME$</h1>
+        <h1 class="page-title">{{ trans('panel.$ROUTE_NAME$.title') }}</h1>
         <div>
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">داشبورد</a></li>
-                <li class="breadcrumb-item"><a href="{{ route('admin.$ROUTE_NAME$.index') }}">$CLASS_NAME$</a></li>
-                <li class="breadcrumb-item active">نمایش</li>
+                <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">{{ trans('panel.dashboard.title') }}</a></li>
+                <li class="breadcrumb-item"><a href="{{ route('admin.$ROUTE_NAME$.index') }}">{{ trans('panel.$ROUTE_NAME$.title') }}</a></li>
+                <li class="breadcrumb-item active">{{ trans('panel.$ROUTE_NAME$.show') }}</li>
             </ol>
         </div>
     </div>

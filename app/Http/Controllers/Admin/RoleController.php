@@ -7,6 +7,7 @@ use App\Helper\Helper;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Role\StoreRequest;
 use App\Http\Requests\Admin\Role\UpdateRequest;
+use DB;
 use Exception;
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Permission;
@@ -17,7 +18,7 @@ class RoleController extends Controller
 {
     public function index()
     {
-        $title = 'کدبرگر | لیست نقش ها';
+        $title = trans('panel.role.index');
         $routeData = route('admin.role.data');
         $selects = ['id', 'name','permissions_count', 'created_at'];
         return view('admin.role.index', compact('title', 'routeData', 'selects'));
@@ -25,14 +26,15 @@ class RoleController extends Controller
 
     public function data()
     {
-        $roles = Role::query()->select('roles.*')->withCount('permissions');
+
         try {
+            $roles = Role::query()->select('roles.*')->withCount('permissions');
             return DataTables::of($roles)
-                ->editColumn('created_at',function ($admin){
-                    return $admin->created_at->toJalali()->format('H:i Y-m-d');
+                ->editColumn('created_at', function ($role) {
+                    return $role->created_at->toJalali()->format('h:i Y-m-d');
                 })
-                ->addColumn('action', function ($roles) {
-                    return Helper::btnMaker(BtnType::Warning, route('admin.role.edit', $roles->id), 'ویرایش');
+                ->addColumn('action', function ($role) {
+                    return Helper::btnMaker(BtnType::Warning, route('admin.role.edit', $role->id), trans('panel.action.edit'));
                 })
                 ->make();
         } catch (Exception $e) {
@@ -42,34 +44,37 @@ class RoleController extends Controller
 
     public function create()
     {
-        $title = 'نقش ها | ایجاد';
+        $title = trans('panel.role.create');
         $routeStore = route('admin.role.store');
         $permissions = Permission::all();
-        return view('admin.role.create', compact('title','routeStore','permissions'));
+        return view('admin.role.create', compact('title', 'routeStore','permissions'));
     }
 
     public function store(StoreRequest $request)
     {
         try {
-            $role = new Role();
+            DB::beginTransaction();
+            $item = $this->itemProvider($request);
+            $role = Role::create($item);
             $role->givePermissionTo($request->get('permissions'));
-            $this->setData($request, $role);
-            $role->save();
+            DB::commit();
             return response()->json([
-                'result'=>'success',
-                'message'=>'نقش کاربری با موفقیت ایجاد شد.'
+                'result' => 'success',
+                'message' => trans('panel.success_store')
             ]);
-        }catch (Exception $exception){
+        } catch (Exception $e) {
+            DB::rollBack();
+            report($e);
             return response()->json([
-                'result'=>'exception',
-                'message'=>$exception->getMessage()
-            ],500);
+                'result' => 'exception',
+                'message' => trans('panel.error_store')
+            ], 500);
         }
     }
 
     public function edit(Role $role)
     {
-        $title = 'نقش کاربری | ویرایش';
+        $title = trans('panel.role.edit');
         $routeUpdate = route('admin.role.update', $role->id);
         $routeDestroy = route('admin.role.destroy', $role->id);
         $permissions = Permission::all();
@@ -80,37 +85,43 @@ class RoleController extends Controller
     public function update(UpdateRequest $request, Role $role)
     {
         try {
+            DB::beginTransaction();
+            $item = $this->itemProvider($request);
+            $role->update($item);
             $role->syncPermissions($request->get('permissions'));
-            $this->setData($request, $role);
-            $role->update();
+            DB::commit();
             return response()->json([
-                'result'=>'success',
-                'message'=>'نقش کاربری با موفقیت ویرایش شد.'
+                'result' => 'success',
+                'message' => trans('panel.success_update')
             ]);
-        }catch (Exception $exception){
+        } catch (Exception $e) {
+            DB::rollBack();
+            report($e);
             return response()->json([
-                'result'=>'exception',
-                'message'=>$exception->getMessage()
-            ],500);
+                'result' => 'exception',
+                'message' => trans('panel.error_update')
+            ], 500);
         }
-
     }
 
     public function destroy(Role $role)
     {
         try {
             $role->delete();
-            return redirect(route('admin.role.index'))->with('success', 'نقش کاربری با موفقیت حذف شد.');
+            return redirect(route('admin.role.index'))->with('success', trans('panel.success_delete'));
         } catch (Exception $e) {
-            return redirect(route('admin.admin.index'))->with('danger', 'خطایی در سرور به وجود امده است لطفا بعدا تلاش کنید!');
+            report($e);
+            return redirect(route('admin.role.index'))->with('danger', trans('panel.error_delete'));
         }
     }
+
     /**
      * @param Request $request
-     * @param Role $role
+     * @return array
      */
-    protected function setData(Request $request, Role $role): void
+    protected function itemProvider(Request $request): array
     {
-        $role->name = $request->get('name');
+        $item['name'] = $request->get('name');
+        return $item;
     }
 }

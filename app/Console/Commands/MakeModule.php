@@ -133,18 +133,18 @@ class MakeModule extends Command
             switch ($column['type']) {
                 case 'boolean':
                 {
-                    $this->renderColumn .= sprintf('<x-admin.checkbox identify="%s" description="%s" ' . $editString . '/>' . PHP_EOL,
+                    $this->renderColumn .= sprintf('<x-admin.checkbox identify="%s" :description="%s" %s />' . PHP_EOL,
                         $column['name'],
-                        $column['name'],
-                        $column['name'],
+                        sprintf("trans('fields.%s.%s')",strtolower($this->nameModule), $column['name']),
+                        $editString,
                     );
                     break;
                 }
                 default:
                 {
-                    $this->renderColumn .= sprintf('<x-admin.input identify="%s" title="%s" type="text" placeholder="Enter %s" ' . $editString . '/>' . PHP_EOL,
+                    $this->renderColumn .= sprintf('<x-admin.input identify="%s" :title="%s" type="text" />' . PHP_EOL,
                         $column['name'],
-                        $column['name'],
+                        sprintf("trans('fields.%s.%s')",strtolower($this->nameModule), $column['name']),
                         $column['name']
                     );
                 }

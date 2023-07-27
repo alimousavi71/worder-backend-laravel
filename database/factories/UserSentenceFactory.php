@@ -2,10 +2,11 @@
 
 namespace Database\Factories;
 
+use App\Models\UserSentence;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\UserSentence>
+ * @extends Factory
  */
 class UserSentenceFactory extends Factory
 {
@@ -17,7 +18,8 @@ class UserSentenceFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'user_id' => rand(1, 10),
+            'sentence_id' => rand(1, 20)
         ];
     }
 }

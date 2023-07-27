@@ -2,12 +2,23 @@
 
 namespace App\Helper;
 
+use App\Enums\Database\Category\CategoryType;
 use App\Enums\General\BtnType;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 
 class Helper
 {
+
+    public static function renderCategoryType($type)
+    {
+        return match ($type) {
+            CategoryType::Word => '<span class="badge bg-success">'.trans('panel.category.type.word').'</span>',
+            CategoryType::Sentence => '<span class="badge bg-info">'.trans('panel.category.type.sentence').'</span>',
+            default => '<span class="badge bg-danger">Not Found</span>',
+        };
+    }
+
     static public function getRouteSmall()
     {
         $routeName = Route::currentRouteName();

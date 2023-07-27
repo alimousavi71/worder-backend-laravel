@@ -5,12 +5,12 @@
 @endsection
 @section('content')
     <div class="page-header">
-        <h1 class="page-title">Category</h1>
+        <h1 class="page-title">{{ trans('panel.category.title') }}</h1>
         <div>
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">داشبورد</a></li>
-                <li class="breadcrumb-item"><a href="{{ route('admin.category.index') }}">Category</a></li>
-                <li class="breadcrumb-item active">نمایش</li>
+                <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">{{ trans('panel.dashboard.title') }}</a></li>
+                <li class="breadcrumb-item"><a href="{{ route('admin.category.index') }}">{{ trans('panel.category.title') }}</a></li>
+                <li class="breadcrumb-item active">{{ trans('panel.category.show') }}</li>
             </ol>
         </div>
     </div>
@@ -23,12 +23,27 @@
                         <table class="table table-hover">
                             <tbody>
                             <tr>
-                                <td>شناسه</td>
+                                <td>{{ trans('fields.category.id') }}</td>
                                 <td><a href="{{ route('admin.category.edit',$category->id) }}">{{ $category->id }}</a></td>
                             </tr>
 
                             <tr>
-                                <td>تاریخ ایجاد</td>
+                                <td>{{ trans('fields.category.title') }}</td>
+                                <td>{{ $category->title }}</td>
+                            </tr>
+
+                            <tr>
+                                <td>{{ trans('fields.category.icon') }}</td>
+                                <td>{{ $category->icon }}</td>
+                            </tr>
+
+                            <tr>
+                                <td>{{ trans('fields.category.type') }}</td>
+                                <td>{!! \App\Helper\Helper::renderCategoryType($category->type) !!}</td>
+                            </tr>
+
+                            <tr>
+                                <td>{{ trans('fields.category.created_at') }}</td>
                                 <td>{{$category->created_at->toJalali()->format('Y-m-d H:i')}}</td>
                             </tr>
                             </tbody>
