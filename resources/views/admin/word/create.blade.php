@@ -26,13 +26,15 @@
                     <form class="request-form forms-sample" method="post" action="{{ $routeStore }}">
                         @csrf
 
-                        <x-admin.input identify="category_id" :title="trans('fields.word.category_id')" type="text" />
-<x-admin.input identify="description" :title="trans('fields.word.description')" type="text" />
-<x-admin.checkbox identify="status" :description="trans('fields.word.status')"  />
-<x-admin.input identify="translate" :title="trans('fields.word.translate')" type="text" />
-<x-admin.input identify="user_id" :title="trans('fields.word.user_id')" type="text" />
-<x-admin.input identify="word" :title="trans('fields.word.word')" type="text" />
+                        <x-admin.select-model identify="category_id" :title="trans('fields.word.category_id')" type="text" key="id" value="title" :items="$categories" />
 
+                        <x-admin.input identify="word" :title="trans('fields.word.word')" type="text" />
+
+                        <x-admin.input identify="translate" :title="trans('fields.word.translate')" type="text" />
+
+                        <x-admin.input identify="description" :title="trans('fields.word.description')" type="text" />
+
+                        <x-admin.select-enum identify="status" :title="trans('fields.word.status')" :enum-class="\App\Enums\Database\Word\WordStatus::class"  />
 
                         <x-admin.button-submit/>
                     </form>

@@ -60,4 +60,14 @@ return [
         'title' => 'عنوان',
         'translate' => 'ترجمه',
     ],
+    'word' => [
+        'id' => 'شناسه',
+        'word' => 'کلمه',
+        'translate' => 'ترجمه',
+        'description' => 'توضیحات',
+        'category_id' => 'دسته بندی',
+        'user_id' => 'کاربر',
+        'status' => 'وضعیت',
+        'created_at' => 'تاریخ ایجاد',
+    ],
 ];

@@ -24,7 +24,11 @@ class UpdateRequest extends FormRequest
     public function rules()
     {
         return [
-             'title'=>'required'
+            'title' => 'bail|required',
+            'category_id' => 'bail|integer|exists:categories,id',
+            'sentence' => 'required',
+            'translate' => 'required',
+            'status' => 'required',
         ];
     }
 }

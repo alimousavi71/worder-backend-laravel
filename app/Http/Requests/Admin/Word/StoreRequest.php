@@ -24,7 +24,10 @@ class StoreRequest extends FormRequest
     public function rules()
     {
         return [
-            'title'=>'required'
+            'category_id' => 'bail|integer|exists:categories,id',
+            'word' => 'bail|required|unique:words,word',
+            'translate' => 'required',
+            'status' => 'required',
         ];
     }
 }

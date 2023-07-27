@@ -29,6 +29,15 @@ class Helper
         };
     }
 
+    public static function renderWordStatus($status)
+    {
+        return match ($status) {
+            SentenceStatus::Pending => '<span class="badge bg-success">'.trans('panel.word.status.pending').'</span>',
+            SentenceStatus::Publish => '<span class="badge bg-info">'.trans('panel.word.status.publish').'</span>',
+            default => '<span class="badge bg-danger">Not Found</span>',
+        };
+    }
+
     static public function getRouteSmall()
     {
         $routeName = Route::currentRouteName();

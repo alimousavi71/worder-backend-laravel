@@ -53,6 +53,24 @@ return [
             'pending'=>'در انتظار',
         ]
     ],
+    'word'=>[
+        'index'=>'کلمه ها',
+        'title'=>'کلمه ها',
+        'edit'=>'ویرایش کلمه',
+        'create'=>'ایجاد کلمه',
+        'show'=>'نمایش کلمه',
+        'status'=>[
+            'publish'=>'منتشر شده',
+            'pending'=>'در انتظار',
+        ],
+        'analytics'=>[
+            'total_user'=>'تعداد نمایش',
+            'total_repeat'=>'تعداد تکرار',
+            'total_wrong'=>'تعداد پاسخ اشتباه',
+            'total_correct'=>'تعداد پاسخ صحیح',
+            'total_i_know'=>'تعداد میدانستم',
+        ]
+    ],
     'admin'=>[
         'index'=>'مدیران',
         'title'=>'مدیران',

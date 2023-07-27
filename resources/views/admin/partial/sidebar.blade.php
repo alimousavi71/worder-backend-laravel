@@ -72,7 +72,18 @@
                     <ul class="slide-menu">
                         <li><a href="{{ route('admin.sentence.index') }}" class="slide-item">{{ trans('panel.list') }}</a></li>
                         <li><a href="{{ route('admin.sentence.create') }}" class="slide-item">{{ trans('panel.create') }}</a></li>
+                    </ul>
+                </li>
 
+                <li class="slide">
+                    <a class="side-menu__item" data-bs-toggle="slide" href="javascript:void(0)" id="navWord">
+                        <i class="side-menu__icon fe fe-clock"></i>
+                        <span class="side-menu__label">{{ trans('panel.word.index') }}</span><i class="angle fe fe-chevron-right"></i>
+                    </a>
+
+                    <ul class="slide-menu">
+                        <li><a href="{{ route('admin.word.index') }}" class="slide-item">{{ trans('panel.list') }}</a></li>
+                        <li><a href="{{ route('admin.word.create') }}" class="slide-item">{{ trans('panel.create') }}</a></li>
                     </ul>
                 </li>
 

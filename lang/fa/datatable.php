@@ -17,4 +17,6 @@ return [
     'is_public'=>'منتشر شده',
     'is_collaboration'=>'جهت همکاری',
     'status'=>'وضعیت',
+    'category.title'=>'نام دسته بندی',
+    'word'=>'کلمه',
 ];

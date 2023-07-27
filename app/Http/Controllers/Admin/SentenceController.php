@@ -20,7 +20,7 @@ class SentenceController extends Controller
     {
         $title = trans('panel.sentence.index');
         $routeData = route('admin.sentence.data');
-        $selects = ['id','title','status', 'created_at'];
+        $selects = ['id', 'title', 'category.title', 'status', 'created_at'];
         return view('admin.sentence.index', compact('title', 'routeData', 'selects'));
     }
 
@@ -28,7 +28,10 @@ class SentenceController extends Controller
     {
 
         try {
-            $sentences = Sentence::query();
+            $sentences = Sentence::query()
+                ->with('category')
+                ->has('category');
+
             return DataTables::of($sentences)
                 ->editColumn('status', function ($sentence) {
                     return Helper::renderSentenceStatus($sentence->status);
@@ -41,7 +44,7 @@ class SentenceController extends Controller
                     $actions .= Helper::btnMaker(BtnType::Info, route('admin.sentence.show', $sentence->id), trans('panel.action.info'));
                     return $actions;
                 })
-                ->rawColumns(['action','status'])
+                ->rawColumns(['action', 'status'])
                 ->make();
         } catch (Exception $e) {
             return $e->getMessage();
@@ -52,8 +55,8 @@ class SentenceController extends Controller
     {
         $title = trans('panel.sentence.create');
         $routeStore = route('admin.sentence.store');
-        $categories = Category::query()->where('type',CategoryType::Sentence)->get();
-        return view('admin.sentence.create', compact('title', 'routeStore','categories'));
+        $categories = Category::query()->where('type', CategoryType::Sentence)->get();
+        return view('admin.sentence.create', compact('title', 'routeStore', 'categories'));
     }
 
     public function store(StoreRequest $request)
@@ -80,8 +83,8 @@ class SentenceController extends Controller
         $title = trans('panel.sentence.edit');
         $routeUpdate = route('admin.sentence.update', $sentence->id);
         $routeDestroy = route('admin.sentence.destroy', $sentence->id);
-        $categories = Category::query()->where('type',CategoryType::Sentence)->get();
-        return view('admin.sentence.edit', compact('title', 'routeUpdate','routeDestroy', 'sentence','categories'));
+        $categories = Category::query()->where('type', CategoryType::Sentence)->get();
+        return view('admin.sentence.edit', compact('title', 'routeUpdate', 'routeDestroy', 'sentence', 'categories'));
     }
 
     public function update(UpdateRequest $request, Sentence $sentence)

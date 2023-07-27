@@ -24,7 +24,10 @@ class UpdateRequest extends FormRequest
     public function rules()
     {
         return [
-             'title'=>'required'
+            'category_id' => 'bail|integer|exists:categories,id',
+            'word' => 'bail|required|unique:words,word,'.$this->get('id'),
+            'translate' => 'required',
+            'status' => 'required',
         ];
     }
 }

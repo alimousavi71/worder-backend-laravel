@@ -14,7 +14,7 @@ return new class extends Migration
     {
         Schema::create('words', function (Blueprint $table) {
             $table->id();
-            $table->string('word');
+            $table->string('word')->nullable()->index();
             $table->string('translate');
             $table->text('description')->nullable();
             $table->unsignedBigInteger('category_id')->nullable();

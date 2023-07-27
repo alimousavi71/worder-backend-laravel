@@ -28,15 +28,20 @@
                         @csrf
                         @method('PATCH')
 
-                        <x-admin.input identify="category_id" :title="trans('fields.word.category_id')" type="text" />
-<x-admin.input identify="description" :title="trans('fields.word.description')" type="text" />
-<x-admin.checkbox identify="status" :description="trans('fields.word.status')" :old="$word->status" />
-<x-admin.input identify="translate" :title="trans('fields.word.translate')" type="text" />
-<x-admin.input identify="user_id" :title="trans('fields.word.user_id')" type="text" />
-<x-admin.input identify="word" :title="trans('fields.word.word')" type="text" />
+                        <x-admin.input identify="id" :title="trans('fields.word.id')" type="hidden" :old="$word->id" />
 
+                        <x-admin.select-model identify="category_id" :title="trans('fields.word.category_id')" type="text" key="id" value="title" :items="$categories" :old="$word->category_id" />
+
+                        <x-admin.input identify="word" :title="trans('fields.word.word')" type="text" :old="$word->word" />
+
+                        <x-admin.input identify="translate" :title="trans('fields.word.translate')" type="text" :old="$word->translate" />
+
+                        <x-admin.input identify="description" :title="trans('fields.word.description')" type="text" :old="$word->description" />
+
+                        <x-admin.select-enum identify="status" :title="trans('fields.word.status')" :enum-class="\App\Enums\Database\Word\WordStatus::class" :old="$word->status" />
 
                         <x-admin.button-submit title="{{ trans('panel.update') }}"/>
+
                         <x-admin.button-delete/>
 
                     </form>

@@ -22,4 +22,9 @@ class Category extends Model
     {
         return $this->hasMany(Word::class);
     }
+
+    public function sentences(): HasMany
+    {
+        return $this->hasMany(Sentence::class);
+    }
 }

@@ -48,7 +48,7 @@
                             </tr>
 
                             <tr>
-                                <td>تاریخ ایجاد</td>
+                                <td>{{ trans('fields.sentence.created_at') }}</td>
                                 <td>{{$sentence->created_at->toJalali()->format('Y-m-d H:i')}}</td>
                             </tr>
                             </tbody>
