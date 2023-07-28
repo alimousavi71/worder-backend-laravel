@@ -3,6 +3,7 @@
 namespace App\Helper;
 
 use App\Enums\Database\Category\CategoryType;
+use App\Enums\Database\Exam\ExamType;
 use App\Enums\Database\Sentence\SentenceStatus;
 use App\Enums\General\BtnType;
 use Illuminate\Support\Facades\DB;
@@ -16,6 +17,18 @@ class Helper
         return match ($type) {
             CategoryType::Word => '<span class="badge bg-success">'.trans('panel.category.type.word').'</span>',
             CategoryType::Sentence => '<span class="badge bg-info">'.trans('panel.category.type.sentence').'</span>',
+            default => '<span class="badge bg-danger">Not Found</span>',
+        };
+    }
+
+    public static function renderExamType($type)
+    {
+        return match ($type) {
+            ExamType::Random => '<span class="badge bg-success">'.trans('panel.exam.type.random').'</span>',
+            ExamType::HardWord => '<span class="badge bg-success">'.trans('panel.exam.type.hard_word').'</span>',
+            ExamType::MyWord => '<span class="badge bg-success">'.trans('panel.exam.type.my_word').'</span>',
+            ExamType::Speed => '<span class="badge bg-success">'.trans('panel.exam.type.speed').'</span>',
+            ExamType::SpeedAndAccuracy => '<span class="badge bg-success">'.trans('panel.exam.type.speed_and_accuracy').'</span>',
             default => '<span class="badge bg-danger">Not Found</span>',
         };
     }

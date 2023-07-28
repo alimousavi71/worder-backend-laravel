@@ -2,7 +2,6 @@
 @section('title') {{ $title }} @endsection
 @section('content')
 
-    <h3 class="text-center">ورود به پنل ادمین</h3>
     <form action="{{ route('admin.login') }}" method="post" class="forms-sample">
         @csrf
 

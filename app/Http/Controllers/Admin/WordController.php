@@ -21,13 +21,21 @@ class WordController extends Controller
         $title = trans('panel.word.index');
         $routeData = route('admin.word.data');
         $selects = ['id','word','category.title','status', 'created_at'];
+
+        session()->put('word-status',request('status'),null);
+
         return view('admin.word.index', compact('title', 'routeData', 'selects'));
     }
 
     public function data()
     {
         try {
-            $words = Word::query()->with('category')->has('category');
+            $words = Word::query()
+                ->with('category')
+                ->when(is_numeric(session('word-status')),function ($q){
+                    return $q->where('status',session('word-status'));
+                })
+                ->has('category');
             return DataTables::of($words)
                 ->editColumn('status', function ($sentence) {
                     return Helper::renderWordStatus($sentence->status);

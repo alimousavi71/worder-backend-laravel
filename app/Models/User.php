@@ -69,4 +69,9 @@ class User extends Authenticatable
         return $this->morphMany(Login::class, 'user')
             ->latest();
     }
+
+    public function exams()
+    {
+        return $this->hasMany(Exam::class);
+    }
 }

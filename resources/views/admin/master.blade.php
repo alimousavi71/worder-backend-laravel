@@ -4,24 +4,41 @@
     <meta charset="UTF-8">
     <meta name='viewport' content='width=device-width, initial-scale=1.0, user-scalable=0'>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="description" content="DevMeet Platform">
+    <meta name="description" content="Worder Platform">
     <meta name="author" content="Ali Mousavi">
     <meta name="keywords" content="Worder Platform">
+    <meta name="robots" content="noindex">
+    <meta name="robots" content="nofollow">
 
     @include('favicon')
 
     <title>@yield('title','Worder')</title>
 
-    <link id="style" href="{{ asset('res-admin/assets/plugins/bootstrap/css/bootstrap.rtl.purged.css') }}" rel="stylesheet" />
+    @if(app()->isLocal())
+        <link id="style" href="{{ asset('res-admin/assets/plugins/bootstrap/css/bootstrap.rtl.purged.css') }}" rel="stylesheet" />
+    @else
+        <link id="style" href="{{ asset('res-admin/assets/plugins/bootstrap/css/bootstrap.rtl.min.css') }}" rel="stylesheet" />
+    @endif
 
     <link href="{{ asset('res-admin/assets/css/dark-style.css') }}" rel="stylesheet" />
 
-    <link href="{{ asset('res-admin/assets/font-awesome/css/fontawesome.purged.css') }}" rel="stylesheet" />
+    @if(app()->isLocal())
+        <link href="{{ asset('res-admin/assets/font-awesome/css/fontawesome.min.css') }}" rel="stylesheet" />
+    @else
+        <link href="{{ asset('res-admin/assets/font-awesome/css/fontawesome.purged.css') }}" rel="stylesheet" />
+    @endif
+
     <link href="{{ asset('res-admin/assets/font-awesome/css/light.css') }}" rel="stylesheet" />
 
     <link id="theme" rel="stylesheet" type="text/css" media="all" href="{{ asset('res-admin/assets/colors/color1.css') }}" />
 
-    <link href="{{ asset('res-admin/assets/css/style.purged.css') }}" rel="stylesheet" />
+    @if(app()->isLocal())
+        <link href="{{ asset('res-admin/assets/css/style.css') }}" rel="stylesheet" />
+    @else
+        <link href="{{ asset('res-admin/assets/css/style.purged.css') }}" rel="stylesheet" />
+    @endif
+
+
     @yield('head')
 
     <link id="theme" rel="stylesheet" type="text/css" media="all" href="{{ asset('res-admin/assets/css/my-style.css') }}" />
@@ -46,7 +63,7 @@
                     </a>
                     <a class="logo-horizontal " href="{{ route('admin.dashboard') }}">
                         <img src="{{ asset('res-admin/assets/images/brand/logo.png') }}" class="header-brand-img desktop-logo" alt="logo">
-                        <img src="{{ asset('res-admin/assets/images/brand/logo-3.png') }}" class="header-brand-img light-logo1" alt="logo">
+                        <img src="{{ asset('res-admin/assets/images/brand/logo-dark.png') }}" class="header-brand-img light-logo1" alt="logo">
                     </a>
 
                     <div class="d-flex order-lg-2 ms-auto header-right-icons">

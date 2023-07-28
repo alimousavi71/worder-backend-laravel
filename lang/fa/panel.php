@@ -24,6 +24,11 @@ return [
     'dashboard'=>[
       'title'=>'داشبورد',
       'main'=>'ماژول ها',
+      'total_user'=>'تعداد کل کاربران',
+      'total_word'=>'تعداد کل کلمات',
+      'total_contact'=>'تعداد تماس ها',
+      'total_queue_word'=>'کلمات در انتظار',
+      'show_link'=>'نمایش',
     ],
     'action'=>[
         'edit'=>'ویرایش',
@@ -41,6 +46,23 @@ return [
         'type'=>[
             'word'=>'کلمه',
             'sentence'=>'جمله'
+        ]
+    ],
+    'exam'=>[
+        'index'=>'آزمون ها',
+        'title'=>'آزمون ها',
+        'show'=>'نمایش آزمون',
+        'type'=>[
+            'random'=>'تصادفی',
+            'hard_word'=>'کلمات سخت',
+            'my_word'=>'کلمات خودم',
+            'speed'=>'سرعتی',
+            'speed_and_accuracy'=>'سرعت و دقت',
+        ],
+        'analytics'=>[
+            'total_correct'=>'تعداد پاسخ صحیح',
+            'total_wrong'=>'تعداد پاسخ غلط',
+            'total_word'=>'تعداد کلمات',
         ]
     ],
     'sentence'=>[
@@ -93,6 +115,7 @@ return [
     ],
     'user'=>[
         'index'=>'کاربران',
+        'new_users'=>'کاربران جدید',
         'title'=>'کاربران',
         'show'=>'نمایش کاربر',
         'edit'=>'ویرایش کاربر',

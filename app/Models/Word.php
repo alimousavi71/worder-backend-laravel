@@ -34,4 +34,10 @@ class Word extends Model
         return $this->belongsToMany(User::class, 'user_word', 'word_id')
             ->withPivot(['is_knew', 'correct_answer', 'wrong_answer', 'repeat']);
     }
+
+    public function exams()
+    {
+        return $this->belongsToMany(Exam::class, 'word_exams', 'exam_id')
+            ->withPivot(['answer']);
+    }
 }

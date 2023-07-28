@@ -140,4 +140,11 @@ Route::group(['middleware' => ['admin.auth'/*,'acl'*/], 'guard' => 'admin'], fun
         Route::get('/contact/show/{contact}', 'show')->name('contact.show');
         Route::delete('/contact/destroy/{contact}', 'destroy')->name('contact.destroy');
     });
+
+    Route::controller(ExamController::class)->group(function () {
+        Route::get('/exam', 'index')->name('exam.index');
+        Route::get('/exam/data', 'data')->name('exam.data');
+        Route::get('/exam/show/{exam}', 'show')->name('exam.show');
+        Route::delete('/exam/destroy/{exam}', 'destroy')->name('exam.destroy');
+    });
 });

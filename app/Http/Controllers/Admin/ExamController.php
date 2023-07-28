@@ -16,105 +16,67 @@ class ExamController extends Controller
 {
     public function index()
     {
-        $title = 'Worder - Exam - List';
+        $title = trans('panel.exam.index');
         $routeData = route('admin.exam.data');
-        $selects = ['id', 'created_at'];
+        $selects = ['id','title','user.email','type','grade', 'created_at'];
         return view('admin.exam.index', compact('title', 'routeData', 'selects'));
     }
 
     public function data()
     {
-
         try {
-            $exams = Exam::query();
+            $exams = Exam::query()
+                ->with('user')
+                ->has('user');
+
             return DataTables::of($exams)
+                ->editColumn('type', function ($exam) {
+                    return Helper::renderExamType($exam->type) ;
+                })
                 ->editColumn('created_at', function ($exam) {
                     return $exam->created_at->toJalali()->format('h:i Y-m-d');
                 })
                 ->addColumn('action', function ($exam) {
-                    $actions = Helper::btnMaker(BtnType::Warning, route('admin.exam.edit', $exam->id), 'ویرایش');
-                    $actions .= Helper::btnMaker(BtnType::Info, route('admin.exam.show', $exam->id), 'اطلاعات');
-                    return $actions;
+                    return Helper::btnMaker(BtnType::Info, route('admin.exam.show', $exam->id), trans('panel.action.info'));
                 })
+                ->rawColumns(['action','type'])
                 ->make();
         } catch (Exception $e) {
             return $e->getMessage();
         }
     }
 
-    public function create()
-    {
-        $title = 'Worder - Exam - Create';
-        $routeStore = route('admin.exam.store');
-        return view('admin.exam.create', compact('title', 'routeStore'));
-    }
-
-    public function store(StoreRequest $request)
-    {
-        try {
-            $exam = new Exam();
-            $this->setData($request, $exam);
-            $exam->save();
-            return response()->json([
-                'result' => 'success',
-                'message' => 'با موفقیت ایجاد شد.'
-            ]);
-        } catch (Exception $exception) {
-            return response()->json([
-                'result' => 'exception',
-                'message' => $exception->getMessage()
-            ], 500);
-        }
-    }
-
-    public function edit(Exam $exam)
-    {
-        $title = 'Worder - Exam - Edit';
-        $routeUpdate = route('admin.exam.update', $exam->id);
-        $routeDestroy = route('admin.exam.destroy', $exam->id);
-        return view('admin.exam.edit', compact('title', 'routeUpdate','routeDestroy', 'exam'));
-    }
 
     public function show(Exam $exam)
     {
-        $title = 'Worder - Exam - Show';
-        return view('admin.exam.show', compact('title', 'exam'));
-    }
+        $title = trans('panel.exam.show');
 
-    public function update(UpdateRequest $request, Exam $exam)
-    {
-        try {
-            $this->setData($request, $exam);
+        $totalUse = 0;
+        $totalRepeat = 0;
+        $totalWrong = 0;
+        $totalCorrect = 0;
+        $totalIKnow = 0;
 
-            $exam->update();
-            return response()->json([
-                'result' => 'success',
-                'message' => 'با موفقیت به روز رسانی شد.'
-            ]);
-        } catch (Exception $exception) {
-            return response()->json([
-                'result' => 'exception',
-                'message' => $exception->getMessage()
-            ], 500);
+        $exam->load(['words','user']);
+
+        if ($exam->words->isNotEmpty()){
+            $usages = $exam->words;
+            $totalUse = $usages->count();
+            $totalWrong = $usages->where('pivot.answer',false)->count();
+            $totalCorrect =$usages->where('pivot.answer',true)->count();
         }
+
+        return view('admin.exam.show', compact('title', 'exam','totalUse','totalRepeat','totalWrong','totalCorrect','totalIKnow'));
     }
 
     public function destroy(Exam $exam)
     {
         try {
             $exam->delete();
-            return redirect(route('admin.exam.index'))->with('success', 'با موفقیت حذف شد.');
+            return redirect(route('admin.exam.index'))->with('success', trans('panel.success_delete'));
         } catch (Exception $e) {
-            return redirect(route('admin.exam.index'))->with('danger', 'خطایی در سرور به وجود امده است لطفا بعدا تلاش کنید!');
+            report($e);
+            return redirect(route('admin.exam.index'))->with('danger', trans('panel.error_delete'));
         }
-    }
-
-    /**
-     * @param Request $request
-     * @param Exam $exam
-     */
-    protected function setData(Request $request, Exam $exam): void
-    {
-        $exam->title = $request->get('title');
     }
 }

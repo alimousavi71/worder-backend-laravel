@@ -24,12 +24,12 @@
                             <h2 class="mb-0 number-font">{{ number_format($totalUse) }}</h2>
                             <p class="text-white mb-0">{{ trans('panel.word.analytics.total_user') }}</p>
                         </div>
-                        <div class="ms-auto"> <i class="fa fa-user-o text-white fs-30 me-2 mt-2"></i> </div>
+                        <div class="ms-auto"> <i class="fal fa-eye text-white fs-30 me-2 mt-2"></i> </div>
                     </div>
                 </div>
             </div>
         </div>
-        <!-- COL END -->
+
         <div class="col-sm-6 col-md-6 col-lg-6 col-xl-3">
             <div class="card bg-secondary img-card box-secondary-shadow">
                 <div class="card-body">
@@ -38,12 +38,12 @@
                             <h2 class="mb-0 number-font">{{ number_format($totalRepeat) }}</h2>
                             <p class="text-white mb-0">{{ trans('panel.word.analytics.total_repeat') }}</p>
                         </div>
-                        <div class="ms-auto"> <i class="fa fa-repeat text-white fs-30 me-2 mt-2"></i> </div>
+                        <div class="ms-auto"> <i class="fal fa-repeat text-white fs-30 me-2 mt-2"></i> </div>
                     </div>
                 </div>
             </div>
         </div>
-        <!-- COL END -->
+
         <div class="col-sm-6 col-md-6 col-lg-6 col-xl-3">
             <div class="card  bg-danger img-card box-danger-shadow">
                 <div class="card-body">
@@ -52,12 +52,12 @@
                             <h2 class="mb-0 number-font">{{ number_format($totalWrong) }}</h2>
                             <p class="text-white mb-0">{{ trans('panel.word.analytics.total_wrong') }}</p>
                         </div>
-                        <div class="ms-auto"> <i class="fa fa-close text-white fs-30 me-2 mt-2"></i> </div>
+                        <div class="ms-auto"> <i class="fal fa-close text-white fs-30 me-2 mt-2"></i> </div>
                     </div>
                 </div>
             </div>
         </div>
-        <!-- COL END -->
+
         <div class="col-sm-6 col-md-6 col-lg-6 col-xl-3">
             <div class="card bg-success img-card box-success-shadow">
                 <div class="card-body">
@@ -66,14 +66,12 @@
                             <h2 class="mb-0 number-font">{{ number_format($totalCorrect) }}</h2>
                             <p class="text-white mb-0">{{ trans('panel.word.analytics.total_correct') }}</p>
                         </div>
-                        <div class="ms-auto"> <i class="fa fa-check-circle text-white fs-30 me-2 mt-2"></i> </div>
+                        <div class="ms-auto"> <i class="fal fa-check-circle text-white fs-30 me-2 mt-2"></i> </div>
                     </div>
                 </div>
             </div>
         </div>
-        <!-- COL END -->
 
-        <!-- COL END -->
         <div class="col-sm-6 col-md-6 col-lg-6 col-xl-3">
             <div class="card bg-success img-card box-success-shadow">
                 <div class="card-body">
@@ -82,12 +80,11 @@
                             <h2 class="mb-0 number-font">{{ number_format($totalIKnow) }}</h2>
                             <p class="text-white mb-0">{{ trans('panel.word.analytics.total_i_know') }}</p>
                         </div>
-                        <div class="ms-auto"> <i class="fa fa-hand-o-up text-white fs-30 me-2 mt-2"></i> </div>
+                        <div class="ms-auto"> <i class="fal fa-brain text-white fs-30 me-2 mt-2"></i> </div>
                     </div>
                 </div>
             </div>
         </div>
-        <!-- COL END -->
     </div>
 
     <div class="row">

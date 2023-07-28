@@ -22,4 +22,5 @@ return [
     'word'=>'کلمه',
     'firstname'=>'نام',
     'lastname'=>'نام خانوادگی',
+    'grade'=>'نمره',
 ];

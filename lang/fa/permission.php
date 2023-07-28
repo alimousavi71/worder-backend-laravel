@@ -15,8 +15,6 @@ return [
 	'contact_show'=>'Contact Show',
 	'contact_destroy'=>'Contact Destroy',
 	'exam_index'=>'Exam Index',
-	'exam_create'=>'Exam Create',
-	'exam_edit'=>'Exam Edit',
 	'exam_show'=>'Exam Show',
 	'exam_destroy'=>'Exam Destroy',
 	'home_index'=>'Home Index',
