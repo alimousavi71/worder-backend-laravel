@@ -16,7 +16,7 @@ class ProfileController extends Controller
 {
     public function index()
     {
-        $title = 'کدبرگر | ویرایش پروفایل';
+        $title = trans('panel.profile.edit');
         $routeUpdate = route('admin.profile.update');
         $admin = Admin::find(auth()->id());
         return view('admin.profile.edit', compact('title','admin', 'routeUpdate'));

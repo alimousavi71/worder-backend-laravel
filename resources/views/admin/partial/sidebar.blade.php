@@ -4,6 +4,7 @@
         <div class="side-header">
             <a class="header-brand1" href="{{ route('admin.dashboard') }}">
                 <img src="{{ asset('res-admin/assets/images/brand/logo.png') }}" class="header-brand-img desktop-logo" alt="logo">
+                <img src="{{ asset('res-admin/assets/images/brand/logo-toggle.png') }}" class="header-brand-img toggle-logo" alt="logo">
             </a>
         </div>
         <div class="main-sidemenu">
@@ -13,12 +14,12 @@
 
             <ul class="side-menu">
                 <li class="sub-category">
-                    <h3>ماژول های اصلی</h3>
+                    <h3>{{ trans('panel.dashboard.main') }}</h3>
                 </li>
                 <li class="slide">
                     <a class="side-menu__item" data-bs-toggle="slide" href="{{ route('admin.dashboard') }}">
-                        <i class="side-menu__icon fe fe-home"></i>
-                        <span class="side-menu__label">داشبورد</span>
+                        <i class="side-menu__icon fal fa-chart-bar"></i>
+                        <span class="side-menu__label">{{ trans('panel.dashboard.title') }}</span>
                     </a>
                 </li>
                 <li class="sub-category">
@@ -27,8 +28,8 @@
 
                 <li class="slide">
                     <a class="side-menu__item" data-bs-toggle="slide" href="javascript:void(0)" id="navAdmin">
-                        <i class="side-menu__icon fe fe-user"></i>
-                        <span class="side-menu__label">{{ trans('panel.admin.index') }}</span><i class="angle fe fe-chevron-right"></i>
+                        <i class="side-menu__icon fal fa-user"></i>
+                        <span class="side-menu__label">{{ trans('panel.admin.index') }}</span><i class="angle fal fa-angle-left"></i>
                     </a>
 
                     <ul class="slide-menu">
@@ -39,8 +40,8 @@
 
                 <li class="slide">
                     <a class="side-menu__item" data-bs-toggle="slide" href="javascript:void(0)" id="navRole">
-                        <i class="side-menu__icon fe fe-lock"></i>
-                        <span class="side-menu__label">{{ trans('panel.role.index') }}</span><i class="angle fe fe-chevron-right"></i>
+                        <i class="side-menu__icon fal fa-lock"></i>
+                        <span class="side-menu__label">{{ trans('panel.role.index') }}</span><i class="angle fal fa-angle-left"></i>
                     </a>
 
                     <ul class="slide-menu">
@@ -51,9 +52,20 @@
                 </li>
 
                 <li class="slide">
+                    <a class="side-menu__item" data-bs-toggle="slide" href="javascript:void(0)" id="navUser">
+                        <i class="side-menu__icon fal fa-user"></i>
+                        <span class="side-menu__label">{{ trans('panel.user.index') }}</span><i class="angle fal fa-angle-left"></i>
+                    </a>
+
+                    <ul class="slide-menu">
+                        <li><a href="{{ route('admin.user.index') }}" class="slide-item">{{ trans('panel.list') }}</a></li>
+                    </ul>
+                </li>
+
+                <li class="slide">
                     <a class="side-menu__item" data-bs-toggle="slide" href="javascript:void(0)" id="navCategory">
-                        <i class="side-menu__icon fe fe-list"></i>
-                        <span class="side-menu__label">{{ trans('panel.category.index') }}</span><i class="angle fe fe-chevron-right"></i>
+                        <i class="side-menu__icon fal fa-list"></i>
+                        <span class="side-menu__label">{{ trans('panel.category.index') }}</span><i class="angle fal fa-angle-left"></i>
                     </a>
 
                     <ul class="slide-menu">
@@ -62,11 +74,10 @@
                     </ul>
                 </li>
 
-
                 <li class="slide">
                     <a class="side-menu__item" data-bs-toggle="slide" href="javascript:void(0)" id="navSentence">
-                        <i class="side-menu__icon fa fa-language"></i>
-                        <span class="side-menu__label">{{ trans('panel.sentence.index') }}</span><i class="angle fe fe-chevron-right"></i>
+                        <i class="side-menu__icon fal fa-language"></i>
+                        <span class="side-menu__label">{{ trans('panel.sentence.index') }}</span><i class="angle fal fa-angle-left"></i>
                     </a>
 
                     <ul class="slide-menu">
@@ -77,8 +88,8 @@
 
                 <li class="slide">
                     <a class="side-menu__item" data-bs-toggle="slide" href="javascript:void(0)" id="navWord">
-                        <i class="side-menu__icon fa fa-language"></i>
-                        <span class="side-menu__label">{{ trans('panel.word.index') }}</span><i class="angle fe fe-chevron-right"></i>
+                        <i class="side-menu__icon fal fa-language"></i>
+                        <span class="side-menu__label">{{ trans('panel.word.index') }}</span><i class="angle fal fa-angle-left"></i>
                     </a>
 
                     <ul class="slide-menu">
@@ -90,8 +101,8 @@
 
                 <li class="slide">
                     <a class="side-menu__item" data-bs-toggle="slide" href="javascript:void(0)" id="navContact">
-                        <i class="side-menu__icon fe fe-phone"></i>
-                        <span class="side-menu__label">{{ trans('panel.contact.index') }}</span><i class="angle fe fe-chevron-right"></i>
+                        <i class="side-menu__icon fal fa-phone"></i>
+                        <span class="side-menu__label">{{ trans('panel.contact.index') }}</span><i class="angle fal fa-angle-left"></i>
                     </a>
 
                     <ul class="slide-menu">
@@ -101,8 +112,8 @@
 
                 <li class="slide">
                     <a class="side-menu__item" data-bs-toggle="slide" href="javascript:void(0)" id="navProfile">
-                        <i class="side-menu__icon fe fe-user-check"></i>
-                        <span class="side-menu__label">{{ trans('panel.profile.index') }}</span><i class="angle fe fe-chevron-right"></i>
+                        <i class="side-menu__icon fal fa-user-edit"></i>
+                        <span class="side-menu__label">{{ trans('panel.profile.index') }}</span><i class="angle fal fa-angle-left"></i>
                     </a>
 
                     <ul class="slide-menu">

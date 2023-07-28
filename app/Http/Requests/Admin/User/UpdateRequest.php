@@ -24,7 +24,9 @@ class UpdateRequest extends FormRequest
     public function rules()
     {
         return [
-             'title'=>'required'
+            'firstname' => 'required',
+            'lastname' => 'required',
+            'avatar' => 'nullable|mimes:png,jpg,jpeg|max:2000',
         ];
     }
 }

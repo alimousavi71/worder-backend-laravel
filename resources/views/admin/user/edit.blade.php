@@ -9,12 +9,12 @@
 @section('content')
 
     <div class="page-header">
-        <h1 class="page-title">User</h1>
+        <h1 class="page-title">{{ trans('panel.user.title') }}</h1>
         <div>
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">داشبورد</a></li>
-                <li class="breadcrumb-item"><a href="{{ route('admin.user.index') }}">User</a></li>
-                <li class="breadcrumb-item active">ویرایش</li>
+                <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">{{ trans('panel.dashboard.title') }}</a></li>
+                <li class="breadcrumb-item"><a href="{{ route('admin.user.index') }}">{{ trans('panel.user.title') }}</a></li>
+                <li class="breadcrumb-item active">{{ trans('panel.user.edit') }}</li>
             </ol>
         </div>
     </div>
@@ -24,21 +24,26 @@
             <div class="card">
                 <div class="card-body pb-3">
                     @include('admin.partial.message')
-                    <form class="request-form forms-sample" method="post" action="{{ $routeUpdate }}">
+                    <form class="request-form forms-sample" enctype="multipart/form-data" method="post" action="{{ $routeUpdate }}">
                         @csrf
                         @method('PATCH')
 
-                        <x-admin.input identify="avatar" title="avatar" type="text" placeholder="Enter avatar" :old="$user->avatar"/>
-<x-admin.input identify="deleted_at" title="deleted_at" type="text" placeholder="Enter deleted_at" :old="$user->deleted_at"/>
-<x-admin.input identify="email" title="email" type="text" placeholder="Enter email" :old="$user->email"/>
-<x-admin.input identify="email_verified_at" title="email_verified_at" type="text" placeholder="Enter email_verified_at" :old="$user->email_verified_at"/>
-<x-admin.input identify="firstname" title="firstname" type="text" placeholder="Enter firstname" :old="$user->firstname"/>
-<x-admin.input identify="lastname" title="lastname" type="text" placeholder="Enter lastname" :old="$user->lastname"/>
-<x-admin.input identify="password" title="password" type="text" placeholder="Enter password" :old="$user->password"/>
-<x-admin.input identify="remember_token" title="remember_token" type="text" placeholder="Enter remember_token" :old="$user->remember_token"/>
+                        @if($user->avatar)
+                            <img class="admin-avatar" src="{{ asset($user->avatar) }}" alt="{{ $user->first_name }} {{ $user->last_name }}">
+                        @endif
 
+                        <x-admin.input identify="avatar" :title="trans('fields.user.avatar')" type="file" />
 
-                        <x-admin.button-submit title="ویرایش"/>
+                        <x-admin.input identify="email" :title="trans('fields.user.email')" type="text" readonly disabled :old="$user->email" />
+
+                        <x-admin.input identify="firstname" :title="trans('fields.user.firstname')" type="text" :old="$user->firstname"/>
+
+                        <x-admin.input identify="lastname" :title="trans('fields.user.lastname')" type="text" :old="$user->lastname"/>
+
+                        <x-admin.input identify="password" :title="trans('fields.user.password')" type="text" />
+
+                        <x-admin.button-submit title="{{ trans('panel.update') }}"/>
+
                         <x-admin.button-delete/>
 
                     </form>
@@ -59,7 +64,7 @@
     ]])
     <script>
         $(document).ready(function () {
-
+            $('#password').val('');
         })
     </script>
 @endsection

@@ -10,17 +10,18 @@
 
     @include('favicon')
 
-    <title>@yield('title','Word Memory')</title>
+    <title>@yield('title','Worder')</title>
 
-    <link id="style" href="{{ asset('res-admin/assets/plugins/bootstrap/css/bootstrap.rtl.min.css') }}" rel="stylesheet" />
+    <link id="style" href="{{ asset('res-admin/assets/plugins/bootstrap/css/bootstrap.rtl.purged.css') }}" rel="stylesheet" />
 
-    <link href="{{ asset('res-admin/assets/css/style.css') }}" rel="stylesheet" />
     <link href="{{ asset('res-admin/assets/css/dark-style.css') }}" rel="stylesheet" />
 
-    <link href="{{ asset('res-admin/assets/css/icons.css') }}" rel="stylesheet" />
+    <link href="{{ asset('res-admin/assets/font-awesome/css/fontawesome.purged.css') }}" rel="stylesheet" />
+    <link href="{{ asset('res-admin/assets/font-awesome/css/light.css') }}" rel="stylesheet" />
 
     <link id="theme" rel="stylesheet" type="text/css" media="all" href="{{ asset('res-admin/assets/colors/color1.css') }}" />
 
+    <link href="{{ asset('res-admin/assets/css/style.purged.css') }}" rel="stylesheet" />
     @yield('head')
 
     <link id="theme" rel="stylesheet" type="text/css" media="all" href="{{ asset('res-admin/assets/css/my-style.css') }}" />
@@ -40,7 +41,9 @@
         <div class="app-header header sticky">
             <div class="container-fluid main-container">
                 <div class="d-flex">
-                    <a aria-label="Hide Sidebar" class="app-sidebar__toggle" data-bs-toggle="sidebar" href="javascript:void(0)"></a>
+                    <a aria-label="Hide Sidebar" class="app-sidebar__toggle" data-bs-toggle="sidebar" href="javascript:void(0)">
+                        <i class="fal fa-navicon"></i>
+                    </a>
                     <a class="logo-horizontal " href="{{ route('admin.dashboard') }}">
                         <img src="{{ asset('res-admin/assets/images/brand/logo.png') }}" class="header-brand-img desktop-logo" alt="logo">
                         <img src="{{ asset('res-admin/assets/images/brand/logo-3.png') }}" class="header-brand-img light-logo1" alt="logo">
@@ -49,7 +52,7 @@
                     <div class="d-flex order-lg-2 ms-auto header-right-icons">
                         <div class="dropdown d-none">
                             <a href="javascript:void(0)" class="nav-link icon" data-bs-toggle="dropdown">
-                                <i class="fe fe-search"></i>
+                                <i class="fal fa-search"></i>
                             </a>
                         </div>
                         <button class="navbar-toggler navresponsive-toggler d-lg-none ms-auto" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent-4" aria-controls="navbarSupportedContent-4" aria-expanded="false" aria-label="Toggle navigation">
@@ -61,8 +64,8 @@
 
                                     <div class="dropdown  d-flex">
                                         <a class="nav-link icon theme-layout nav-link-bg layout-setting">
-                                            <span style="margin-top: 10px" class="dark-layout"><i class="fe fe-moon"></i></span>
-                                            <span style="margin-top: 10px" class="light-layout"><i class="fe fe-sun"></i></span>
+                                            <span style="margin-top: 10px" class="dark-layout"><i class="fal fa-moon"></i></span>
+                                            <span style="margin-top: 10px" class="light-layout"><i class="fal fa-sun"></i></span>
                                         </a>
                                     </div>
 

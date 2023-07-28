@@ -106,8 +106,6 @@ Route::group(['middleware' => ['admin.auth'/*,'acl'*/], 'guard' => 'admin'], fun
     Route::controller(UserController::class)->group(function () {
         Route::get('/user', 'index')->name('user.index');
         Route::get('/user/data', 'data')->name('user.data');
-        Route::get('/user/create', 'create')->name('user.create');
-        Route::post('/user/store', 'store')->name('user.store');
         Route::get('/user/edit/{user}', 'edit')->name('user.edit');
         Route::get('/user/show/{user}', 'show')->name('user.show');
         Route::patch('/user/update/{user}', 'update')->name('user.update');

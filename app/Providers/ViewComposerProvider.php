@@ -24,6 +24,6 @@ class ViewComposerProvider extends ServiceProvider
      */
     public function boot()
     {
-        view()->composer(['admin.user.create','admin.user.edit'],UserComposer::class);
+        //view()->composer(['admin.user.create','admin.user.edit'],UserComposer::class);
     }
 }

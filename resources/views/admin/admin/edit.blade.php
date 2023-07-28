@@ -47,6 +47,7 @@
                         <x-admin.checkbox identify="has_access" :description="trans('fields.admin.has_access')" :old="$admin->has_access" />
 
                         <x-admin.button-submit title="{{ trans('panel.update') }}"/>
+
                         <x-admin.button-delete/>
 
                     </form>

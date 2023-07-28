@@ -153,8 +153,6 @@ class AdminController extends Controller
                 ->field('avatar')
                 ->upload();
 
-            dd($provider['photo']);
-
             $item['avatar'] = $provider['photo'];
         }
 

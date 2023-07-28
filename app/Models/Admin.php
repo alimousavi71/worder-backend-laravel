@@ -63,6 +63,4 @@ class Admin extends Authenticatable
     {
         return $this->morphMany(Login::class, 'user');
     }
-
-
 }
