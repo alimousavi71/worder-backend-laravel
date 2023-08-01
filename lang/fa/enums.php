@@ -22,5 +22,5 @@ return [
         MeetConnectionWay::Telegram => 'تلگرام',
         MeetConnectionWay::Email => 'ایمیل',
         MeetConnectionWay::Call => 'شماره',
-    ]
+    ],
 ];

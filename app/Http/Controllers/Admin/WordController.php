@@ -20,9 +20,9 @@ class WordController extends Controller
     {
         $title = trans('panel.word.index');
         $routeData = route('admin.word.data');
-        $selects = ['id','word','category.title','status', 'created_at'];
+        $selects = ['id', 'word', 'category.title', 'status', 'created_at'];
 
-        session()->put('word-status',request('status'),null);
+        session()->put('word-status', request('status'), null);
 
         return view('admin.word.index', compact('title', 'routeData', 'selects'));
     }
@@ -32,10 +32,11 @@ class WordController extends Controller
         try {
             $words = Word::query()
                 ->with('category')
-                ->when(is_numeric(session('word-status')),function ($q){
-                    return $q->where('status',session('word-status'));
+                ->when(is_numeric(session('word-status')), function ($q) {
+                    return $q->where('status', session('word-status'));
                 })
                 ->has('category');
+
             return DataTables::of($words)
                 ->editColumn('status', function ($sentence) {
                     return Helper::renderWordStatus($sentence->status);
@@ -46,9 +47,10 @@ class WordController extends Controller
                 ->addColumn('action', function ($word) {
                     $actions = Helper::btnMaker(BtnType::Warning, route('admin.word.edit', $word->id), trans('panel.action.edit'));
                     $actions .= Helper::btnMaker(BtnType::Info, route('admin.word.show', $word->id), trans('panel.action.info'));
+
                     return $actions;
                 })
-                ->rawColumns(['action','status'])
+                ->rawColumns(['action', 'status'])
                 ->make();
         } catch (Exception $e) {
             return $e->getMessage();
@@ -60,7 +62,8 @@ class WordController extends Controller
         $title = trans('panel.word.create');
         $routeStore = route('admin.word.store');
         $categories = Category::query()->where('type', CategoryType::Word)->get();
-        return view('admin.word.create', compact('title', 'routeStore','categories'));
+
+        return view('admin.word.create', compact('title', 'routeStore', 'categories'));
     }
 
     public function store(StoreRequest $request)
@@ -71,13 +74,14 @@ class WordController extends Controller
 
             return response()->json([
                 'result' => 'success',
-                'message' => trans('panel.success_store')
+                'message' => trans('panel.success_store'),
             ]);
         } catch (Exception $e) {
             report($e);
+
             return response()->json([
                 'result' => 'exception',
-                'message' => trans('panel.error_store')
+                'message' => trans('panel.error_store'),
             ], 500);
         }
     }
@@ -88,7 +92,8 @@ class WordController extends Controller
         $routeUpdate = route('admin.word.update', $word->id);
         $routeDestroy = route('admin.word.destroy', $word->id);
         $categories = Category::query()->where('type', CategoryType::Word)->get();
-        return view('admin.word.edit', compact('title', 'routeUpdate','routeDestroy', 'word','categories'));
+
+        return view('admin.word.edit', compact('title', 'routeUpdate', 'routeDestroy', 'word', 'categories'));
     }
 
     public function update(UpdateRequest $request, Word $word)
@@ -99,13 +104,14 @@ class WordController extends Controller
 
             return response()->json([
                 'result' => 'success',
-                'message' => trans('panel.success_update')
+                'message' => trans('panel.success_update'),
             ]);
         } catch (Exception $e) {
             report($e);
+
             return response()->json([
                 'result' => 'exception',
-                'message' => trans('panel.error_update')
+                'message' => trans('panel.error_update'),
             ], 500);
         }
     }
@@ -119,36 +125,33 @@ class WordController extends Controller
         $totalCorrect = 0;
         $totalIKnow = 0;
 
-        $word->load(['users','user']);
+        $word->load(['users', 'user']);
 
-        if ($word->users->isNotEmpty()){
+        if ($word->users->isNotEmpty()) {
             $usages = $word->users;
             $totalUse = $usages->count();
             $totalRepeat = $usages->sum('pivot.repeat');
             $totalWrong = $usages->sum('pivot.wrong_answer');
             $totalCorrect = $usages->sum('pivot.correct_answer');
-            $totalIKnow = $usages->where('pivot.is_knew',true)->count();
+            $totalIKnow = $usages->where('pivot.is_knew', true)->count();
         }
 
-        return view('admin.word.show', compact('title', 'word','totalUse','totalRepeat','totalWrong','totalCorrect','totalIKnow'));
+        return view('admin.word.show', compact('title', 'word', 'totalUse', 'totalRepeat', 'totalWrong', 'totalCorrect', 'totalIKnow'));
     }
 
     public function destroy(Word $word)
     {
         try {
             $word->delete();
+
             return redirect(route('admin.word.index'))->with('success', trans('panel.success_delete'));
         } catch (Exception $e) {
             report($e);
+
             return redirect(route('admin.word.index'))->with('danger', trans('panel.error_delete'));
         }
     }
 
-    /**
-     * @param Request $request
-     * @param bool $editMode
-     * @return array
-     */
     protected function itemProvider(Request $request, bool $editMode = false): array
     {
         $item['category_id'] = $request->get('category_id');
@@ -156,6 +159,7 @@ class WordController extends Controller
         $item['translate'] = $request->get('translate');
         $item['description'] = $request->get('description');
         $item['status'] = $request->get('status');
+
         return $item;
     }
 }

@@ -15,11 +15,17 @@ use BenSampo\Enum\Enum;
  */
 final class StyleLoader extends Enum
 {
-    const DataTable =   1;
-    const Toast =   2;
-    const MultiSelect =   3;
-    const Alert =   4;
-    const Select2 =   5;
+    const DataTable = 1;
+
+    const Toast = 2;
+
+    const MultiSelect = 3;
+
+    const Alert = 4;
+
+    const Select2 = 5;
+
     const Quill = 6;
+
     const Datepicker = 7;
 }

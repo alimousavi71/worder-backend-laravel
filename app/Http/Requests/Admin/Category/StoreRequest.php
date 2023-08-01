@@ -24,7 +24,7 @@ class StoreRequest extends FormRequest
     public function rules()
     {
         return [
-            'title'=>'bail|required|alpha|unique:categories,title'
+            'title' => 'bail|required|alpha|unique:categories,title',
         ];
     }
 }

@@ -10,11 +10,17 @@ use Illuminate\Support\Facades\Schema;
 class MakeModule extends Command
 {
     protected $signature = 'make:module {name}';
+
     protected $description = 'Create Module';
+
     protected string $nameModule = '';
+
     protected string $basePath = '';
+
     protected array $columns = [];
+
     protected string $renderColumn = '';
+
     private string $stubPath;
 
     public function __construct()
@@ -30,7 +36,7 @@ class MakeModule extends Command
         try {
             $columns = Schema::getColumnListing($tableName);
             $columnSchema = [];
-            if (!count($columns)) {
+            if (! count($columns)) {
                 throw new Exception('Columns not found');
             }
             foreach ($columns as $column) {
@@ -40,9 +46,10 @@ class MakeModule extends Command
                     'type' => $type,
                 ];
             }
+
             return $columnSchema;
         } catch (Exception $exception) {
-            throw new Exception('Columns error : ' . $exception->getMessage());
+            throw new Exception('Columns error : '.$exception->getMessage());
         }
     }
 
@@ -52,12 +59,12 @@ class MakeModule extends Command
     private function makeController()
     {
         try {
-            $controllerPath = $this->basePath . '/app/Http/Controllers/Admin/';
-            $controllerName = ucfirst($this->nameModule) . 'Controller.php';
-            File::put($controllerPath . $controllerName, $this->handleStub('controller.stub'));
+            $controllerPath = $this->basePath.'/app/Http/Controllers/Admin/';
+            $controllerName = ucfirst($this->nameModule).'Controller.php';
+            File::put($controllerPath.$controllerName, $this->handleStub('controller.stub'));
             $this->info(sprintf('Controller %s Created', $controllerName));
         } catch (Exception $exception) {
-            throw new Exception('Make Controller Error : ' . $exception->getMessage());
+            throw new Exception('Make Controller Error : '.$exception->getMessage());
         }
     }
 
@@ -67,21 +74,21 @@ class MakeModule extends Command
     private function makeRequests()
     {
         try {
-            $requestPath = $this->basePath . '/app/Http/Requests/Admin/' . ucfirst($this->nameModule);
+            $requestPath = $this->basePath.'/app/Http/Requests/Admin/'.ucfirst($this->nameModule);
             $this->makeDir($requestPath);
             $this->info(sprintf('Request Folder With Path %s Created', $requestPath));
 
             $requestStore = 'StoreRequest.php';
             $requestUpdate = 'UpdateRequest.php';
 
-            File::put($requestPath . '/' . $requestStore, $this->handleStub('request-store.stub'));
+            File::put($requestPath.'/'.$requestStore, $this->handleStub('request-store.stub'));
             $this->info(sprintf('Request File %s Created', $requestStore));
 
-            File::put($requestPath . '/' . $requestUpdate, $this->handleStub('request-update.stub'));
+            File::put($requestPath.'/'.$requestUpdate, $this->handleStub('request-update.stub'));
             $this->info(sprintf('Request File %s Created', $requestUpdate));
 
         } catch (Exception $exception) {
-            throw new Exception('Make Controller Error : ' . $exception->getMessage());
+            throw new Exception('Make Controller Error : '.$exception->getMessage());
         }
     }
 
@@ -91,30 +98,30 @@ class MakeModule extends Command
     private function makeViews()
     {
         try {
-            $viewPath = $this->basePath . '/resources/views/admin/' . $this->nameModule;
+            $viewPath = $this->basePath.'/resources/views/admin/'.$this->nameModule;
             $this->makeDir($viewPath);
             $this->info(sprintf('View Folder With Path %s Created', $viewPath));
 
             $viewIndex = 'index.blade.php';
-            File::put($viewPath . '/' . $viewIndex, $this->handleStub('view-index.stub'));
+            File::put($viewPath.'/'.$viewIndex, $this->handleStub('view-index.stub'));
             $this->info(sprintf('View %s Created', $viewIndex));
 
             $viewCreate = 'create.blade.php';
             $this->makeInputByColumns();
-            File::put($viewPath . '/' . $viewCreate, $this->handleStub('view-create.stub'));
+            File::put($viewPath.'/'.$viewCreate, $this->handleStub('view-create.stub'));
             $this->info(sprintf('View %s Created', $viewCreate));
 
             $viewEdit = 'edit.blade.php';
             $this->makeInputByColumns(true);
-            File::put($viewPath . '/' . $viewEdit, $this->handleStub('view-edit.stub'));
+            File::put($viewPath.'/'.$viewEdit, $this->handleStub('view-edit.stub'));
             $this->info(sprintf('View %s Created', $viewEdit));
 
             $viewShow = 'show.blade.php';
-            File::put($viewPath . '/' . $viewShow, $this->handleStub('view-show.stub'));
+            File::put($viewPath.'/'.$viewShow, $this->handleStub('view-show.stub'));
             $this->info(sprintf('View %s Created', $viewShow));
 
         } catch (Exception $exception) {
-            throw new Exception('Make Controller Error : ' . $exception->getMessage());
+            throw new Exception('Make Controller Error : '.$exception->getMessage());
         }
     }
 
@@ -132,22 +139,22 @@ class MakeModule extends Command
             }
             switch ($column['type']) {
                 case 'boolean':
-                {
-                    $this->renderColumn .= sprintf('<x-admin.checkbox identify="%s" :description="%s" %s />' . PHP_EOL,
+
+                    $this->renderColumn .= sprintf('<x-admin.checkbox identify="%s" :description="%s" %s />'.PHP_EOL,
                         $column['name'],
-                        sprintf("trans('fields.%s.%s')",strtolower($this->nameModule), $column['name']),
+                        sprintf("trans('fields.%s.%s')", strtolower($this->nameModule), $column['name']),
                         $editString,
                     );
                     break;
-                }
+
                 default:
-                {
-                    $this->renderColumn .= sprintf('<x-admin.input identify="%s" :title="%s" type="text" />' . PHP_EOL,
+
+                    $this->renderColumn .= sprintf('<x-admin.input identify="%s" :title="%s" type="text" />'.PHP_EOL,
                         $column['name'],
-                        sprintf("trans('fields.%s.%s')",strtolower($this->nameModule), $column['name']),
+                        sprintf("trans('fields.%s.%s')", strtolower($this->nameModule), $column['name']),
                         $column['name']
                     );
-                }
+
             }
 
         }
@@ -156,7 +163,7 @@ class MakeModule extends Command
     public function handle()
     {
         try {
-            $this->stubPath = app()->basePath("stubs/generate/");
+            $this->stubPath = app()->basePath('stubs/generate/');
             $this->nameModule = $this->argument('name');
             $this->basePath = app()->basePath();
 
@@ -179,6 +186,7 @@ class MakeModule extends Command
         } catch (Exception $exception) {
             $this->info($exception->getMessage());
         }
+
         return 0;
     }
 
@@ -198,18 +206,20 @@ class MakeModule extends Command
 
     private function handleStub($stubName)
     {
-        $contents = File::get($this->stubPath . $stubName);
+        $contents = File::get($this->stubPath.$stubName);
         foreach ($this->stubVariables() as $search => $replace) {
-            $contents = str_replace('$' . $search . '$', $replace, $contents);
+            $contents = str_replace('$'.$search.'$', $replace, $contents);
         }
+
         return $contents;
     }
 
     public function makeDir($path)
     {
-        if (!File::isDirectory($path)) {
+        if (! File::isDirectory($path)) {
             File::makeDirectory($path, 0777, true, true);
         }
+
         return $path;
     }
 }

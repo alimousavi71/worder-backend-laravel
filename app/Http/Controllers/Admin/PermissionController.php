@@ -10,6 +10,7 @@ class PermissionController extends Controller
     public function sync()
     {
         resolve(PermissionService::class)->sync();
-        return back()->with('success',trans('panel.permission.sync-success'));
+
+        return back()->with('success', trans('panel.permission.sync-success'));
     }
 }

@@ -11,7 +11,6 @@ class RedirectIfAdmin
      * Handle an incoming request.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \Closure  $next
      * @param  string|null  $guard
      * @return mixed
      */
@@ -19,10 +18,10 @@ class RedirectIfAdmin
     {
         if (Auth::guard($guard)->check()) {
             Auth::shouldUse($guard);
+
             return redirect()->route('admin.dashboard');
         }
 
         return $next($request);
     }
-
 }

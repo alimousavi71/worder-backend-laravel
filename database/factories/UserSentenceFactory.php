@@ -2,7 +2,6 @@
 
 namespace Database\Factories;
 
-use App\Models\UserSentence;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -19,7 +18,7 @@ class UserSentenceFactory extends Factory
     {
         return [
             'user_id' => rand(1, 10),
-            'sentence_id' => rand(1, 20)
+            'sentence_id' => rand(1, 20),
         ];
     }
 }

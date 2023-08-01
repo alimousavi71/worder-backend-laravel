@@ -22,6 +22,7 @@ class AdminController extends Controller
         $title = trans('panel.admin.index');
         $routeData = route('admin.admin.data');
         $selects = ['id', 'first_name', 'last_name', 'logins_count', 'created_at'];
+
         return view('admin.admin.index', compact('title', 'routeData', 'selects'));
     }
 
@@ -29,6 +30,7 @@ class AdminController extends Controller
     {
         try {
             $admins = Admin::query()->select('admins.*')->withCount('logins');
+
             return DataTables::of($admins)
                 ->editColumn('created_at', function ($admin) {
                     return $admin->created_at->toJalali()->format('h:i Y-m-d');
@@ -36,6 +38,7 @@ class AdminController extends Controller
                 ->addColumn('action', function ($admin) {
                     $actions = Helper::btnMaker(BtnType::Warning, route('admin.admin.edit', $admin->id), trans('panel.action.edit'));
                     $actions .= Helper::btnMaker(BtnType::Info, route('admin.admin.show', $admin->id), trans('panel.action.info'));
+
                     return $actions;
                 })
                 ->make();
@@ -49,6 +52,7 @@ class AdminController extends Controller
         $title = trans('panel.admin.create');
         $routeStore = route('admin.admin.store');
         $roles = Role::all();
+
         return view('admin.admin.create', compact('title', 'routeStore', 'roles'));
     }
 
@@ -60,16 +64,18 @@ class AdminController extends Controller
             $admin = Admin::create($item);
             $admin->syncRoles($request->get('role'));
             DB::commit();
+
             return response()->json([
                 'result' => 'success',
-                'message' => trans('panel.success_store')
+                'message' => trans('panel.success_store'),
             ]);
         } catch (Exception $e) {
             DB::rollBack();
             report($e);
+
             return response()->json([
                 'result' => 'exception',
-                'message' => trans('panel.error_store')
+                'message' => trans('panel.error_store'),
             ], 500);
         }
     }
@@ -80,6 +86,7 @@ class AdminController extends Controller
         $routeUpdate = route('admin.admin.update', $admin->id);
         $routeDestroy = route('admin.admin.destroy', $admin->id);
         $roles = Role::all();
+
         return view('admin.admin.edit', compact('title', 'routeUpdate', 'routeDestroy', 'admin', 'roles'));
     }
 
@@ -91,16 +98,18 @@ class AdminController extends Controller
             $admin->update($item);
             $admin->syncRoles($request->get('role'));
             DB::commit();
+
             return response()->json([
                 'result' => 'success',
-                'message' => trans('panel.success_update')
+                'message' => trans('panel.success_update'),
             ]);
         } catch (Exception $e) {
             DB::rollBack();
             report($e);
+
             return response()->json([
                 'result' => 'exception',
-                'message' => trans('panel.error_update')
+                'message' => trans('panel.error_update'),
             ], 500);
         }
     }
@@ -108,6 +117,7 @@ class AdminController extends Controller
     public function show(Admin $admin)
     {
         $title = trans('panel.admin.show');
+
         return view('admin.admin.show', compact('title', 'admin'));
     }
 
@@ -115,22 +125,19 @@ class AdminController extends Controller
     {
         try {
             DB::beginTransaction();
-            $admin->update(['email' => uniqid($admin->email) . '_']);
+            $admin->update(['email' => uniqid($admin->email).'_']);
             $admin->delete();
             DB::commit();
+
             return redirect(route('admin.admin.index'))->with('success', trans('panel.success_delete'));
         } catch (Exception $e) {
             DB::rollBack();
             report($e);
+
             return redirect(route('admin.admin.index'))->with('danger', trans('panel.error_delete'));
         }
     }
 
-    /**
-     * @param Request $request
-     * @param bool $editMode
-     * @return array
-     */
     protected function itemProvider(Request $request, bool $editMode = false): array
     {
         $item['first_name'] = $request->get('first_name');
@@ -138,7 +145,7 @@ class AdminController extends Controller
         $item['password'] = bcrypt($request->get('password'));
         $item['has_access'] = $request->has('has_access');
 
-        if (!$editMode) {
+        if (! $editMode) {
             $item['email'] = $request->get('email');
         }
 

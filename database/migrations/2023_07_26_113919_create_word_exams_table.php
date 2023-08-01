@@ -21,7 +21,6 @@ return new class extends Migration
             $table->foreign('exam_id')->references('id')->on('exams');
             $table->foreign('word_id')->references('id')->on('words');
 
-
         });
     }
 

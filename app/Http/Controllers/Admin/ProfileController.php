@@ -10,7 +10,6 @@ use App\Models\Admin;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
-use Spatie\Permission\Models\Permission;
 
 class ProfileController extends Controller
 {
@@ -19,17 +18,17 @@ class ProfileController extends Controller
         $title = trans('panel.profile.edit');
         $routeUpdate = route('admin.profile.update');
         $admin = Admin::find(auth()->id());
-        return view('admin.profile.edit', compact('title','admin', 'routeUpdate'));
-    }
 
+        return view('admin.profile.edit', compact('title', 'admin', 'routeUpdate'));
+    }
 
     public function password()
     {
         $title = 'کدبرگر | پروفایل | تغییر گذرواژه';
         $routeUpdate = route('admin.profile.password.update');
-        return view('admin.profile.edit_password', compact('title','routeUpdate'));
-    }
 
+        return view('admin.profile.edit_password', compact('title', 'routeUpdate'));
+    }
 
     public function update(UpdateRequest $request)
     {
@@ -37,15 +36,16 @@ class ProfileController extends Controller
             $admin = Admin::find(auth()->id());
             $this->setProfileData($request, $admin);
             $admin->update();
+
             return response()->json([
-                'result'=>'success',
-                'message'=>'پروفایل با موفقیت به روز شد.'
+                'result' => 'success',
+                'message' => 'پروفایل با موفقیت به روز شد.',
             ]);
-        }catch (Exception $exception){
+        } catch (Exception $exception) {
             return response()->json([
-                'result'=>'exception',
-                'message'=>$exception->getMessage()
-            ],500);
+                'result' => 'exception',
+                'message' => $exception->getMessage(),
+            ], 500);
         }
 
     }
@@ -54,32 +54,29 @@ class ProfileController extends Controller
     {
         try {
             $admin = Admin::find(auth()->id());
-            if (!Hash::check($request->get('current_password'),$admin->password)) {
+            if (! Hash::check($request->get('current_password'), $admin->password)) {
                 return response()->json([
-                    'result'=>'warning',
-                    'message'=>'گذرواژه وارد شده صحیح نیست!'
+                    'result' => 'warning',
+                    'message' => 'گذرواژه وارد شده صحیح نیست!',
                 ]);
             }
 
             $admin->password = bcrypt($request->get('new_password'));
             $admin->update();
+
             return response()->json([
-                'result'=>'success',
-                'message'=>'گذرواژه با موفقیت به روز شد.'
+                'result' => 'success',
+                'message' => 'گذرواژه با موفقیت به روز شد.',
             ]);
-        }catch (Exception $exception){
+        } catch (Exception $exception) {
             return response()->json([
-                'result'=>'exception',
-                'message'=>$exception->getMessage()
-            ],500);
+                'result' => 'exception',
+                'message' => $exception->getMessage(),
+            ], 500);
         }
 
     }
 
-    /**
-     * @param Request $request
-     * @param Admin $admin
-     */
     protected function setProfileData(Request $request, Admin $admin): void
     {
         $admin->first_name = $request->get('first_name');
@@ -99,6 +96,7 @@ class ProfileController extends Controller
     {
         auth()->logout();
         $request->session()->invalidate();
+
         return redirect()->route('admin.dashboard');
     }
 }

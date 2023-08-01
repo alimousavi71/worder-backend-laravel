@@ -19,6 +19,7 @@ class CategoryController extends Controller
         $title = trans('panel.category.index');
         $routeData = route('admin.category.data');
         $selects = ['id', 'title', 'type', 'words_count', 'created_at'];
+
         return view('admin.category.index', compact('title', 'routeData', 'selects'));
     }
 
@@ -27,6 +28,7 @@ class CategoryController extends Controller
 
         try {
             $categories = Category::query()->withCount('words');
+
             return DataTables::of($categories)
                 ->editColumn('type', function ($category) {
                     return Helper::renderCategoryType($category->type);
@@ -37,9 +39,10 @@ class CategoryController extends Controller
                 ->addColumn('action', function ($category) {
                     $actions = Helper::btnMaker(BtnType::Warning, route('admin.category.edit', $category->id), trans('panel.action.edit'));
                     $actions .= Helper::btnMaker(BtnType::Info, route('admin.category.show', $category->id), trans('panel.action.info'));
+
                     return $actions;
                 })
-                ->rawColumns(['action','type'])
+                ->rawColumns(['action', 'type'])
                 ->make();
         } catch (Exception $e) {
             return $e->getMessage();
@@ -50,6 +53,7 @@ class CategoryController extends Controller
     {
         $title = trans('panel.category.create');
         $routeStore = route('admin.category.store');
+
         return view('admin.category.create', compact('title', 'routeStore'));
     }
 
@@ -58,15 +62,17 @@ class CategoryController extends Controller
         try {
             $item = $this->itemProvider($request);
             Category::create($item);
+
             return response()->json([
                 'result' => 'success',
-                'message' => trans('panel.success_store')
+                'message' => trans('panel.success_store'),
             ]);
         } catch (Exception $e) {
             report($e);
+
             return response()->json([
                 'result' => 'exception',
-                'message' => trans('panel.error_store')
+                'message' => trans('panel.error_store'),
             ], 500);
         }
     }
@@ -76,6 +82,7 @@ class CategoryController extends Controller
         $title = trans('panel.category.edit');
         $routeUpdate = route('admin.category.update', $category->id);
         $routeDestroy = route('admin.category.destroy', $category->id);
+
         return view('admin.category.edit', compact('title', 'routeUpdate', 'routeDestroy', 'category'));
     }
 
@@ -84,15 +91,17 @@ class CategoryController extends Controller
         try {
             $item = $this->itemProvider($request);
             $category->update($item);
+
             return response()->json([
                 'result' => 'success',
-                'message' => trans('panel.success_update')
+                'message' => trans('panel.success_update'),
             ]);
         } catch (Exception $e) {
             report($e);
+
             return response()->json([
                 'result' => 'exception',
-                'message' => trans('panel.error_update')
+                'message' => trans('panel.error_update'),
             ], 500);
         }
     }
@@ -101,9 +110,11 @@ class CategoryController extends Controller
     {
         try {
             $category->delete();
+
             return redirect(route('admin.category.index'))->with('success', trans('panel.success_delete'));
         } catch (Exception $e) {
             report($e);
+
             return redirect(route('admin.category.index'))->with('danger', trans('panel.error_delete'));
         }
     }
@@ -111,14 +122,10 @@ class CategoryController extends Controller
     public function show(Category $category)
     {
         $title = trans('panel.category.show');
+
         return view('admin.category.show', compact('title', 'category'));
     }
 
-    /**
-     * @param Request $request
-     * @param bool $editMode
-     * @return array
-     */
     protected function itemProvider(Request $request, bool $editMode = false): array
     {
         $item['title'] = $request->get('title');

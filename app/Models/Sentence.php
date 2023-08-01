@@ -17,6 +17,7 @@ class Sentence extends Model
         'category_id',
         'status',
     ];
+
     public function category(): BelongsTo
     {
         return $this->belongsTo(Category::class);
@@ -24,6 +25,6 @@ class Sentence extends Model
 
     public function users()
     {
-        return $this->belongsToMany(User::class,'user_sentence','sentence_id');
+        return $this->belongsToMany(User::class, 'user_sentence', 'sentence_id');
     }
 }

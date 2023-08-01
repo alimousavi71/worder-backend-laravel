@@ -12,7 +12,6 @@ class RedirectIfNotAdmin
      * Handle an incoming request.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \Closure  $next
      * @param  string  $guard
      * @return mixed
      *
@@ -22,6 +21,7 @@ class RedirectIfNotAdmin
     {
         if (Auth::guard($guard)->check()) {
             Auth::shouldUse($guard);
+
             return $next($request);
         }
 
@@ -31,5 +31,4 @@ class RedirectIfNotAdmin
             'Unauthenticated.', [$guard], $redirectToRoute
         );
     }
-
 }

@@ -11,7 +11,6 @@ use Illuminate\Support\Facades\Route;
 
 class Helper
 {
-
     public static function renderCategoryType($type)
     {
         return match ($type) {
@@ -51,7 +50,7 @@ class Helper
         };
     }
 
-    static public function getRouteSmall()
+    public static function getRouteSmall()
     {
         $routeName = Route::currentRouteName();
         if (str($routeName)->contains('admin.admin')) {
@@ -63,48 +62,47 @@ class Helper
         }
 
         $routeParts = explode('.', $routeName);
+
         return $routeParts[1];
     }
 
-
-    static public function permissionReadAble($permission)
+    public static function permissionReadAble($permission)
     {
         return strtoupper(str_replace('_', ' ', $permission));
     }
 
-    static public function btnMaker($type, $route = '', $title = '')
+    public static function btnMaker($type, $route = '', $title = '')
     {
         switch ($type) {
             case BtnType::Warning:
-            {
-                return '<a target="_blank" href="' . $route . '" class="btn btn-sm btn-warning mx-1">' . $title . '</a>';
-            }
+
+                return '<a target="_blank" href="'.$route.'" class="btn btn-sm btn-warning mx-1">'.$title.'</a>';
+
             case BtnType::Danger:
-            {
-                return '<a target="_blank" href="' . $route . '" class="btn btn-sm btn-danger mx-1">' . $title . '</a>';
-            }
+
+                return '<a target="_blank" href="'.$route.'" class="btn btn-sm btn-danger mx-1">'.$title.'</a>';
+
             case BtnType::Info:
-            {
-                return '<a target="_blank" href="' . $route . '" class="btn btn-sm btn-success mx-1">' . $title . '</a>';
-            }
+
+                return '<a target="_blank" href="'.$route.'" class="btn btn-sm btn-success mx-1">'.$title.'</a>';
+
         }
+
         return '';
     }
 
     /**
      * Format bytes to kb, mb, gb, tb
      *
-     * @param integer $size
-     * @param integer $precision
-     * @return integer
+     * @return int
      */
     public static function formatBytes(int $size, int $precision = 2)
     {
         if ($size > 0) {
             $base = log($size) / log(1024);
-            $suffixes = array(' bytes', ' KB', ' MB', ' GB', ' TB');
+            $suffixes = [' bytes', ' KB', ' MB', ' GB', ' TB'];
 
-            return round(pow(1024, $base - floor($base)), $precision) . $suffixes[floor($base)];
+            return round(pow(1024, $base - floor($base)), $precision).$suffixes[floor($base)];
         } else {
             return $size;
         }
@@ -118,6 +116,19 @@ class Helper
         for ($i = 0; $i < $length; $i++) {
             $randomString .= $characters[rand(0, $charactersLength - 1)];
         }
+
+        return $randomString;
+    }
+
+    public static function randNumeric($length = 7)
+    {
+        $characters = '0123456789';
+        $charactersLength = strlen($characters);
+        $randomString = '';
+        for ($i = 0; $i < $length; $i++) {
+            $randomString .= $characters[rand(0, $charactersLength - 1)];
+        }
+
         return $randomString;
     }
 
@@ -125,6 +136,7 @@ class Helper
     {
         $persian = ['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹'];
         $english = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
+
         return str_replace($persian, $english, $string);
     }
 
@@ -134,12 +146,13 @@ class Helper
         if (DB::table($table)->where($field, $code)->exists()) {
             self::uniqueIdentity($table, $field);
         }
+
         return $code;
     }
 
     public static function slugPersian($string, $separator = '-')
     {
-        $_transliteration = array(
+        $_transliteration = [
             '/ä|æ|ǽ/' => 'ae',
             '/ö|œ/' => 'oe',
             '/ü/' => 'ue',
@@ -189,16 +202,17 @@ class Helper
             '/Ĳ/' => 'IJ',
             '/ĳ/' => 'ij',
             '/Œ/' => 'OE',
-            '/ƒ/' => 'f'
-        );
+            '/ƒ/' => 'f',
+        ];
         $quotedReplacement = preg_quote($separator, '/');
-        $merge = array(
+        $merge = [
             '/[^\s\p{Zs}\p{Ll}\p{Lm}\p{Lo}\p{Lt}\p{Lu}\p{Nd}]/mu' => ' ',
             '/[\s\p{Zs}]+/mu' => $separator,
             sprintf('/^[%s]+|[%s]+$/', $quotedReplacement, $quotedReplacement) => '',
-        );
+        ];
         $map = $_transliteration + $merge;
         unset($_transliteration);
+
         return preg_replace(array_keys($map), array_values($map), $string);
     }
 }

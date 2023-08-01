@@ -17,11 +17,11 @@ class AdminFactory extends Factory
     public function definition()
     {
         return [
-            'first_name'=>$this->faker->firstName,
-            'last_name'=>$this->faker->lastName,
-            'email'=>$this->faker->unique()->email,
-            'has_access'=>true,
-            'password'=>bcrypt('12345678'),
+            'first_name' => $this->faker->firstName,
+            'last_name' => $this->faker->lastName,
+            'email' => $this->faker->unique()->email,
+            'has_access' => true,
+            'password' => bcrypt('12345678'),
         ];
     }
 }

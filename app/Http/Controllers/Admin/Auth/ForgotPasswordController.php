@@ -19,7 +19,8 @@ class ForgotPasswordController extends Controller
     public function showLinkRequestForm()
     {
         $title = 'کدبرگر | فراموشی گذرواژه';
-        return view('admin.auth.passwords.email',compact('title'));
+
+        return view('admin.auth.passwords.email', compact('title'));
     }
 
     public function broker()

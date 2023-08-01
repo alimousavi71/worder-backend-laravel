@@ -20,7 +20,8 @@ class RoleController extends Controller
     {
         $title = trans('panel.role.index');
         $routeData = route('admin.role.data');
-        $selects = ['id', 'name','permissions_count', 'created_at'];
+        $selects = ['id', 'name', 'permissions_count', 'created_at'];
+
         return view('admin.role.index', compact('title', 'routeData', 'selects'));
     }
 
@@ -29,6 +30,7 @@ class RoleController extends Controller
 
         try {
             $roles = Role::query()->select('roles.*')->withCount('permissions');
+
             return DataTables::of($roles)
                 ->editColumn('created_at', function ($role) {
                     return $role->created_at->toJalali()->format('h:i Y-m-d');
@@ -47,7 +49,8 @@ class RoleController extends Controller
         $title = trans('panel.role.create');
         $routeStore = route('admin.role.store');
         $permissions = Permission::all();
-        return view('admin.role.create', compact('title', 'routeStore','permissions'));
+
+        return view('admin.role.create', compact('title', 'routeStore', 'permissions'));
     }
 
     public function store(StoreRequest $request)
@@ -58,16 +61,18 @@ class RoleController extends Controller
             $role = Role::create($item);
             $role->givePermissionTo($request->get('permissions'));
             DB::commit();
+
             return response()->json([
                 'result' => 'success',
-                'message' => trans('panel.success_store')
+                'message' => trans('panel.success_store'),
             ]);
         } catch (Exception $e) {
             DB::rollBack();
             report($e);
+
             return response()->json([
                 'result' => 'exception',
-                'message' => trans('panel.error_store')
+                'message' => trans('panel.error_store'),
             ], 500);
         }
     }
@@ -79,7 +84,8 @@ class RoleController extends Controller
         $routeDestroy = route('admin.role.destroy', $role->id);
         $permissions = Permission::all();
         $permissionSelected = $role->permissions()->pluck('id')->toArray();
-        return view('admin.role.edit', compact('title', 'routeUpdate','routeDestroy', 'role','permissions','permissionSelected'));
+
+        return view('admin.role.edit', compact('title', 'routeUpdate', 'routeDestroy', 'role', 'permissions', 'permissionSelected'));
     }
 
     public function update(UpdateRequest $request, Role $role)
@@ -90,16 +96,18 @@ class RoleController extends Controller
             $role->update($item);
             $role->syncPermissions($request->get('permissions'));
             DB::commit();
+
             return response()->json([
                 'result' => 'success',
-                'message' => trans('panel.success_update')
+                'message' => trans('panel.success_update'),
             ]);
         } catch (Exception $e) {
             DB::rollBack();
             report($e);
+
             return response()->json([
                 'result' => 'exception',
-                'message' => trans('panel.error_update')
+                'message' => trans('panel.error_update'),
             ], 500);
         }
     }
@@ -108,20 +116,19 @@ class RoleController extends Controller
     {
         try {
             $role->delete();
+
             return redirect(route('admin.role.index'))->with('success', trans('panel.success_delete'));
         } catch (Exception $e) {
             report($e);
+
             return redirect(route('admin.role.index'))->with('danger', trans('panel.error_delete'));
         }
     }
 
-    /**
-     * @param Request $request
-     * @return array
-     */
     protected function itemProvider(Request $request): array
     {
         $item['name'] = $request->get('name');
+
         return $item;
     }
 }

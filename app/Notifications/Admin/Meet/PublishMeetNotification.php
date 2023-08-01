@@ -34,7 +34,7 @@ class PublishMeetNotification extends Notification implements ShouldQueue
      */
     public function via($notifiable)
     {
-        return ['database','mail',SMSChannel::class];
+        return ['database', 'mail', SMSChannel::class];
     }
 
     /**
@@ -46,22 +46,22 @@ class PublishMeetNotification extends Notification implements ShouldQueue
     public function toMail($notifiable)
     {
         return (new MailMessage)
-                    ->line('Meet : ' . $this->meet['title'])
-                    ->action('Notification Action', url('/'))
-                    ->line('Thank you for using our application!');
+            ->line('Meet : '.$this->meet['title'])
+            ->action('Notification Action', url('/'))
+            ->line('Thank you for using our application!');
     }
 
     public function toSMS($notifiable)
     {
-        Log::info('SMS Publish Meet : ' . $this->meet['title'] .' To : ' . $notifiable->mobile);
+        Log::info('SMS Publish Meet : '.$this->meet['title'].' To : '.$notifiable->mobile);
     }
 
     public function toArray($notifiable)
     {
         return [
-            'status'=>'published',
-            'id'=>$this->meet['id'],
-            'title'=>$this->meet['title'],
+            'status' => 'published',
+            'id' => $this->meet['id'],
+            'title' => $this->meet['title'],
         ];
     }
 }

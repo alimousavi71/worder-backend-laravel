@@ -3,9 +3,9 @@
 namespace App\Models;
 
 use App\Notifications\Admin\Auth\ResetPassword;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Notifications\Notifiable;
 use Spatie\Permission\Traits\HasRoles;
 
@@ -51,7 +51,7 @@ class Admin extends Authenticatable
     /**
      * Send the password reset notification.
      *
-     * @param string $token
+     * @param  string  $token
      * @return void
      */
     public function sendPasswordResetNotification($token)

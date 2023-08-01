@@ -14,7 +14,7 @@ use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\WordController;
 use Illuminate\Support\Facades\Route;
 
-Route::group(['namespace'=>'App\Http\Controllers\Admin'],function (){
+Route::group(['namespace' => 'App\Http\Controllers\Admin'], function () {
     Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');
     Route::post('login', 'Auth\LoginController@login');
     Route::post('logout', 'Auth\LoginController@logout')->name('logout');
@@ -30,13 +30,11 @@ Route::group(['namespace'=>'App\Http\Controllers\Admin'],function (){
     Route::post('password/confirm', 'Auth\ConfirmPasswordController@confirm');
 });
 
-
 Route::group(['middleware' => ['admin.auth'/*,'acl'*/], 'guard' => 'admin'], function () {
     /* this function for help to route ui dashboard */
-    Route::get('/', [HomeController::class,'redirect'])->name('home');
-    Route::get('/dashboard', [HomeController::class,'index'])->name('dashboard');
-    Route::get('/permission/sync',[PermissionController::class,'sync'])->name('permission.sync');
-
+    Route::get('/', [HomeController::class, 'redirect'])->name('home');
+    Route::get('/dashboard', [HomeController::class, 'index'])->name('dashboard');
+    Route::get('/permission/sync', [PermissionController::class, 'sync'])->name('permission.sync');
 
     Route::controller(AdminController::class)->group(function () {
         Route::get('/admin', 'index')->name('admin.index');
@@ -111,7 +109,6 @@ Route::group(['middleware' => ['admin.auth'/*,'acl'*/], 'guard' => 'admin'], fun
         Route::patch('/user/update/{user}', 'update')->name('user.update');
         Route::delete('/user/destroy/{user}', 'destroy')->name('user.destroy');
     });
-
 
     Route::controller(ProfileController::class)->group(function () {
         Route::get('/profile', 'index')->name('profile.index');

@@ -3,10 +3,6 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
-use App\Models\Admin;
-use App\Models\Contact;
-use App\Models\UserWord;
-use App\Models\WordExam;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder

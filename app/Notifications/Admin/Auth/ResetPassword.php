@@ -2,9 +2,9 @@
 
 namespace App\Notifications\Admin\Auth;
 
-use Illuminate\Support\Facades\Lang;
-use Illuminate\Notifications\Notification;
 use Illuminate\Notifications\Messages\MailMessage;
+use Illuminate\Notifications\Notification;
+use Illuminate\Support\Facades\Lang;
 
 class ResetPassword extends Notification
 {
@@ -25,7 +25,7 @@ class ResetPassword extends Notification
     /**
      * Create a notification instance.
      *
-     * @param string $token
+     * @param  string  $token
      * @return void
      */
     public function __construct($token)
@@ -36,7 +36,7 @@ class ResetPassword extends Notification
     /**
      * Get the notification's channels.
      *
-     * @param mixed $notifiable
+     * @param  mixed  $notifiable
      * @return array|string
      */
     public function via($notifiable)

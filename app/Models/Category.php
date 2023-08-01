@@ -15,7 +15,7 @@ class Category extends Model
         'title',
         'type',
         'description',
-        'icon'
+        'icon',
     ];
 
     public function words(): HasMany

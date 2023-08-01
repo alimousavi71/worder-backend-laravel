@@ -8,7 +8,6 @@ use Illuminate\Http\Request;
 
 class ConfirmPasswordController extends Controller
 {
-
     use ConfirmsPasswords;
 
     protected $redirectTo = '/cp-admin-4242';

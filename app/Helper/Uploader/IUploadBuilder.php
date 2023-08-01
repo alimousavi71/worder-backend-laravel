@@ -1,8 +1,6 @@
 <?php
 
-
 namespace App\Helper\Uploader;
-
 
 interface IUploadBuilder
 {
@@ -17,5 +15,4 @@ interface IUploadBuilder
     public function fit(int $width, int $height): IUploadBuilder;
 
     public function resize(int $width, int $height): IUploadBuilder;
-
 }

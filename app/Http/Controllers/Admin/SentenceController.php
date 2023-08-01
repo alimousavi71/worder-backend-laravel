@@ -21,6 +21,7 @@ class SentenceController extends Controller
         $title = trans('panel.sentence.index');
         $routeData = route('admin.sentence.data');
         $selects = ['id', 'title', 'category.title', 'status', 'created_at'];
+
         return view('admin.sentence.index', compact('title', 'routeData', 'selects'));
     }
 
@@ -42,6 +43,7 @@ class SentenceController extends Controller
                 ->addColumn('action', function ($sentence) {
                     $actions = Helper::btnMaker(BtnType::Warning, route('admin.sentence.edit', $sentence->id), trans('panel.action.edit'));
                     $actions .= Helper::btnMaker(BtnType::Info, route('admin.sentence.show', $sentence->id), trans('panel.action.info'));
+
                     return $actions;
                 })
                 ->rawColumns(['action', 'status'])
@@ -56,6 +58,7 @@ class SentenceController extends Controller
         $title = trans('panel.sentence.create');
         $routeStore = route('admin.sentence.store');
         $categories = Category::query()->where('type', CategoryType::Sentence)->get();
+
         return view('admin.sentence.create', compact('title', 'routeStore', 'categories'));
     }
 
@@ -67,13 +70,14 @@ class SentenceController extends Controller
 
             return response()->json([
                 'result' => 'success',
-                'message' => trans('panel.success_store')
+                'message' => trans('panel.success_store'),
             ]);
         } catch (Exception $e) {
             report($e);
+
             return response()->json([
                 'result' => 'exception',
-                'message' => trans('panel.error_store')
+                'message' => trans('panel.error_store'),
             ], 500);
         }
     }
@@ -84,6 +88,7 @@ class SentenceController extends Controller
         $routeUpdate = route('admin.sentence.update', $sentence->id);
         $routeDestroy = route('admin.sentence.destroy', $sentence->id);
         $categories = Category::query()->where('type', CategoryType::Sentence)->get();
+
         return view('admin.sentence.edit', compact('title', 'routeUpdate', 'routeDestroy', 'sentence', 'categories'));
     }
 
@@ -95,13 +100,14 @@ class SentenceController extends Controller
 
             return response()->json([
                 'result' => 'success',
-                'message' => trans('panel.success_update')
+                'message' => trans('panel.success_update'),
             ]);
         } catch (Exception $e) {
             report($e);
+
             return response()->json([
                 'result' => 'exception',
-                'message' => trans('panel.error_update')
+                'message' => trans('panel.error_update'),
             ], 500);
         }
     }
@@ -110,6 +116,7 @@ class SentenceController extends Controller
     {
         $title = trans('panel.sentence.show');
         $sentence->load('users');
+
         return view('admin.sentence.show', compact('title', 'sentence'));
     }
 
@@ -117,18 +124,15 @@ class SentenceController extends Controller
     {
         try {
             $sentence->delete();
+
             return redirect(route('admin.sentence.index'))->with('success', trans('panel.success_delete'));
         } catch (Exception $e) {
             report($e);
+
             return redirect(route('admin.sentence.index'))->with('danger', trans('panel.error_delete'));
         }
     }
 
-    /**
-     * @param Request $request
-     * @param bool $editMode
-     * @return array
-     */
     protected function itemProvider(Request $request, bool $editMode = false): array
     {
         $item['title'] = $request->get('title');
@@ -136,6 +140,7 @@ class SentenceController extends Controller
         $item['sentence'] = $request->get('sentence');
         $item['translate'] = $request->get('translate');
         $item['status'] = $request->get('status');
+
         return $item;
     }
 }

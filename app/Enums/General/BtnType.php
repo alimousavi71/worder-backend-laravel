@@ -12,6 +12,8 @@ use BenSampo\Enum\Enum;
 final class BtnType extends Enum
 {
     const Warning = 1;
+
     const Info = 2;
+
     const Danger = 3;
 }

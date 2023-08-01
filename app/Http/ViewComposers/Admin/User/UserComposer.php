@@ -19,6 +19,6 @@ class UserComposer
         $avatars = Avatar::query()->get();
         $cities = City::query()->with('province')->get();
 
-        $view->with(compact('avatars','cities'));
+        $view->with(compact('avatars', 'cities'));
     }
 }

@@ -3,7 +3,6 @@
 namespace Database\Factories;
 
 use App\Enums\Database\Contact\Rate;
-use App\Models\Contact;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -20,7 +19,7 @@ class ContactFactory extends Factory
     {
         return [
             'comment' => $this->faker->sentence,
-            'user_id' => rand(1,10),
+            'user_id' => rand(1, 10),
             'rate' => Rate::getRandomValue(),
             'is_seen' => $this->faker->boolean,
             'is_public' => $this->faker->boolean,

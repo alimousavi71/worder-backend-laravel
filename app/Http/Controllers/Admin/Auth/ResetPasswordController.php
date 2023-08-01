@@ -10,8 +10,8 @@ use Illuminate\Support\Facades\Password;
 
 class ResetPasswordController extends Controller
 {
-
     use ResetsPasswords;
+
     protected $redirectTo = '/cp-admin-4242';
 
     public function __construct()
@@ -22,10 +22,11 @@ class ResetPasswordController extends Controller
     public function showResetForm(Request $request, $token = null)
     {
         $title = 'Admittedz | Reset Password';
-        return view('admin.auth.passwords.reset',compact('title'))->with(
+
+        return view('admin.auth.passwords.reset', compact('title'))->with(
             [
                 'token' => $token,
-                'email' => $request->get('email')
+                'email' => $request->get('email'),
             ]
         );
     }

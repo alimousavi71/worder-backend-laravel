@@ -16,7 +16,8 @@ class ContactController extends Controller
     {
         $title = trans('panel.contact.index');
         $routeData = route('admin.contact.data');
-        $selects = ['id','user.email','rate','is_seen','is_public', 'created_at'];
+        $selects = ['id', 'user.email', 'rate', 'is_seen', 'is_public', 'created_at'];
+
         return view('admin.contact.index', compact('title', 'routeData', 'selects'));
     }
 
@@ -34,6 +35,7 @@ class ContactController extends Controller
                 ->addColumn('action', function ($contact) {
                     $actions = Helper::btnMaker(BtnType::Warning, route('admin.contact.edit', $contact->id), trans('panel.action.edit'));
                     $actions .= Helper::btnMaker(BtnType::Info, route('admin.contact.show', $contact->id), trans('panel.action.info'));
+
                     return $actions;
                 })
                 ->make();
@@ -47,6 +49,7 @@ class ContactController extends Controller
         $title = trans('panel.contact.edit');
         $routeUpdate = route('admin.contact.update', $contact->id);
         $routeDestroy = route('admin.contact.destroy', $contact->id);
+
         return view('admin.contact.edit', compact('title', 'routeUpdate', 'routeDestroy', 'contact'));
     }
 
@@ -54,17 +57,19 @@ class ContactController extends Controller
     {
         try {
             $contact->update([
-                'is_public' => $request->has('is_public')
+                'is_public' => $request->has('is_public'),
             ]);
+
             return response()->json([
                 'result' => 'success',
-                'message' => trans('panel.success_update')
+                'message' => trans('panel.success_update'),
             ]);
         } catch (Exception $e) {
             report($e);
+
             return response()->json([
                 'result' => 'exception',
-                'message' => trans('panel.error_update')
+                'message' => trans('panel.error_update'),
             ], 500);
         }
     }
@@ -73,19 +78,22 @@ class ContactController extends Controller
     {
         $title = trans('panel.contact.show');
         $contact->update([
-            'is_seen' => true
+            'is_seen' => true,
         ]);
-        $routeDestroy = route('admin.contact.destroy',$contact->id);
-        return view('admin.contact.show', compact('title', 'contact','routeDestroy'));
+        $routeDestroy = route('admin.contact.destroy', $contact->id);
+
+        return view('admin.contact.show', compact('title', 'contact', 'routeDestroy'));
     }
 
     public function destroy(Contact $contact)
     {
         try {
             $contact->delete();
+
             return redirect(route('admin.contact.index'))->with('success', 'با موفقیت حذف شد.');
         } catch (Exception $e) {
             report($e);
+
             return redirect(route('admin.contact.index'))->with('danger', 'خطایی در سرور به وجود امده است لطفا بعدا تلاش کنید!');
         }
     }

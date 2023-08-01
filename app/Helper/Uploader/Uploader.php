@@ -1,8 +1,6 @@
 <?php
 
-
 namespace App\Helper\Uploader;
-
 
 use Exception;
 use Illuminate\Support\Str;
@@ -27,18 +25,21 @@ class Uploader implements IUploadBuilder
     {
         $this->config->delete = true;
         $this->config->delete_filename = $filename;
+
         return $this;
     }
 
     public function path(string $path): IUploadBuilder
     {
         $this->config->path = 'uploads/'.$path.'/';
+
         return $this;
     }
 
     public function field(string $field): IUploadBuilder
     {
         $this->config->field = $field;
+
         return $this;
     }
 
@@ -47,6 +48,7 @@ class Uploader implements IUploadBuilder
         $this->config->thumb = true;
         $this->config->thumb_height = $height;
         $this->config->thumb_width = $width;
+
         return $this;
     }
 
@@ -55,6 +57,7 @@ class Uploader implements IUploadBuilder
         $this->config->fit = true;
         $this->config->fit_height = $height;
         $this->config->fit_width = $width;
+
         return $this;
     }
 
@@ -63,6 +66,7 @@ class Uploader implements IUploadBuilder
         $this->config->resize = true;
         $this->config->resize_height = $height;
         $this->config->resize_width = $width;
+
         return $this;
     }
 
@@ -73,34 +77,34 @@ class Uploader implements IUploadBuilder
     {
         try {
             $result = [];
-            if (isset($this->config->delete) && !Str::contains($this->config->delete_filename,'default')) {
+            if (isset($this->config->delete) && ! Str::contains($this->config->delete_filename, 'default')) {
                 if (file_exists($this->config->delete_filename)) {
                     unlink($this->config->delete_filename);
                 }
                 if (isset($this->config->path)) {
-                    $thumbPathDelete = str_replace($this->config->path,$this->config->path.'thumb/',$this->config->delete_filename);
+                    $thumbPathDelete = str_replace($this->config->path, $this->config->path.'thumb/', $this->config->delete_filename);
                     if (file_exists($thumbPathDelete)) {
                         unlink($thumbPathDelete);
                     }
                 }
             }
 
-            if (!isset($this->config->field)) {
+            if (! isset($this->config->field)) {
                 throw new Exception('Please Select Field Name');
             }
 
-            if (!request()->hasFile($this->config->field)) {
+            if (! request()->hasFile($this->config->field)) {
                 throw new Exception('Dont Send Image File');
             }
 
-            if (!isset($this->config->path)) {
+            if (! isset($this->config->path)) {
                 $this->config->path = 'uploads/';
             }
 
             $uniqid = uniqid(md5(Str::random(20)));
 
             $file = request()->file($this->config->field);
-            $path = $this->config->path . $uniqid . '.' . $file->extension();
+            $path = $this->config->path.$uniqid.'.'.$file->extension();
             $image = Image::make($file);
 
             if (isset($this->config->fit)) {
@@ -114,7 +118,7 @@ class Uploader implements IUploadBuilder
             $result['photo'] = $path;
 
             if (isset($this->config->thumb)) {
-                $path = $this->config->path .'thumb/' . $uniqid . '.' . $file->extension();
+                $path = $this->config->path.'thumb/'.$uniqid.'.'.$file->extension();
                 $image = Image::make($file);
                 $image->fit($this->config->thumb_width, $this->config->thumb_height);
                 $image->save($path);
@@ -127,8 +131,7 @@ class Uploader implements IUploadBuilder
             $result['file_type'] = $file->getType();
 
             return $result;
-        }
-        catch (Exception $e){
+        } catch (Exception $e) {
             return $e->getMessage();
         }
     }

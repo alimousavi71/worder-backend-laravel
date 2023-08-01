@@ -3,7 +3,6 @@
 namespace Database\Factories;
 
 use App\Enums\Database\Exam\ExamType;
-use App\Models\Exam;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -19,7 +18,7 @@ class ExamFactory extends Factory
     public function definition(): array
     {
         return [
-            'title' => 'Exam ' . fake()->numerify('##'),
+            'title' => 'Exam '.fake()->numerify('##'),
             'type' => ExamType::Random,
             'user_id' => rand(1, 10),
             'grade' => rand(1, 100),

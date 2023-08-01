@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Admin\Chart;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Admin\Chart\ChartMeetVisitRequest;
 use App\Models\Meet;
 use Carbon\Carbon;
 use CyrildeWit\EloquentViewable\Support\Period;
@@ -36,7 +35,6 @@ class MeetChartController extends Controller
             $date = Carbon::createFromDate($fromDate);
         }
 
-
         switch ($by) {
             case 'custom':
                 $days = $date->diffInDays(Carbon::createFromDate($toDate));
@@ -55,7 +53,6 @@ class MeetChartController extends Controller
                 break;
         }
 
-
         $datasets = [];
         $datasetsUnique = [];
 
@@ -69,7 +66,7 @@ class MeetChartController extends Controller
                 case 'week':
                     $from = $date->format('Y-m-d H:i');
                     $to = $date->copy()->addWeeks(1)->format('Y-m-d H:i');
-                    $labels[] = 'هفته ' . ($i + 1);
+                    $labels[] = 'هفته '.($i + 1);
                     break;
                 case 'month':
                     $from = $date->startOfMonth()->format('Y-m-d H:i');
@@ -109,7 +106,7 @@ class MeetChartController extends Controller
                 'borderColor' => '#6c5ffc',
                 'borderWidth' => '3',
                 'pointRadius' => '3',
-                'data' => $datasets
+                'data' => $datasets,
             ],
             [
                 'label' => 'بازدید یکتا',
@@ -117,8 +114,8 @@ class MeetChartController extends Controller
                 'borderColor' => '#05c3fb',
                 'borderWidth' => '3',
                 'pointRadius' => '3',
-                'data' => $datasetsUnique
-            ]
+                'data' => $datasetsUnique,
+            ],
         ];
 
         return response()->json($response);
@@ -128,6 +125,4 @@ class MeetChartController extends Controller
     {
 
     }
-
-
 }

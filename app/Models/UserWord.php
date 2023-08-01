@@ -9,6 +9,12 @@ use Illuminate\Database\Eloquent\Model;
 class UserWord extends Model
 {
     protected $table = 'user_word';
+
     use HasFactory;
     use HasUlids;
+
+    protected $fillable = [
+        'user_id',
+        'word_id',
+    ];
 }

@@ -2,7 +2,13 @@
 
 namespace App\Exceptions;
 
+use App\Service\Response\ResponseService;
+use Illuminate\Auth\AuthenticationException;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Http\Exceptions\ThrottleRequestsException;
+use Laravel\Sanctum\Exceptions\MissingScopeException;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Throwable;
 
 class Handler extends ExceptionHandler
@@ -26,5 +32,29 @@ class Handler extends ExceptionHandler
         $this->reportable(function (Throwable $e) {
             //
         });
+    }
+
+    public function render($request, Throwable $e)
+    {
+        if ($request->expectsJson()) {
+            $ResponseService = resolve(ResponseService::class);
+            if ($e instanceof AuthenticationException) {
+                return $ResponseService::failure('Unauthenticated.', 401);
+            }
+            if ($e instanceof ModelNotFoundException) {
+                return $ResponseService::failure('Model Not Found.', 404);
+            }
+            if ($e instanceof ThrottleRequestsException) {
+                return $ResponseService::failure('Too Many Attempts.', 429);
+            }
+            if ($e instanceof NotFoundHttpException) {
+                return $ResponseService::failure('Route or Url Not Found.', 404);
+            }
+            if ($e instanceof MissingScopeException) {
+                return $ResponseService::failure('User can access.', 403);
+            }
+        }
+
+        return parent::render($request, $e);
     }
 }

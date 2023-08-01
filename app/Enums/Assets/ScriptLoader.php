@@ -18,12 +18,20 @@ use BenSampo\Enum\Enum;
 final class ScriptLoader extends Enum
 {
     const DataTable = 1;
+
     const MultiSelect = 2;
+
     const Alert = 3;
+
     const Select2 = 4;
+
     const DataTableOffline = 5;
+
     const Quill = 6;
+
     const ChartJs = 7;
+
     const Datepicker = 8;
+
     const Inputmask = 9;
 }

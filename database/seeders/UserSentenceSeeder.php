@@ -3,7 +3,6 @@
 namespace Database\Seeders;
 
 use App\Models\UserSentence;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class UserSentenceSeeder extends Seeder

@@ -3,7 +3,6 @@
 namespace Database\Factories;
 
 use App\Enums\Database\Word\WordStatus;
-use App\Models\Word;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**

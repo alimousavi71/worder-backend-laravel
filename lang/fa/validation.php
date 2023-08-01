@@ -164,6 +164,8 @@ return [
         'permissions' => 'مجوز ها',
         'avatar' => 'تصویر آواتار',
         'sentence' => 'جمله',
-        'translate' => 'ترجمه'
-    ]
+        'translate' => 'ترجمه',
+        'password_confirm' => 'تکرار گذرواژه',
+        'old_password' => 'گذرواژه قبلی',
+    ],
 ];

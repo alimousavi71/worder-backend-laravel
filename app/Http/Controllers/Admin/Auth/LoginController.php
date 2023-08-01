@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers\Admin\Auth;
+
 use App\Http\Controllers\Controller;
 use App\Models\Admin;
 use App\Models\Login;
@@ -24,18 +25,19 @@ class LoginController extends Controller
         return Auth::guard('admin');
     }
 
-
     public function showLoginForm()
     {
         //auth()->guard('admin')->login(Admin::query()->first());
         $title = 'کدبرگر | ورود';
-        return view('admin.auth.login',compact('title'));
+
+        return view('admin.auth.login', compact('title'));
     }
 
     public function logout(Request $request)
     {
         $this->guard()->logout();
         $request->session()->invalidate();
+
         return $this->loggedOut($request) ?: redirect()->route('admin.dashboard');
     }
 
@@ -49,8 +51,7 @@ class LoginController extends Controller
     }
 
     /**
-     * @param Request $request
-     * @param Admin $user
+     * @param  Admin  $user
      */
     protected function authenticated(Request $request, $user)
     {

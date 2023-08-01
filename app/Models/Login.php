@@ -22,7 +22,7 @@ class Login extends Model
     ];
 
     protected $casts = [
-        'login_at'=>'datetime'
+        'login_at' => 'datetime',
     ];
 
     public function user()
@@ -30,9 +30,6 @@ class Login extends Model
         return $this->morphTo();
     }
 
-    /**
-     * @param Admin|User $user
-     */
     public function userLogin(Admin|User $user)
     {
         $user->logins()->create([
