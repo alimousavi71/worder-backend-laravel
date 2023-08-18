@@ -6,13 +6,13 @@ use BenSampo\Enum\Enum;
 
 final class Rate extends Enum
 {
-    const EXCELLENT = 1;
+    const EXCELLENT = 5;
 
-    const GOOD = 2;
+    const GOOD = 4;
 
     const NORMAL = 3;
 
-    const BAD = 4;
+    const BAD = 2;
 
-    const VERY_BAD = 5;
+    const VERY_BAD = 1;
 }
