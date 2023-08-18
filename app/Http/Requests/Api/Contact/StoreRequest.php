@@ -24,9 +24,8 @@ class StoreRequest extends FormRequest
     public function rules()
     {
         return [
-            'email' => 'required|email',
-            'figma_link' => 'required|url',
-            'dribble_link' => 'required|url',
+            'comment' => 'required|min:5',
+            'rate' => 'nullable|int|min:1|max:5',
         ];
     }
 }

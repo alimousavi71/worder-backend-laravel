@@ -174,6 +174,7 @@ return [
         Mews\Captcha\CaptchaServiceProvider::class,
         Intervention\Image\ImageServiceProvider::class,
         \App\Providers\RepositoryServiceProvider::class,
+        \App\Providers\MacroServiceProvider::class,
     ])->toArray(),
 
     /*

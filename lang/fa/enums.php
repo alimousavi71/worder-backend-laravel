@@ -1,26 +1,17 @@
 <?php
 
-use App\Enums\Database\Meet\MeetConnectionWay;
-use App\Enums\Database\Meet\MeetStatus;
-use App\Enums\Database\Meet\MeetType;
+use App\Enums\Database\Exam\ExamType;
+use App\Enums\Database\WordReport\EWordReportReason;
 
 return [
-    MeetStatus::class => [
-        MeetStatus::Publish => 'منتشر شده',
-        MeetStatus::Reject => 'رد شده',
-        MeetStatus::Pending => 'در انتظار',
-        MeetStatus::Expire => 'منقضی شده',
-        MeetStatus::NeedEdit => 'نیاز به ویرایش',
+    ExamType::class => [
+        ExamType::Normal => 'عادی',
+        ExamType::Timer => 'تایمر',
     ],
-    MeetType::class => [
-        MeetType::Premium => 'پریمیوم',
-        MeetType::Free => 'رایگان',
-    ],
-    MeetConnectionWay::class => [
-        MeetConnectionWay::None => 'بدون ارتباط',
-        MeetConnectionWay::Whatsapp => 'واتس آپ',
-        MeetConnectionWay::Telegram => 'تلگرام',
-        MeetConnectionWay::Email => 'ایمیل',
-        MeetConnectionWay::Call => 'شماره',
+    EWordReportReason::class => [
+        EWordReportReason::WrongWord => 'لغت اشتباه است',
+        EWordReportReason::WrongTranslate => 'ترجمه صحیح نیست',
+        EWordReportReason::Useless => 'بدون استفاده',
+        EWordReportReason::WrongPronunciation => 'تلفظ صحیح نیست',
     ],
 ];

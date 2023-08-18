@@ -19,4 +19,7 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/test', [App\Http\Controllers\TestController::class, 'index'])->name('test');
+Route::get('/test/login', [App\Http\Controllers\TestController::class, 'login'])->name('test.login');
+Route::get('/test/callback', [App\Http\Controllers\TestController::class, 'callback'])->name('test.callback');
+Route::get('/test/translate', [App\Http\Controllers\TestController::class, 'translate'])->name('test.translate');

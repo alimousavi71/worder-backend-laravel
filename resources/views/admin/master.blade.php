@@ -29,6 +29,7 @@
     @endif
 
     <link href="{{ asset('res-admin/assets/font-awesome/css/light.css') }}" rel="stylesheet" />
+    <link href="{{ asset('res-admin/assets/font-awesome/css/solid.css') }}" rel="stylesheet" />
 
     <link id="theme" rel="stylesheet" type="text/css" media="all" href="{{ asset('res-admin/assets/colors/color1.css') }}" />
 

@@ -13,7 +13,7 @@ class ResponseService
         return Response::json([
             'status' => ResponseStatusCode::HTTP_OK,
             'message' => $message,
-            'date' => $data,
+            'data' => $data,
         ]);
     }
 
@@ -22,7 +22,17 @@ class ResponseService
         return Response::json([
             'status' => $code,
             'message' => $message,
-            'date' => $data,
+            'data' => $data,
+        ], $code);
+    }
+
+    public static function token($user, $token)
+    {
+        return Response::json([
+            'status' => 200,
+            'message' => trans('api.auth.login.success'),
+            'token' => $token,
+            'user' => $user,
         ]);
     }
 }

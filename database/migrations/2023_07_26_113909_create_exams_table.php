@@ -1,6 +1,7 @@
 <?php
 
 use App\Enums\Database\Exam\ExamType;
+use App\Enums\Database\Exam\RepositoryType;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -15,12 +16,11 @@ return new class extends Migration
         Schema::create('exams', function (Blueprint $table) {
             $table->id();
             $table->string('title');
-            $table->unsignedTinyInteger('type')->default(ExamType::Random);
+            $table->unsignedTinyInteger('type')->default(ExamType::Normal);
+            $table->unsignedTinyInteger('repository')->default(RepositoryType::MyWord);
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('grade')->default(0);
-            $table->boolean('is_timer_on')->default(true);
-            $table->boolean('is_word_knew')->default(false);
-            $table->boolean('is_my_words')->default(false);
+            $table->dateTime('end_time')->nullable();
             $table->softDeletes();
             $table->timestamps();
 

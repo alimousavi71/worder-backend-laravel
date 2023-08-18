@@ -64,6 +64,11 @@ class User extends Authenticatable
         return $this->hasOne(UserBlock::class);
     }
 
+    public function avatar()
+    {
+        return $this->hasOne(Avatar::class);
+    }
+
     public function logins()
     {
         return $this->morphMany(Login::class, 'user')

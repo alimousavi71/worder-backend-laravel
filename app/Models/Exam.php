@@ -10,6 +10,14 @@ class Exam extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'title',
+        'type',
+        'repository',
+        'user_id',
+        'grade',
+    ];
+
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);

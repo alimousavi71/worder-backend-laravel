@@ -1,0 +1,1 @@
+<a target="_blank" href="{{ route('test.login') }}">Login</a>

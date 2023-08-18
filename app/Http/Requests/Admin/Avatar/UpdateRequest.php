@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests\Admin\Admin;
+namespace App\Http\Requests\Admin\Avatar;
 
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -24,11 +24,7 @@ class UpdateRequest extends FormRequest
     public function rules()
     {
         return [
-            'first_name' => 'required|max:255',
-            'last_name' => 'required|max:255',
-            'password' => 'nullable|min:8|max:255',
             'avatar' => 'nullable|mimes:png,jpg,jpeg|max:2000',
-            'role' => 'required|exists:roles,id',
         ];
     }
 }

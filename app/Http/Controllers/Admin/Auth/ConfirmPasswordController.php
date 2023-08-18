@@ -10,7 +10,7 @@ class ConfirmPasswordController extends Controller
 {
     use ConfirmsPasswords;
 
-    protected $redirectTo = '/cp-admin-4242';
+    protected string $redirectTo = '/cp-admin-4242';
 
     public function __construct()
     {

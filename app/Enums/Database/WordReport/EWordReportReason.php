@@ -2,9 +2,10 @@
 
 namespace App\Enums\Database\WordReport;
 
+use BenSampo\Enum\Contracts\LocalizedEnum;
 use BenSampo\Enum\Enum;
 
-final class EReason extends Enum
+final class EWordReportReason extends Enum implements LocalizedEnum
 {
     const WrongWord = 1;
 

@@ -9,12 +9,12 @@
 @section('content')
 
     <div class="page-header">
-        <h1 class="page-title">{{ trans('panel.category.title') }}</h1>
+        <h1 class="page-title">{{ trans('panel.avatar.title') }}</h1>
         <div>
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">{{ trans('panel.dashboard.title') }}</a></li>
-                <li class="breadcrumb-item"><a href="{{ route('admin.category.index') }}">{{ trans('panel.category.title') }}</a></li>
-                <li class="breadcrumb-item active">{{ trans('panel.category.edit') }}</li>
+                <li class="breadcrumb-item"><a href="{{ route('admin.avatar.index') }}">{{ trans('panel.avatar.title') }}</a></li>
+                <li class="breadcrumb-item active">{{ trans('panel.avatar.edit') }}</li>
             </ol>
         </div>
     </div>
@@ -28,15 +28,13 @@
                         @csrf
                         @method('PATCH')
 
-                        <x-admin.input identify="id" title="id" type="hidden" :old="$category->id" />
+                        <x-admin.input identify="id" title="id" type="hidden" :old="$avatar->id" />
 
-                        <x-admin.select-enum identify="type" :title="trans('fields.category.type')" :enum-class="\App\Enums\Database\Category\CategoryType::class" :old="$category->type" />
+                        @if($avatar->icon)
+                            <img style="width: 200px;" src="{{ asset($avatar->icon) }}" alt="avatar">
+                        @endif
 
-                        <x-admin.input identify="title" :title="trans('fields.category.title')" type="text" :old="$category->title" />
-
-                        <x-admin.input identify="description" :title="trans('fields.category.description')" type="text" :old="$category->description" />
-
-                        <x-admin.input identify="icon" :title="trans('fields.category.icon')" type="text" :old="$category->icon" />
+                        <x-admin.input identify="icon" type="file" :title="trans('fields.avatar.icon')" type="file" />
 
                         <x-admin.button-submit title="{{ trans('panel.update') }}"/>
 

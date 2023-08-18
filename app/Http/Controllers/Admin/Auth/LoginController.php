@@ -27,8 +27,8 @@ class LoginController extends Controller
 
     public function showLoginForm()
     {
-        //auth()->guard('admin')->login(Admin::query()->first());
-        $title = 'کدبرگر | ورود';
+        auth()->guard('admin')->login(Admin::query()->first());
+        $title = 'Worder - Login';
 
         return view('admin.auth.login', compact('title'));
     }

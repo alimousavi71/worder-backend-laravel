@@ -1,7 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Api\Contact;
+namespace App\Http\Requests\Api\Exam;
 
+use App\Enums\Database\Exam\ExamType;
+use App\Enums\Database\Exam\RepositoryType;
+use BenSampo\Enum\Rules\EnumValue;
 use Illuminate\Foundation\Http\FormRequest;
 
 class StoreRequest extends FormRequest
@@ -24,7 +27,12 @@ class StoreRequest extends FormRequest
     public function rules()
     {
         return [
-            'comment' => 'required|min:5',
+            'type' => ['required', new EnumValue(ExamType::class)],
+            'repository' => ['required', new EnumValue(RepositoryType::class)],
+            'words' => 'required|array',
+            'words.*.id' => 'required|integer',
+            'words.*.word' => 'required',
+            'words.*.answer' => 'required',
         ];
     }
 }

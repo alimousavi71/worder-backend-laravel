@@ -4,15 +4,15 @@ namespace App\Enums\Database\Contact;
 
 use BenSampo\Enum\Enum;
 
-final class Rate extends Enum
+final class ERate extends Enum
 {
-    const EXCELLENT = 5;
-
-    const GOOD = 4;
-
-    const NORMAL = 3;
+    const VERY_BAD = 1;
 
     const BAD = 2;
 
-    const VERY_BAD = 1;
+    const NORMAL = 3;
+
+    const GOOD = 4;
+
+    const EXCELLENT = 5;
 }

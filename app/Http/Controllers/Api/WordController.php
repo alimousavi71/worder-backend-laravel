@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\Word\CreateRequest;
 use App\Http\Requests\Api\Word\PickupRequest;
+use App\Http\Requests\Api\Word\ReportRequest;
 use App\Models\User;
 use App\Repositories\IUserRepo;
 use App\Repositories\IWordRepo;
@@ -81,6 +82,27 @@ class WordController extends Controller
             $this->wordRepo->createUserWord($request->get('word'), $request->get('translate'), $user->id);
 
             return ResponseService::success(trans('api.word.new.success'));
+        } catch (Exception $e) {
+            report($e);
+
+            return ResponseService::failure(trans('api.exception'), 500);
+        }
+    }
+
+    public function report(ReportRequest $request)
+    {
+        try {
+            //TODO fix this with auth
+            $user = User::find(1);
+
+            $wordCheckExist = $this->wordRepo->findById($request->get('word_id'));
+            if (! $wordCheckExist) {
+                return ResponseService::failure(trans('api.word.notfound'), 404);
+            }
+
+            $this->wordRepo->report($request->get('word_id'), $request->get('reason_id'), $user->id);
+
+            return ResponseService::success(trans('api.word.report.success'));
         } catch (Exception $e) {
             report($e);
 

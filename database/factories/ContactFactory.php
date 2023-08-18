@@ -2,7 +2,7 @@
 
 namespace Database\Factories;
 
-use App\Enums\Database\Contact\Rate;
+use App\Enums\Database\Contact\ERate;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -20,7 +20,7 @@ class ContactFactory extends Factory
         return [
             'comment' => $this->faker->sentence,
             'user_id' => rand(1, 10),
-            'rate' => Rate::getRandomValue(),
+            'rate' => ERate::getRandomValue(),
             'is_seen' => $this->faker->boolean,
             'is_public' => $this->faker->boolean,
             'is_collaboration' => $this->faker->boolean,

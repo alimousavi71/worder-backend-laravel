@@ -2,66 +2,37 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Enums\General\BtnType;
-use App\Helper\Helper;
+use App\Helper\Uploader\Uploader;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Admin\Category\StoreRequest;
-use App\Http\Requests\Admin\Category\UpdateRequest;
-use App\Models\Category;
+use App\Http\Requests\Admin\Avatar\StoreRequest;
+use App\Http\Requests\Admin\Avatar\UpdateRequest;
+use App\Models\Avatar;
 use Exception;
 use Illuminate\Http\Request;
-use Yajra\DataTables\Facades\DataTables;
 
-class CategoryController extends Controller
+class AvatarController extends Controller
 {
     public function index()
     {
-        $title = trans('panel.category.index');
-        $routeData = route('admin.category.data');
-        $selects = ['id', 'title', 'type', 'words_count', 'created_at'];
+        $title = trans('panel.avatar.index');
+        $avatars = Avatar::query()->orderBy('sort_order')->get();
 
-        return view('admin.category.index', compact('title', 'routeData', 'selects'));
-    }
-
-    public function data()
-    {
-
-        try {
-            $categories = Category::query()->withCount('words');
-
-            return DataTables::of($categories)
-                ->editColumn('type', function ($category) {
-                    return Helper::renderCategoryType($category->type);
-                })
-                ->editColumn('created_at', function ($category) {
-                    return $category->created_at->toJalali()->format('h:i Y-m-d');
-                })
-                ->addColumn('action', function ($category) {
-                    $actions = Helper::btnMaker(BtnType::Warning, route('admin.category.edit', $category->id), trans('panel.action.edit'));
-                    $actions .= Helper::btnMaker(BtnType::Info, route('admin.category.show', $category->id), trans('panel.action.info'));
-
-                    return $actions;
-                })
-                ->rawColumns(['action', 'type'])
-                ->make();
-        } catch (Exception $e) {
-            return $e->getMessage();
-        }
+        return view('admin.avatar.index', compact('title', 'avatars'));
     }
 
     public function create()
     {
-        $title = trans('panel.category.create');
-        $routeStore = route('admin.category.store');
+        $title = trans('panel.avatar.create');
+        $routeStore = route('admin.avatar.store');
 
-        return view('admin.category.create', compact('title', 'routeStore'));
+        return view('admin.avatar.create', compact('title', 'routeStore'));
     }
 
     public function store(StoreRequest $request)
     {
         try {
             $item = $this->itemProvider($request);
-            Category::create($item);
+            Avatar::query()->create($item);
 
             return response()->json([
                 'result' => 'success',
@@ -77,20 +48,20 @@ class CategoryController extends Controller
         }
     }
 
-    public function edit(Category $category)
+    public function edit(Avatar $avatar)
     {
-        $title = trans('panel.category.edit');
-        $routeUpdate = route('admin.category.update', $category->id);
-        $routeDestroy = route('admin.category.destroy', $category->id);
+        $title = trans('panel.avatar.edit');
+        $routeUpdate = route('admin.avatar.update', $avatar->id);
+        $routeDestroy = route('admin.avatar.destroy', $avatar->id);
 
-        return view('admin.category.edit', compact('title', 'routeUpdate', 'routeDestroy', 'category'));
+        return view('admin.avatar.edit', compact('title', 'routeUpdate', 'routeDestroy', 'avatar'));
     }
 
-    public function update(UpdateRequest $request, Category $category)
+    public function update(UpdateRequest $request, Avatar $avatar)
     {
         try {
             $item = $this->itemProvider($request);
-            $category->update($item);
+            $avatar->update($item);
 
             return response()->json([
                 'result' => 'success',
@@ -106,32 +77,52 @@ class CategoryController extends Controller
         }
     }
 
-    public function destroy(Category $category)
+    public function sortItem(StoreRequest $request)
+    {
+        $avatars = Avatar::query()->get();
+        foreach ($avatars as $avatar) {
+            $avatar->timestamps = false;
+            $id = $avatar->id;
+            foreach ($request->get('orders') as $order) {
+                if ($order['id'] == $id) {
+                    $avatar->update([
+                        'sort_order' => $order['position'],
+                    ]);
+                }
+            }
+        }
+
+        $response['result'] = 'updated';
+        $response['message'] = 'Sort Successfully';
+
+        return response()->json($response);
+    }
+
+    public function destroy(Avatar $avatar)
     {
         try {
-            $category->delete();
+            $avatar->delete();
 
-            return redirect(route('admin.category.index'))->with('success', trans('panel.success_delete'));
+            return redirect(route('admin.avatar.index'))->with('success', trans('panel.success_delete'));
         } catch (Exception $e) {
             report($e);
 
-            return redirect(route('admin.category.index'))->with('danger', trans('panel.error_delete'));
+            return redirect(route('admin.avatar.index'))->with('danger', trans('panel.error_delete'));
         }
-    }
-
-    public function show(Category $category)
-    {
-        $title = trans('panel.category.show');
-
-        return view('admin.category.show', compact('title', 'category'));
     }
 
     protected function itemProvider(Request $request, bool $editMode = false): array
     {
-        $item['title'] = $request->get('title');
-        $item['description'] = $request->get('description');
-        $item['type'] = $request->get('type');
-        $item['icon'] = $request->get('icon');
+        $item = [];
+        if ($request->hasFile('icon')) {
+            $provider = (new Uploader())
+                ->fit(450, 450)
+                ->path('avatar')
+                ->field('icon')
+                ->upload();
+
+            $item['icon'] = $provider['photo'];
+        }
 
         return $item;
     }

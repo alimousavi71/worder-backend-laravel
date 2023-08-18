@@ -2,6 +2,7 @@
 
 // Login
 use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Admin\AvatarController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\ContactController;
 use App\Http\Controllers\Admin\ExamController;
@@ -99,6 +100,17 @@ Route::group(['middleware' => ['admin.auth'/*,'acl'*/], 'guard' => 'admin'], fun
         Route::get('/category/show/{category}', 'show')->name('category.show');
         Route::patch('/category/update/{category}', 'update')->name('category.update');
         Route::delete('/category/destroy/{category}', 'destroy')->name('category.destroy');
+    });
+
+    Route::controller(AvatarController::class)->group(function () {
+        Route::get('/avatar', 'index')->name('avatar.index');
+        Route::get('/avatar/data', 'data')->name('avatar.data');
+        Route::get('/avatar/create', 'create')->name('avatar.create');
+        Route::post('/avatar/store', 'store')->name('avatar.store');
+        Route::post('/avatar/sort-item', 'sortItem')->name('avatar.sort-item');
+        Route::get('/avatar/edit/{avatar}', 'edit')->name('avatar.edit');
+        Route::patch('/avatar/update/{avatar}', 'update')->name('avatar.update');
+        Route::delete('/avatar/destroy/{avatar}', 'destroy')->name('avatar.destroy');
     });
 
     Route::controller(UserController::class)->group(function () {

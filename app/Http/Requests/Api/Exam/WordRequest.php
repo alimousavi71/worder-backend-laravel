@@ -3,10 +3,11 @@
 namespace App\Http\Requests\Api\Exam;
 
 use App\Enums\Database\Exam\ExamType;
+use App\Enums\Database\Exam\RepositoryType;
 use BenSampo\Enum\Rules\EnumValue;
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreRequest extends FormRequest
+class WordRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -27,6 +28,7 @@ class StoreRequest extends FormRequest
     {
         return [
             'type' => ['required', new EnumValue(ExamType::class)],
+            'repository' => ['required', new EnumValue(RepositoryType::class)],
         ];
     }
 }

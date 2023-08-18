@@ -12,7 +12,7 @@ class ResetPasswordController extends Controller
 {
     use ResetsPasswords;
 
-    protected $redirectTo = '/cp-admin-4242';
+    protected string $redirectTo = '/cp-admin-4242';
 
     public function __construct()
     {
@@ -21,7 +21,7 @@ class ResetPasswordController extends Controller
 
     public function showResetForm(Request $request, $token = null)
     {
-        $title = 'Admittedz | Reset Password';
+        $title = 'Worder | Reset Password';
 
         return view('admin.auth.passwords.reset', compact('title'))->with(
             [

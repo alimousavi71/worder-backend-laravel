@@ -38,7 +38,7 @@ class ForgetController extends Controller
         } catch (Exception $e) {
             report($e);
 
-            return ResponseService::failure(trans('api.auth.forget.filed'), 500);
+            return ResponseService::failure(trans('api.exception'), 500);
 
         }
     }

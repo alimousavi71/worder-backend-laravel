@@ -11,6 +11,21 @@ use Illuminate\Support\Facades\Route;
 
 class Helper
 {
+    public static function abbreviateNumber($number)
+    {
+        if ($number >= 1e12) {
+            return round($number / 1e12, 1).'T';
+        } elseif ($number >= 1e9) {
+            return round($number / 1e9, 1).'B';
+        } elseif ($number >= 1e6) {
+            return round($number / 1e6, 1).'M';
+        } elseif ($number >= 1e3) {
+            return round($number / 1e3, 1).'k';
+        }
+
+        return $number;
+    }
+
     public static function renderCategoryType($type)
     {
         return match ($type) {

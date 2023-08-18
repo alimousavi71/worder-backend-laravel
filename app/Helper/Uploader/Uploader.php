@@ -114,7 +114,7 @@ class Uploader implements IUploadBuilder
             if (isset($this->config->resize)) {
                 $image->resize($this->config->resize_width, $this->config->resize_height);
             }
-            $image->save($path);
+            $image->save($path, 100);
             $result['photo'] = $path;
 
             if (isset($this->config->thumb)) {

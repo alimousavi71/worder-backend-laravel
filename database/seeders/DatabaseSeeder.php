@@ -24,6 +24,7 @@ class DatabaseSeeder extends Seeder
             ExamSeeder::class,
             WordExamSeeder::class,
             UserSentenceSeeder::class,
+            AvatarSeeder::class,
         ]);
     }
 }

@@ -42,7 +42,7 @@ class ResetController extends Controller
             DB::rollBack();
             report($e);
 
-            return ResponseService::failure(trans('api.auth.reset.filed'), 500);
+            return ResponseService::failure(trans('api.exception'), 500);
 
         }
     }

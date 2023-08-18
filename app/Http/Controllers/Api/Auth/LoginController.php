@@ -38,10 +38,9 @@ class LoginController extends Controller
             $this->userRepo->logLogin($user);
 
             $token = $user->createToken('USER_API_TOKEN', ['user'])->plainTextToken;
-            $data['user'] = new LoginResponse($user);
-            $data['token'] = $token;
+            $user = new LoginResponse($user);
 
-            return ResponseService::success(trans('api.auth.login.success'), $data);
+            return ResponseService::token($user, $token);
         } catch (Exception $e) {
             report($e);
 

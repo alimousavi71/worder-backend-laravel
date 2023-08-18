@@ -13,6 +13,7 @@ class Contact extends Model
         'comment',
         'user_id',
         'rate',
+        'agent',
         'is_seen',
         'is_public',
         'is_collaboration',

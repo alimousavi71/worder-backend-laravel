@@ -3,7 +3,7 @@
     <div class="app-sidebar">
         <div class="side-header">
             <a class="header-brand1" href="{{ route('admin.dashboard') }}">
-                <img src="{{ asset('res-admin/assets/images/brand/logo.png') }}" class="header-brand-img desktop-logo" alt="Worder">
+                <img src="{{ asset('res-admin/assets/images/brand/test-logo.png') }}" class="header-brand-img desktop-logo" alt="Worder">
                 <img src="{{ asset('res-admin/assets/images/brand/logo-toggle.png') }}" class="header-brand-img toggle-logo" alt="Worder">
                 <img src="{{ asset('res-admin/assets/images/brand/logo-dark.png') }}" class="header-brand-img light-logo1" alt="Worder">
                 <img src="{{ asset('res-admin/assets/images/brand/logo-mini-dark.png') }}" class="header-brand-img light-logo" alt="Worder">
@@ -104,6 +104,18 @@
 
                     <ul class="slide-menu">
                         <li><a href="{{ route('admin.exam.index') }}" class="slide-item">{{ trans('panel.list') }}</a></li>
+                    </ul>
+                </li>
+
+                <li class="slide">
+                    <a class="side-menu__item" data-bs-toggle="slide" href="javascript:void(0)" id="navAvatar">
+                        <i class="side-menu__icon fal fa-image"></i>
+                        <span class="side-menu__label">{{ trans('panel.avatar.index') }}</span><i class="angle fal fa-angle-left"></i>
+                    </a>
+
+                    <ul class="slide-menu">
+                        <li><a href="{{ route('admin.avatar.index') }}" class="slide-item">{{ trans('panel.list') }}</a></li>
+                        <li><a href="{{ route('admin.avatar.create') }}" class="slide-item">{{ trans('panel.create') }}</a></li>
                     </ul>
                 </li>
 

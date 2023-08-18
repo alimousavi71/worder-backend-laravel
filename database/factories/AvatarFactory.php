@@ -5,7 +5,7 @@ namespace Database\Factories;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\avatar>
+ * @extends Factory
  */
 class AvatarFactory extends Factory
 {
@@ -16,8 +16,6 @@ class AvatarFactory extends Factory
      */
     public function definition(): array
     {
-        return [
-            //
-        ];
+
     }
 }

@@ -32,7 +32,6 @@ class UserRepo implements IUserRepo
     {
         return User::query()
             ->where('email', $email)
-            //->where('is_block', false)
             ->first();
     }
 

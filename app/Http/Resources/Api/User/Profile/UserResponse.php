@@ -1,26 +1,26 @@
 <?php
 
-namespace App\Http\Resources\Api\User\Word;
+namespace App\Http\Resources\Api\User\Profile;
 
-use App\Models\Word;
+use App\Helper\Helper;
+use App\Models\User;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class WordResponse extends JsonResource
+class UserResponse extends JsonResource
 {
     public function toArray($request)
     {
         /**
-         * @var $this Word
+         * @var $this User
          */
         $r['id'] = $this->id;
-        $r['word'] = $this->word;
-        $r['translate'] = $this->translate ?? '';
-        $r['description'] = $this->description ?? '';
-        if (! empty($this->pivot)) {
-            $r['is_knew'] = (bool) $this->pivot->is_knew;
-            $r['correct_answer'] = $this->pivot->correct_answer;
-            $r['wrong_answer'] = $this->pivot->wrong_answer;
-            $r['repeat'] = $this->pivot->repeat;
+        $r['firstname'] = $this->firstname;
+        $r['lastname'] = $this->lastname;
+        $r['avatar'] = $this->avatar ? asset($this->avatar) : asset('default/avatar.jpeg');
+        $r['email'] = $this->email;
+
+        if ($this->loadCount('words')) {
+            $r['allWords'] = Helper::abbreviateNumber($this->words_count);
         }
 
         return $r;

@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Enums\Database\Exam\ExamType;
+use App\Enums\Database\Exam\RepositoryType;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -19,12 +20,10 @@ class ExamFactory extends Factory
     {
         return [
             'title' => 'Exam '.fake()->numerify('##'),
-            'type' => ExamType::Random,
+            'type' => ExamType::getRandomValue(),
+            'repository' => RepositoryType::getRandomValue(),
             'user_id' => rand(1, 10),
             'grade' => rand(1, 100),
-            'is_timer_on' => fake()->boolean,
-            'is_word_knew' => fake()->boolean,
-            'is_my_words' => fake()->boolean,
         ];
     }
 }
