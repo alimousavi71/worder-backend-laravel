@@ -88,10 +88,10 @@ class UserRepo implements IUserRepo
             ->delete();
     }
 
-    public function updateAvatar(User $user, string $avatar)
+    public function updateAvatar(int $userId, int $avatarId)
     {
-        return $user->update([
-            'avatar' => $avatar,
+        return User::query()->where('id', $userId)->update([
+            'avatar_id' => $avatarId,
         ]);
     }
 

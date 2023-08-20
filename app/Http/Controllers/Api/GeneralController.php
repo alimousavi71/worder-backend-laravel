@@ -21,7 +21,7 @@ class GeneralController extends Controller
             $data['repository'] = RepositoryType::asApi();
             $data['reportTypes'] = EWordReportReason::asApi();
             $data['rates'] = ERate::asApi();
-            $data['avatars'] = AvatarResponse::collection(Avatar::query()->get());
+            $data['avatars'] = AvatarResponse::collection(Avatar::query()->orderBy('sort_order')->get());
 
             return ResponseService::success(trans('api.general.success'), $data);
         } catch (Exception $e) {

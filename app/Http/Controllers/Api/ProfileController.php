@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Helper\Helper;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Api\User\Profile\AvatarUpdateRequest;
 use App\Http\Requests\Api\User\Profile\PasswordRequest;
 use App\Http\Requests\Api\User\Profile\UpdateRequest;
 use App\Http\Resources\Api\User\Profile\UserResponse;
@@ -67,27 +68,13 @@ class ProfileController extends Controller
     {
         try {
             //TODO fix this with auth
-            $user = User::withCount('words')->find(1);
+            $user = User::withCount(['words', 'avatar'])->find(1);
 
             return response()->json([
                 'status' => 200,
                 'message' => trans('api.profile.info_success'),
                 'user' => new UserResponse($user),
             ]);
-
-        } catch (Exception $e) {
-            report($e);
-
-            return ResponseService::failure(trans('api.exception'), 500);
-        }
-    }
-
-    public function signout()
-    {
-        try {
-            auth('sanctum')->user()->tokens()->delete();
-
-            return ResponseService::success(trans('api.profile.signout.success'));
 
         } catch (Exception $e) {
             report($e);
@@ -116,11 +103,48 @@ class ProfileController extends Controller
     public function updatePassword(PasswordRequest $request)
     {
         try {
-            $user = auth('sanctum')->user();
+            //TODO fix this with auth
+            $user = User::query()->find(1);
 
             $this->userRepo->updatePassword($user->id, $request->get('password'));
 
             return ResponseService::success(trans('api.profile.password.success'));
+
+        } catch (Exception $e) {
+            report($e);
+
+            return ResponseService::failure(trans('api.exception'), 500);
+        }
+    }
+
+    public function updateAvatar(AvatarUpdateRequest $request)
+    {
+        try {
+            //TODO fix this with auth
+            $user = User::query()->find(1);
+
+            $this->userRepo->updateAvatar($user->id, $request->get('avatar_id'));
+
+            return ResponseService::success(trans('api.profile.avatar_success'));
+
+        } catch (Exception $e) {
+            report($e);
+
+            return ResponseService::failure(trans('api.exception'), 500);
+        }
+    }
+
+    public function signout()
+    {
+        try {
+
+            //TODO fix this with auth
+            $user = User::query()->find(1);
+
+            $user->tokens()->delete();
+            //auth('sanctum')->user()->tokens()->delete();
+
+            return ResponseService::success(trans('api.profile.signout.success'));
 
         } catch (Exception $e) {
             report($e);

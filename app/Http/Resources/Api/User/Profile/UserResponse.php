@@ -23,6 +23,10 @@ class UserResponse extends JsonResource
             $r['allWords'] = Helper::abbreviateNumber($this->words_count);
         }
 
+        if ($this->relationLoaded('avatar')) {
+            $r['avatar'] = $this->avatar?->icon ? asset($this->avatar->icon) : asset('default/avatar.jpeg');
+        }
+
         return $r;
     }
 }

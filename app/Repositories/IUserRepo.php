@@ -33,11 +33,10 @@ interface IUserRepo
 
     public function updatePassword(int $userId, string $password);
 
+    public function updateAvatar(int $userId, int $avatarId);
+
     /* Regular */
     public function logLogin(User $user): Login;
-
-    /* Avatar */
-    public function updateAvatar(User $user, string $avatar);
 
     /* My words */
     public function wordsById(int $userId): Collection;

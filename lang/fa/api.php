@@ -29,6 +29,8 @@ return [
 
     'profile' => [
         'update_success' => 'پروفایل با موفقیت به روز شد.',
+        'info_success' => 'پروفایل بازیابی شد.',
+        'avatar_success' => 'آواتار به روز شد.',
     ],
 
 ];

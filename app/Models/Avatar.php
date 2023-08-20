@@ -16,6 +16,6 @@ class Avatar extends Model
 
     public function avatar()
     {
-        return $this->belongsTo(Avatar::class);
+        return $this->hasMany(User::class, 'avatar_id');
     }
 }
