@@ -1,0 +1,43 @@
+<?php
+
+namespace App\AcfType\Builder;
+
+use App\AcfType\AcfEmail;
+
+class AcfEmailBuilder
+{
+    private AcfEmail $instance;
+
+    public function __construct(string $name, string $label, bool $required = false)
+    {
+        $this->instance = new AcfEmail();
+        $this->instance->setValidation(['email']);
+        $this->instance->setName($name);
+        $this->instance->setLabel($label);
+        $this->instance->setType('Email');
+        if ($required) {
+            $this->instance->setRequired($required);
+        }
+
+    }
+
+    public function withDefaultValue(string $defaultValue): self
+    {
+
+        $this->instance->defaultValue = $defaultValue;
+
+        return $this;
+    }
+
+    public function withPlaceHolder(string $placeHolder): self
+    {
+        $this->instance->placeHolder = $placeHolder;
+
+        return $this;
+    }
+
+    public function build(): AcfEmail
+    {
+        return $this->instance;
+    }
+}

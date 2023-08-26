@@ -23,3 +23,5 @@ Route::get('/test', [App\Http\Controllers\TestController::class, 'index'])->name
 Route::get('/test/login', [App\Http\Controllers\TestController::class, 'login'])->name('test.login');
 Route::get('/test/callback', [App\Http\Controllers\TestController::class, 'callback'])->name('test.callback');
 Route::get('/test/translate', [App\Http\Controllers\TestController::class, 'translate'])->name('test.translate');
+
+Route::get('/acf/test', [App\Http\Controllers\AcfController::class, 'test']);

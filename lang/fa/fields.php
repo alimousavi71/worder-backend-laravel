@@ -21,6 +21,14 @@ return [
         'icon' => 'تصویر',
         'type' => 'نوع',
     ],
+    'acf-template' => [
+        'id' => 'شناسه',
+        'title' => 'عنوان',
+        'photo' => 'تصویر',
+        'description' => 'توضیحات',
+        'template' => 'فایل قالب',
+        'created_at' => 'تاریخ ایجاد',
+    ],
     'avatar' => [
         'id' => 'شناسه',
         'created_at' => 'تاریخ ایجاد',

@@ -1,6 +1,8 @@
 <?php
 
 // Login
+use App\Http\Controllers\Admin\AcfFieldAttachController;
+use App\Http\Controllers\Admin\AcfTemplateController;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\AvatarController;
 use App\Http\Controllers\Admin\CategoryController;
@@ -100,6 +102,23 @@ Route::group(['middleware' => ['admin.auth'/*,'acl'*/], 'guard' => 'admin'], fun
         Route::get('/category/show/{category}', 'show')->name('category.show');
         Route::patch('/category/update/{category}', 'update')->name('category.update');
         Route::delete('/category/destroy/{category}', 'destroy')->name('category.destroy');
+    });
+
+    Route::controller(AcfTemplateController::class)->group(function () {
+        Route::get('/acf-template', 'index')->name('acf-template.index');
+        Route::get('/acf-template/data', 'data')->name('acf-template.data');
+        Route::get('/acf-template/create', 'create')->name('acf-template.create');
+        Route::post('/acf-template/store', 'store')->name('acf-template.store');
+
+        Route::get('/acf-template/{type}/render', 'render')->name('acf-template.render');
+        Route::get('/acf-template/{acfTemplate}/edit', 'edit')->name('acf-template.edit');
+        Route::get('/acf-template/{acfTemplate}/manage', 'manage')->name('acf-template.manage');
+        Route::patch('/acf-template/{acfTemplate}/update', 'update')->name('acf-template.update');
+        Route::delete('/acf-template/{acfTemplate}/destroy', 'destroy')->name('acf-template.destroy');
+    });
+
+    Route::controller(AcfFieldAttachController::class)->group(function () {
+        Route::patch('/acf-template/{acfTemplate}/store-fields', 'store')->name('acf-template.store-fields');
     });
 
     Route::controller(AvatarController::class)->group(function () {

@@ -167,5 +167,6 @@ return [
         'translate' => 'ترجمه',
         'password_confirm' => 'تکرار گذرواژه',
         'old_password' => 'گذرواژه قبلی',
+        'template' => 'فایل قالب',
     ],
 ];

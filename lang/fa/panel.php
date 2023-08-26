@@ -33,6 +33,7 @@ return [
     ],
     'action' => [
         'edit' => 'ویرایش',
+        'manage' => 'مدیریت',
         'info' => 'جزئیات',
     ],
     'setting' => [
@@ -79,6 +80,13 @@ return [
         'analytics' => [
             'total_view' => 'تعداد کاربران',
         ],
+    ],
+    'acf-template' => [
+        'index' => 'قالب ها',
+        'title' => 'قالب ها',
+        'edit' => 'ویرایش قالب',
+        'create' => 'ایجاد قالب',
+        'show' => 'نمایش قالب',
     ],
     'word' => [
         'index' => 'کلمه ها',
