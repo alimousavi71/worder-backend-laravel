@@ -4,11 +4,11 @@ namespace App\AcfType;
 
 class AcfText extends AcfBase
 {
-    public int $charLimit;
+    public ?int $charLimit = null;
 
-    public string $defaultValue;
+    public ?string $defaultValue = null;
 
-    public string $placeHolder;
+    public ?string $placeHolder;
 
     public function getCharLimit(): int
     {

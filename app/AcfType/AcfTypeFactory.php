@@ -6,6 +6,7 @@ use App\AcfType\Builder\AcfDateBuilder;
 use App\AcfType\Builder\AcfEmailBuilder;
 use App\AcfType\Builder\AcfImageBuilder;
 use App\AcfType\Builder\AcfRangeBuilder;
+use App\AcfType\Builder\AcfSelectBuilder;
 use App\AcfType\Builder\AcfTextareaBuilder;
 use App\AcfType\Builder\AcfTextBuilder;
 use App\AcfType\Builder\AcfUrlBuilder;
@@ -15,6 +16,11 @@ class AcfTypeFactory
     public static function text(string $name, string $label, bool $required = false): AcfTextBuilder
     {
         return new AcfTextBuilder($name, $label, $required);
+    }
+
+    public static function select(string $name, string $label, bool $required = false): AcfSelectBuilder
+    {
+        return new AcfSelectBuilder($name, $label, $required);
     }
 
     public static function email(string $name, string $label, bool $required = false): AcfEmailBuilder

@@ -4,9 +4,9 @@ namespace App\AcfType;
 
 class AcfSelect extends AcfBase
 {
-    public string $defaultValue;
+    public ?string $defaultValue = null;
 
-    public string $placeHolder;
+    public ?string $placeHolder;
 
     public array $select = [];
 

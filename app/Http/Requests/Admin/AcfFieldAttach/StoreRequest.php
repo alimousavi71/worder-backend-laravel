@@ -23,11 +23,15 @@ class StoreRequest extends FormRequest
      */
     public function rules()
     {
-        return [
-            'fields' => 'required|array',
-            'fields.*.label' => 'required',
-            'fields.*.name' => 'required',
-            'fields.*.type' => 'required|in:Text,Textarea,Email,Url,Range',
-        ];
+        if ($this->get('fields')) {
+            return [
+                'fields' => 'required|array',
+                'fields.*.label' => 'required',
+                'fields.*.name' => 'required',
+                'fields.*.type' => 'required|in:Text,Textarea,Email,Url,Range,Select,Image',
+            ];
+        }
+
+        return [];
     }
 }

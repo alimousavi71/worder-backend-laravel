@@ -10,6 +10,8 @@ class AcfBase
 
     public string $type;
 
+    public ?string $description = null;
+
     public bool $required = false;
 
     public array $validation = [];
@@ -63,6 +65,11 @@ class AcfBase
     {
         $this->validation[] = 'required';
         $this->required = $required;
+    }
+
+    public function setDescription(?string $description): void
+    {
+        $this->description = $description;
     }
 
     public function toArray(): array

@@ -4,17 +4,17 @@ namespace App\AcfType;
 
 class AcfImage extends AcfBase
 {
-    public string $defaultValue;
+    public ?string $defaultValue = null;
 
-    public string $placeHolder;
+    public ?string $placeHolder;
 
     public string $alt = '';
 
     public int $size = 0;
 
-    public int $width = 0;
+    public ?int $width = null;
 
-    public int $height = 0;
+    public ?int $height = null;
 
     public array $extensions;
 

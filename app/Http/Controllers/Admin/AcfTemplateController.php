@@ -28,13 +28,18 @@ class AcfTemplateController extends Controller
 
     public function render($type)
     {
+        $share = [
+            'index' => null,
+        ];
+
         return match ($type) {
-            'Text' => View::make('admin.acf-template.field.text', ['type' => 'متنی']),
-            'Textarea' => View::make('admin.acf-template.field.textarea', ['type' => 'متنی بزرگ']),
-            'Email' => View::make('admin.acf-template.field.email', ['type' => 'پست الکترونیکی']),
-            'Url' => View::make('admin.acf-template.field.url', ['type' => 'لینک']),
-            'Range' => View::make('admin.acf-template.field.range', ['type' => 'بازه عددی']),
-            'Select' => View::make('admin.acf-template.field.select', ['type' => 'انتخابی']),
+            'Text' => View::make('admin.acf-template.field.text', ['type' => 'متنی', ...$share]),
+            'Textarea' => View::make('admin.acf-template.field.textarea', ['type' => 'متنی بزرگ', ...$share]),
+            'Email' => View::make('admin.acf-template.field.email', ['type' => 'پست الکترونیکی', ...$share]),
+            'Url' => View::make('admin.acf-template.field.url', ['type' => 'لینک', ...$share]),
+            'Range' => View::make('admin.acf-template.field.range', ['type' => 'بازه عددی', ...$share]),
+            'Select' => View::make('admin.acf-template.field.select', ['type' => 'انتخابی', ...$share]),
+            'Image' => View::make('admin.acf-template.field.image', ['type' => 'تصویر', ...$share]),
             default => '',
         };
 
@@ -107,8 +112,9 @@ class AcfTemplateController extends Controller
     public function manage(AcfTemplate $acfTemplate)
     {
 
+        $acfTemplate->load('acfFields');
         $availableTemplates = $this->getAvailableTemplates();
-        $title = trans('panel.acf-template.edit');
+        $title = trans('panel.acf-template.builder');
         $routeUpdate = route('admin.acf-template.store-fields', $acfTemplate->id);
 
         return view('admin.acf-template.manage', compact('title', 'routeUpdate', 'acfTemplate', 'availableTemplates'));

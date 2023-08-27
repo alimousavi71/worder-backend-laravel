@@ -1,5 +1,11 @@
+@php
+    $_index = '__INDEX__';
+    $_index_label = '__INDEX__LABEL__';
+    if (!is_null($index)) $_index = $index;
+    if (!is_null($index)) $_index_label = $index + 1;
+@endphp
 <div class="field-item-container">
-    <input name="fields[__INDEX__][type]" value="Textarea" type="hidden">
+    <input name="fields[{{ $_index }}][type]" value="Textarea" type="hidden">
     @include('admin.acf-template.field.base')
     <div class="acf-table-container acf-hide">
         <table class="acf-table-field">
@@ -13,7 +19,8 @@
                     <p>نمایش placeholder فیلد</p>
                 </td>
                 <td class="acf-td-field">
-                    <input name="fields[__INDEX__][placeHolder]" type="text" value="Placeholder __INDEX__LABEL__">
+                    <input name="fields[{{ $_index }}][placeHolder]" type="text"
+                           value="@if(isset($field->props['placeHolder'])) {{ $field->props['placeHolder'] }}@endif">
                 </td>
             </tr>
 
@@ -25,7 +32,8 @@
                     <p>مقدار پیش فرض فیلد</p>
                 </td>
                 <td class="acf-td-field">
-                    <input name="fields[__INDEX__][default]" type="text" value="Default __INDEX__LABEL__">
+                    <input name="fields[{{ $_index }}][defaultValue]" type="text"
+                           value="@if(isset($field->props['defaultValue'])) {{ $field->props['defaultValue'] }}@endif">
                 </td>
             </tr>
 
@@ -37,7 +45,8 @@
                     <p>تعداد کاراکتر های قابل ثبت</p>
                 </td>
                 <td class="acf-td-field">
-                    <input name="fields[__INDEX__][charLimit]" type="number" value="10">
+                    <input name="fields[{{ $_index }}][charLimit]" type="number"
+                           value="@if(isset($field->props['charLimit'])){{ $field->props['charLimit'] }}@endif">
                 </td>
             </tr>
 
@@ -49,7 +58,8 @@
                     <p>تعداد سطرهای متنی textarea</p>
                 </td>
                 <td class="acf-td-field">
-                    <input name="fields[__INDEX__][rows]" type="number" value="5">
+                    <input name="fields[{{ $_index }}][rows]" type="number"
+                           value="@if(isset($field->props['rows'])){{ $field->props['rows'] }}@endif">
                 </td>
             </tr>
 

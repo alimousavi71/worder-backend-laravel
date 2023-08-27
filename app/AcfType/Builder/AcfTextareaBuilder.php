@@ -20,15 +20,24 @@ class AcfTextareaBuilder
 
     }
 
-    public function withCharLimit(int $charLimit): self
+    public function withDescription(?string $description): self
     {
-        $this->instance->validation[] = 'max:'.$charLimit;
+        $this->instance->description = $description;
+
+        return $this;
+    }
+
+    public function withCharLimit(?int $charLimit): self
+    {
+        if ($charLimit) {
+            $this->instance->validation[] = 'max:'.$charLimit;
+        }
         $this->instance->charLimit = $charLimit;
 
         return $this;
     }
 
-    public function withDefaultValue(string $defaultValue): self
+    public function withDefaultValue(?string $defaultValue): self
     {
 
         $this->instance->defaultValue = $defaultValue;
@@ -36,7 +45,7 @@ class AcfTextareaBuilder
         return $this;
     }
 
-    public function withPlaceHolder(string $placeHolder): self
+    public function withPlaceHolder(?string $placeHolder): self
     {
         $this->instance->placeHolder = $placeHolder;
 

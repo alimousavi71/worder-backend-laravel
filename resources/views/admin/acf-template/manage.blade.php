@@ -151,22 +151,30 @@
                         @csrf
                         @method('PATCH')
 
+                        <img class="w-sm-100 w-50" src="{{ asset($acfTemplate->photo) }}"
+                             alt="{{ $acfTemplate->title }}">
+
                         <x-admin.input identify="id" title="id" type="hidden" :old="$acfTemplate->id"/>
 
-                        <x-admin.button-submit/>
+                        <x-admin.button-submit title="به روز رسانی"/>
 
+                        <hr>
 
-                        <select name="type" id="selectFieldType">
-                            <option value="Text">Text</option>
-                            <option value="Textarea">Textarea</option>
-                            <option value="Email">Email</option>
-                            <option value="Url">Url</option>
-                            <option value="Range">Range</option>
-                        </select>
+                        <div class="d-flex gap-3">
+                            <select class="form-control" name="type" id="selectFieldType">
+                                <option value="Text">متنی</option>
+                                <option value="Textarea">متنی بزرگ</option>
+                                <option value="Email">ایمیل</option>
+                                <option value="Url">لینک</option>
+                                <option value="Range">بازه عددی</option>
+                                <option value="Select">انتخابی</option>
+                                <option value="Image">تصویر</option>
+                            </select>
 
-                        <button class="btn btn-success mb-3" type="button" onclick="addField()">Add Text</button>
+                            <button class="btn btn-success" type="button" onclick="addField()">افرودن فیلد</button>
+                        </div>
 
-                        <div id="builder">
+                        <div id="builder" class="mt-3">
                             <div>
                                 <ul class="ul-header">
                                     <li>مرتب سازی</li>
@@ -177,14 +185,32 @@
                                 </ul>
                             </div>
                             <div id="fields">
-
+                                @if($acfTemplate->acfFields->isNotEmpty())
+                                    @foreach($acfTemplate->acfFields as $field)
+                                        @switch($field->type)
+                                            @case('Text')
+                                                @include('admin.acf-template.field.text',['type'=>'متنی','field' =>$field,'index'=>$loop->index])
+                                            @break
+                                            @case('Textarea')
+                                                @include('admin.acf-template.field.textarea',['type'=>'متنی بزرگ','field' =>$field,'index'=>$loop->index])
+                                            @break
+                                            @case('Email')
+                                                @include('admin.acf-template.field.email',['type'=>'پست الکترونیکی','field' =>$field,'index'=>$loop->index])
+                                            @break
+                                            @case('Url')
+                                                @include('admin.acf-template.field.url',['type'=>'لینک','field' =>$field,'index'=>$loop->index])
+                                            @break
+                                            @case('Range')
+                                                @include('admin.acf-template.field.range',['type'=>'بازه عددی','field' =>$field,'index'=>$loop->index])
+                                            @break
+                                            @case('Select')
+                                                @include('admin.acf-template.field.select',['type'=>'انتخابی','field' =>$field,'index'=>$loop->index])
+                                            @break
+                                        @endswitch
+                                    @endforeach
+                                @endif
                             </div>
                         </div>
-
-
-                        {{--<img src="{{ asset($acfTemplate->photo) }}" alt="{{ $acfTemplate->title }}">--}}
-
-
                     </form>
                 </div>
             </div>
@@ -200,11 +226,12 @@
     <script>
         $(document).ready(function () {
             init();
+            sortFieldInit();
         })
 
         const builder = $('#builder')
         const fields = $('#builder #fields')
-        let fieldCount = 0;
+        let fieldCount = parseInt('@if ($acfTemplate->acfFields->count()){{$acfTemplate->acfFields->count()}}@else{{'0'}}@endif');
 
         function init() {
             fields.on('click', '.acf-btn-delete', function () {
@@ -257,8 +284,6 @@
                     target.text('')
                 }
             });
-
-            addField();
         }
 
         function updateFiledCounter() {
@@ -290,6 +315,14 @@
                     url = '{{ route('admin.acf-template.render','Range') }}';
                     break;
                 }
+                case 'Select': {
+                    url = '{{ route('admin.acf-template.render','Select') }}';
+                    break;
+                }
+                case 'Image': {
+                    url = '{{ route('admin.acf-template.render','Image') }}';
+                    break;
+                }
             }
             $.get({
                 url: url,
@@ -297,7 +330,7 @@
             }).then(function (data) {
                 let dataResource = data;
                 dataResource = dataResource.replace(/__INDEX__/g, fieldCount);
-                dataResource = dataResource.replace(/__INDEX__LABEL__/g, fieldCount);
+                dataResource = dataResource.replace(/__INDEX__LABEL__/g, fieldCount + 1);
                 fields.append(dataResource);
                 fieldCount++;
                 updateFiledCounter();

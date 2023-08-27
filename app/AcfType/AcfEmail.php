@@ -6,9 +6,9 @@ class AcfEmail extends AcfBase
 {
     public int $charLimit;
 
-    public string $defaultValue;
+    public ?string $defaultValue = null;
 
-    public string $placeHolder;
+    public ?string $placeHolder;
 
     public function getDefaultValue(): string
     {

@@ -1,32 +1,29 @@
+@php
+    $_index = '__INDEX__';
+    $_index_label = '__INDEX__LABEL__';
+    if (!is_null($index)) $_index = $index;
+    if (!is_null($index)) $_index_label = $index + 1;
+@endphp
 <div class="field-item-container">
     @include('admin.acf-template.field.base')
-    <input name="fields[__INDEX__][type]" value="Range" type="hidden">
+    <input name="fields[{{ $_index }}][type]" value="Range" type="hidden">
     <div class="acf-table-container acf-hide">
         <table class="acf-table-field">
             <tbody>
             @include('admin.acf-template.field.base-field')
 
-            <tr>
-                <td class="acf-td-desc">
-                    <h4>
-                        <span>متن نگه دارنده</span>
-                    </h4>
-                    <p>نمایش placeholder فیلد</p>
-                </td>
-                <td class="acf-td-field">
-                    <input name="fields[__INDEX__][placeHolder]" type="text" value="Placeholder __INDEX__LABEL__">
-                </td>
-            </tr>
 
             <tr>
                 <td class="acf-td-desc">
                     <h4>
                         <span>کمترین</span>
+                        <span class="text-red">*</span>
                     </h4>
                     <p>کمترین مقدار عددی</p>
                 </td>
                 <td class="acf-td-field">
-                    <input name="fields[__INDEX__][minimum]" type="text" value="minimum __INDEX__LABEL__">
+                    <input name="fields[{{ $_index }}][minimum]" type="text"
+                           value="@if(isset($field->props['minimum'])) {{ $field->props['minimum'] }}@endif">
                 </td>
             </tr>
 
@@ -34,11 +31,13 @@
                 <td class="acf-td-desc">
                     <h4>
                         <span>حد اکثر</span>
+                        <span class="text-red">*</span>
                     </h4>
                     <p>بیشترین مقدار عددی</p>
                 </td>
                 <td class="acf-td-field">
-                    <input name="fields[__INDEX__][maximum]" type="text" value="maximum __INDEX__LABEL__">
+                    <input name="fields[{{ $_index }}][maximum]" type="text"
+                           value="@if(isset($field->props['maximum'])) {{ $field->props['maximum'] }}@endif">
                 </td>
             </tr>
 
@@ -49,7 +48,8 @@
                     </h4>
                 </td>
                 <td class="acf-td-field">
-                    <input name="fields[__INDEX__][defaultMinimum]" type="text" value="defaultMinimum __INDEX__LABEL__">
+                    <input name="fields[{{ $_index }}][defaultMinimum]" type="text"
+                           value="@if(isset($field->props['defaultMinimum'])) {{ $field->props['defaultMinimum'] }}@endif">
                 </td>
             </tr>
 
@@ -60,7 +60,8 @@
                     </h4>
                 </td>
                 <td class="acf-td-field">
-                    <input name="fields[__INDEX__][defaultMaximum]" type="text" value="Default __INDEX__LABEL__">
+                    <input name="fields[{{ $_index }}][defaultMaximum]" type="text"
+                           value="@if(isset($field->props['defaultMaximum'])) {{ $field->props['defaultMaximum'] }}@endif">
                 </td>
             </tr>
 

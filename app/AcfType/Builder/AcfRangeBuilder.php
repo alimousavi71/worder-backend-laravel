@@ -20,6 +20,13 @@ class AcfRangeBuilder
 
     }
 
+    public function withDescription(?string $description): self
+    {
+        $this->instance->description = $description;
+
+        return $this;
+    }
+
     public function withMinimum(float $minimum): self
     {
 

@@ -14,7 +14,7 @@
 
     <title>@yield('title','Worder')</title>
 
-    @if(app()->isLocal())
+    @if(!app()->isLocal())
         <link id="style" href="{{ asset('res-admin/assets/plugins/bootstrap/css/bootstrap.rtl.purged.css') }}" rel="stylesheet" />
     @else
         <link id="style" href="{{ asset('res-admin/assets/plugins/bootstrap/css/bootstrap.rtl.min.css') }}" rel="stylesheet" />

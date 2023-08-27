@@ -20,7 +20,14 @@ class AcfDateBuilder
 
     }
 
-    public function withDefaultValue(string $defaultValue): self
+    public function withDescription(?string $description): self
+    {
+        $this->instance->description = $description;
+
+        return $this;
+    }
+
+    public function withDefaultValue(?string $defaultValue): self
     {
 
         $this->instance->defaultValue = $defaultValue;
@@ -28,7 +35,7 @@ class AcfDateBuilder
         return $this;
     }
 
-    public function withPlaceHolder(string $placeHolder): self
+    public function withPlaceHolder(?string $placeHolder): self
     {
         $this->instance->placeHolder = $placeHolder;
 

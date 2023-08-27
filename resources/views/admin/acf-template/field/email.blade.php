@@ -1,6 +1,12 @@
+@php
+    $_index = '__INDEX__';
+    $_index_label = '__INDEX__LABEL__';
+    if (!is_null($index)) $_index = $index;
+    if (!is_null($index)) $_index_label = $index + 1;
+@endphp
 <div class="field-item-container">
     @include('admin.acf-template.field.base')
-    <input name="fields[__INDEX__][type]" value="Email" type="hidden">
+    <input name="fields[{{ $_index }}][type]" value="Email" type="hidden">
     <div class="acf-table-container acf-hide">
         <table class="acf-table-field">
             <tbody>
@@ -14,7 +20,8 @@
                     <p>نمایش placeholder فیلد</p>
                 </td>
                 <td class="acf-td-field">
-                    <input name="fields[__INDEX__][placeHolder]" type="text" value="Placeholder __INDEX__LABEL__">
+                    <input name="fields[{{ $_index }}][placeHolder]" type="text"
+                           value="@if(isset($field->props['placeHolder'])) {{ $field->props['placeHolder'] }}@endif">
                 </td>
             </tr>
 
@@ -26,7 +33,8 @@
                     <p>مقدار پیش فرض فیلد</p>
                 </td>
                 <td class="acf-td-field">
-                    <input name="fields[__INDEX__][default]" type="text" value="Default __INDEX__LABEL__">
+                    <input name="fields[{{ $_index }}][defaultValue]" type="text"
+                           value="@if(isset($field->props['defaultValue'])){{ $field->props['defaultValue'] }}@endif">
                 </td>
             </tr>
 
