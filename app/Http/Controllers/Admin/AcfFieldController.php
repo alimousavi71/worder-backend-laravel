@@ -5,17 +5,15 @@ namespace App\Http\Controllers\Admin;
 use App\AcfType\AcfTypeFactory;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\AcfFieldAttach\StoreRequest;
+use App\Models\AcfField;
 use App\Models\AcfTemplate;
 use Exception;
 
-class AcfFieldAttachController extends Controller
+class AcfFieldController extends Controller
 {
-    public function store(StoreRequest $request, AcfTemplate $acfTemplate)
+    public function attach(StoreRequest $request, AcfTemplate $acfTemplate)
     {
         try {
-
-            $acfTemplate->fields()->delete();
-
             if (! count($request->get('fields', []))) {
                 return response()->json([
                     'result' => 'success',
@@ -23,20 +21,27 @@ class AcfFieldAttachController extends Controller
 
                 ]);
             }
+
             foreach ($request->get('fields') as $field) {
 
-                $acfTemplate->fields()->create([
+                AcfField::updateOrCreate([
+                    'acf_template_id' => $acfTemplate->id,
+                    'id' => $field['id'] ?? null,
+                ], [
                     'label' => $field['label'],
                     'name' => $field['name'],
                     'description' => $field['description'],
                     'required' => isset($field['required']) ? 1 : 0,
                     'type' => $field['type'],
                     'props' => $this->detectFieldProps($field),
+                    'sort_position' => $field['sort_position'],
                 ]);
+
             }
 
             return response()->json([
                 'result' => 'success',
+                'refresh' => true,
                 'message' => trans('panel.success_store'),
 
             ]);
@@ -47,6 +52,20 @@ class AcfFieldAttachController extends Controller
                 'result' => 'exception',
                 'message' => $e->getMessage(),
             ], 500);
+        }
+    }
+
+    public function delete($fieldId)
+    {
+        try {
+            AcfField::query()
+                ->where('id', $fieldId)
+                ->delete();
+
+            return back()->with('success', trans('panel.success_delete'));
+        } catch (Exception $exception) {
+            return back()->with('danger', $exception->getMessage());
+
         }
     }
 

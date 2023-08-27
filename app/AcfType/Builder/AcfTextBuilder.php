@@ -14,10 +14,7 @@ class AcfTextBuilder
         $this->instance->setName($name);
         $this->instance->setLabel($label);
         $this->instance->setType('Text');
-        if ($required) {
-            $this->instance->setRequired($required);
-        }
-
+        $this->instance->setRequired($required);
     }
 
     public function withDescription(?string $description): self

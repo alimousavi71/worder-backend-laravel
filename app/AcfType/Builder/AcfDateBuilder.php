@@ -14,9 +14,7 @@ class AcfDateBuilder
         $this->instance->setName($name);
         $this->instance->setLabel($label);
         $this->instance->setType('Date');
-        if ($required) {
-            $this->instance->setRequired($required);
-        }
+        $this->instance->setRequired($required);
 
     }
 

@@ -19,6 +19,7 @@ class AcfTemplate extends Model
 
     public function fields()
     {
-        return $this->hasMany(AcfField::class, 'acf_template_id');
+        return $this->hasMany(AcfField::class, 'acf_template_id')
+            ->orderBy('sort_position');
     }
 }

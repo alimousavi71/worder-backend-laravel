@@ -15,11 +15,7 @@ class AcfImageBuilder
         $this->instance->setName($name);
         $this->instance->setLabel($label);
         $this->instance->setType('image');
-        if ($required) {
-            $this->instance->setRequired($required);
-        }
-        $this->instance->setExtensions($extensions);
-
+        $this->instance->setRequired($required);
     }
 
     public function withDescription(?string $description): self

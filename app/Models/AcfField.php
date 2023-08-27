@@ -20,6 +20,8 @@ class AcfField extends Model
         'required',
         'type',
         'props',
+        'acf_template_id',
+        'sort_position',
     ];
 
     public function acfTemplate()

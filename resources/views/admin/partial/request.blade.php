@@ -16,6 +16,7 @@
             success: function (response) {
                 hasSpinner.buttonLoader('stop');
                 if (response.result === 'created' || response.result === 'success' || response.result === 'updated') {
+
                     $.toast({
                         heading: 'موفق',
                         text: response.message ,
@@ -23,6 +24,11 @@
                         ...baseConfig,
                         icon: 'success'
                     });
+                    setTimeout(()=>{
+                        if(response.refresh !== undefined){
+                            window.location.reload();
+                        }
+                    },200)
                 }
 
                 else if (response.result === 'warning') {

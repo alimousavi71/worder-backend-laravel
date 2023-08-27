@@ -63,7 +63,12 @@ class AcfBase
 
     public function setRequired(bool $required): void
     {
-        $this->validation[] = 'required';
+        if ($required) {
+            $this->validation[] = 'required';
+        } else {
+            $this->validation[] = 'nullable';
+        }
+
         $this->required = $required;
     }
 

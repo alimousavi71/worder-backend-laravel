@@ -15,9 +15,7 @@ class AcfEmailBuilder
         $this->instance->setName($name);
         $this->instance->setLabel($label);
         $this->instance->setType('Email');
-        if ($required) {
-            $this->instance->setRequired($required);
-        }
+        $this->instance->setRequired($required);
 
     }
 

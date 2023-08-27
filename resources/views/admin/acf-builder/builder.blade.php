@@ -10,14 +10,7 @@
 @section('content')
 
     <div class="page-header">
-        <h1 class="page-title">{{ trans('panel.page.title') }}</h1>
-        <div>
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">{{ trans('panel.dashboard.title') }}</a></li>
-                <li class="breadcrumb-item"><a href="{{ route('admin.page.index') }}">{{ trans('panel.page.title') }}</a></li>
-                <li class="breadcrumb-item active">{{ trans('panel.page.builder') }}</li>
-            </ol>
-        </div>
+        <h1 class="page-title">{{ trans('panel.builder.index') }}</h1>
     </div>
 
     <div class="row">
@@ -28,16 +21,16 @@
                         <div class="col-12 mb-3">
                             @include('admin.partial.message')
                         </div>
-                        @if($acfTemplates->isNotEmpty())
-                            @foreach($acfTemplates as $acfTemplate)
+                        @if($templates->isNotEmpty())
+                            @foreach($templates as $template)
                                 <div class="col-12 col-md-4 col-lg-3">
                                     <div class="row-acf-template">
-                                        <h4>{{ $acfTemplate->title }}</h4>
+                                        <h4>{{ $template->title }}</h4>
                                         <div>
-                                            @if(in_array($acfTemplate->id,$oldsTemplate))
-                                                <a href="{{ route('admin.page.builder.template.remove',[$page->id,$acfTemplate->id]) }}" class="btn btn-danger btn-sm">{{ trans('panel.page.template.remove') }}</a>
+                                            @if(in_array($template->id,$oldsTemplates))
+                                                <a href="{{ route('admin.builder.template.remove',[$model,$modelInstance->id,$template->id]) }}" class="btn btn-danger btn-sm">{{ trans('panel.builder.template.remove') }}</a>
                                             @else
-                                                <a href="{{ route('admin.page.builder.template.add',[$page->id,$acfTemplate->id]) }}" class="btn btn-success btn-sm">{{ trans('panel.page.template.add') }}</a>
+                                                <a href="{{ route('admin.builder.template.add',[$model,$modelInstance->id,$template->id]) }}" class="btn btn-success btn-sm">{{ trans('panel.builder.template.add') }}</a>
                                             @endif
                                         </div>
                                     </div>
@@ -54,21 +47,21 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
-                    <form class="request-form forms-sample" method="post" action="{{ $routeUpdate }}">
+                    <form class="request-form forms-sample" method="post" action="{{ route('admin.builder.save',[$model,$modelInstance->id]) }}">
                         @csrf
                         @method('PATCH')
 
-                        <x-admin.input identify="id" title="id" type="hidden" :old="$page->id" />
+                        <x-admin.input identify="id" title="id" type="hidden" :old="$modelInstance->id" />
 
                         <div id="builder">
-                            @if($page->acfTemplates->isNotEmpty())
-                                @foreach($page->acfTemplates as $template)
+                            @if($modelInstance->acfTemplates->isNotEmpty())
+                                @foreach($modelInstance->acfTemplates as $template)
                                     <div class="acf-template-container">
                                         <h4 class="acf-template-title">{{ $template->title }}</h4>
                                         <div class="acf-template-fields">
                                             @if($template->fields->isNotEmpty())
                                                 @foreach($template->fields as $field)
-                                                    @include('admin.acf-template.render.render',['field'=>$field,'old'=>$page->acfStores->where('acf_field_id',$field->id)->first()])
+                                                    @include('admin.acf-template.render.render',['index'=>$loop->index,'parentIndex'=>$loop->parent->index,'field'=>$field,'old'=>$modelInstance->acfStores->where('acf_field_id',$field->id)->first()])
                                                 @endforeach
                                             @endif
                                         </div>
@@ -81,10 +74,6 @@
 
                     </form>
 
-                    <form id="deleteItem" action="{{ $routeDestroy }}" method="post" class="form-inline">
-                        @csrf
-                        @method('DELETE')
-                    </form>
                 </div>
             </div>
         </div>

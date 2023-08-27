@@ -18,8 +18,9 @@ return [
     'edit' => 'ویرایش',
     'list' => 'لیست',
     'success_store' => 'با موفقیت ایجاد شد.',
+    'success_no_change' => 'تغییری ایجاد نشد.',
     'success_update' => 'با موفقیت به روز شد.',
-    'success_delete' => 'با موفقیت خذف شد.',
+    'success_delete' => 'با موفقیت حذف شد.',
     'error_delete' => 'خطا در حذف اطلاعات',
     'error_update' => 'خطا در ویرایش اطلاعات',
     'dashboard' => [
@@ -58,7 +59,11 @@ return [
         'edit' => 'ویرایش صفحه',
         'create' => 'ایجاد صفحه',
         'show' => 'نمایش صفحه',
-        'builder' => 'Page Builder',
+
+    ],
+    'builder' => [
+        'index' => 'Page Builder',
+        'validation_error' => 'خطا در اعتبار سنجی فیلد ها بررسی کنید و مجدد ارسال کنید!',
         'template' => [
             'removed' => 'قالب حذف شد',
             'remove' => 'حذف شود',

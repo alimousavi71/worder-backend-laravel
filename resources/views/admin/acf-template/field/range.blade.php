@@ -12,7 +12,6 @@
             <tbody>
             @include('admin.acf-template.field.base-field')
 
-
             <tr>
                 <td class="acf-td-desc">
                     <h4>

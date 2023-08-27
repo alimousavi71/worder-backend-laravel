@@ -11,13 +11,11 @@ class AcfRangeBuilder
     public function __construct(string $name, string $label, bool $required = false)
     {
         $this->instance = new AcfRange();
+        $this->instance->setValidation(['numeric']);
         $this->instance->setName($name);
         $this->instance->setLabel($label);
         $this->instance->setType('Range');
-        if ($required) {
-            $this->instance->setRequired($required);
-        }
-
+        $this->instance->setRequired($required);
     }
 
     public function withDescription(?string $description): self

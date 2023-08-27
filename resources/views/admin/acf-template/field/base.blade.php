@@ -30,6 +30,6 @@
     </li>
 
     <li class="f-action">
-        <button class="btn btn-danger btn-sm acf-btn-delete"  type="button">حذف</button>
+        <button class="btn btn-danger btn-sm acf-btn-delete" @if(isset($field)) data-open="{{ route('admin.acf-field.delete',[$field->id]) }}" @else data-open="" @endif type="button">حذف</button>
     </li>
 </ul>

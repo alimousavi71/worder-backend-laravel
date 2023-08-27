@@ -70,25 +70,25 @@
                                     @foreach($acfTemplate->fields as $field)
                                         @switch($field->type)
                                             @case('Text')
-                                                @include('admin.acf-template.field.text',['type'=>'متنی','field' =>$field,'index'=>$loop->index])
+                                            @include('admin.acf-template.field.text',['type'=>'متنی','field' =>$field,'index'=>$loop->index])
                                             @break
                                             @case('Textarea')
-                                                @include('admin.acf-template.field.textarea',['type'=>'متنی بزرگ','field' =>$field,'index'=>$loop->index])
+                                            @include('admin.acf-template.field.textarea',['type'=>'متنی بزرگ','field' =>$field,'index'=>$loop->index])
                                             @break
                                             @case('Email')
-                                                @include('admin.acf-template.field.email',['type'=>'پست الکترونیکی','field' =>$field,'index'=>$loop->index])
+                                            @include('admin.acf-template.field.email',['type'=>'پست الکترونیکی','field' =>$field,'index'=>$loop->index])
                                             @break
                                             @case('Url')
-                                                @include('admin.acf-template.field.url',['type'=>'لینک','field' =>$field,'index'=>$loop->index])
+                                            @include('admin.acf-template.field.url',['type'=>'لینک','field' =>$field,'index'=>$loop->index])
                                             @break
                                             @case('Range')
-                                                @include('admin.acf-template.field.range',['type'=>'بازه عددی','field' =>$field,'index'=>$loop->index])
+                                            @include('admin.acf-template.field.range',['type'=>'بازه عددی','field' =>$field,'index'=>$loop->index])
                                             @break
                                             @case('Select')
-                                                @include('admin.acf-template.field.select',['type'=>'انتخابی','field' =>$field,'index'=>$loop->index])
+                                            @include('admin.acf-template.field.select',['type'=>'انتخابی','field' =>$field,'index'=>$loop->index])
                                             @break
                                             @case('Image')
-                                                @include('admin.acf-template.field.image',['type'=>'تصویر','field' =>$field,'index'=>$loop->index])
+                                            @include('admin.acf-template.field.image',['type'=>'تصویر','field' =>$field,'index'=>$loop->index])
                                             @break
                                         @endswitch
                                     @endforeach
@@ -111,6 +111,7 @@
         $(document).ready(function () {
             init();
             sortFieldInit();
+            updateSortInput();
         })
 
         const builder = $('#builder')
@@ -120,9 +121,27 @@
         function init() {
             $('.acf-table-container').fadeOut('fast');
             fields.on('click', '.acf-btn-delete', function () {
-                const target = $(this).closest('.acf-field-item-container').remove();
-                fieldCount--;
-                updateFiledCounter();
+                const dataOpen = $(this).data('open');
+                const self = $(this);
+                swal({
+                    title: "حذف",
+                    text: "آیا مطمئن هستید که میخواهید این مورد را حذف کنید؟",
+                    type: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#ff0f3b",
+                    confirmButtonText: "حذف",
+                    cancelButtonText: "صرفه نظر",
+                    closeOnConfirm: true
+                }, function () {
+                    if (dataOpen !== '') {
+                        window.location.replace(dataOpen);
+                    } else {
+                        self.closest('.acf-field-item-container').remove();
+                        fieldCount--;
+                        updateFiledCounter();
+                        updateSortInput();
+                    }
+                });
             });
 
             fields.on('click', '.f-title', function () {
@@ -171,6 +190,12 @@
             })
         }
 
+        function updateSortInput() {
+            fields.children('.acf-field-item-container').each(function (index, item) {
+                $(item).find('.acf-sort-position').val(index);
+            })
+        }
+
         function addField() {
             let url = '';
             switch ($('#selectFieldType').val()) {
@@ -213,6 +238,7 @@
                 fields.append(dataResource);
                 fieldCount++;
                 updateFiledCounter();
+                updateSortInput();
                 sortFieldInit();
             });
         }
@@ -223,6 +249,7 @@
                 forcePlaceholderSize: true,
                 update: function () {
                     updateFiledCounter();
+                    updateSortInput();
                 }
             });
         }

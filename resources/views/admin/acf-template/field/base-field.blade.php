@@ -25,7 +25,11 @@
         <p>نام متغییر قابل دسترسی در قالب</p>
     </td>
     <td class="acf-td-field">
+        <input class="acf-sort-position" type="hidden" name="fields[{{ $_index }}][sort_position]" value="">
         <input class="acf-inp-name" name="fields[{{ $_index }}][name]" type="text" value="@if(isset($field->props['label'])) {{ $field->props['name'] }}@endif">
+        @if(isset($field))
+            <input type="hidden" name="fields[{{ $_index }}][id]" value="{{ $field->id }}">
+        @endif
     </td>
 </tr>
 <tr>

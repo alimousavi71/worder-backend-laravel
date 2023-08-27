@@ -2,7 +2,7 @@
 
 // Login
 use App\Http\Controllers\Admin\AcfBuilderController;
-use App\Http\Controllers\Admin\AcfFieldAttachController;
+use App\Http\Controllers\Admin\AcfFieldController;
 use App\Http\Controllers\Admin\AcfTemplateController;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\AvatarController;
@@ -144,8 +144,9 @@ Route::group(['middleware' => ['admin.auth'/*,'acl'*/], 'guard' => 'admin'], fun
         Route::delete('/acf-template/{acfTemplate}/destroy', 'destroy')->name('acf-template.destroy');
     });
 
-    Route::controller(AcfFieldAttachController::class)->group(function () {
-        Route::patch('/acf-template/{acfTemplate}/store-fields', 'store')->name('acf-template.store-fields');
+    Route::controller(AcfFieldController::class)->group(function () {
+        Route::patch('/acf-field/{acfTemplate}/attach', 'attach')->name('acf-field.attach');
+        Route::get('/acf-field/{fieldId}/delete', 'delete')->name('acf-field.delete')->whereNumber('fieldId');
     });
 
     Route::controller(AvatarController::class)->group(function () {

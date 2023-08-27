@@ -10,6 +10,15 @@ class AcfStore extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'target_id',
+        'target_type',
+        'acf_template_id',
+        'acf_field_id',
+        'value',
+        'sort_position',
+    ];
+
     public function target()
     {
         return $this->morphTo();

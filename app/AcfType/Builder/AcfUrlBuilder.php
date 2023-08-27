@@ -15,10 +15,7 @@ class AcfUrlBuilder
         $this->instance->setName($name);
         $this->instance->setLabel($label);
         $this->instance->setType('Url');
-        if ($required) {
-            $this->instance->setRequired($required);
-        }
-
+        $this->instance->setRequired($required);
     }
 
     public function withDescription(?string $description): self

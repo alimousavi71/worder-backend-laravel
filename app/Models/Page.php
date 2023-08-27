@@ -24,7 +24,7 @@ class Page extends Model
 
     public function acfStores(): MorphMany
     {
-        return $this->morphMany(AcfStore::class, 'target');
+        return $this->morphMany(AcfStore::class, 'target')->orderBy('sort_position');
     }
 
     public function acfTemplates(): HasManyThrough
