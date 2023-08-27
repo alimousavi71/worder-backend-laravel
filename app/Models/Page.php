@@ -22,11 +22,15 @@ class Page extends Model
         return $this->morphMany(AcfConnect::class, 'target');
     }
 
+    public function acfStores(): MorphMany
+    {
+        return $this->morphMany(AcfStore::class, 'target');
+    }
+
     public function acfTemplates(): HasManyThrough
     {
         return $this->hasManyThrough(AcfTemplate::class, AcfConnect::class, 'target_id', 'id', 'id', 'acf_template_id')
-            ->where('target_type', array_search(static::class, Relation::morphMap()) ?: static::class)
-            ->with('fields');
+            ->where('target_type', array_search(static::class, Relation::morphMap()) ?: static::class);
 
     }
 }

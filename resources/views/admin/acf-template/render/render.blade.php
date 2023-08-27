@@ -9,7 +9,7 @@
             </label>
             <input type="text"
                    @if(isset($field->props['required']) && $field->props['required']) required @endif
-                   value="@if(isset($field->props['defaultValue'])){{ $field->props['defaultValue'] }}@endif"
+                   value="@if(isset($old)){{ $old->value }}@elseif(isset($field->props['defaultValue'])){{ $field->props['defaultValue'] }}@endif"
                    maxlength="@if(isset($field->props['charLimit'])){{ $field->props['charLimit'] }}@endif"
                    placeholder="@if(isset($field->props['placeHolder'])){{ $field->props['placeHolder'] }}@endif">
             @if(isset($field->props['description']))

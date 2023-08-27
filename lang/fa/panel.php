@@ -35,6 +35,8 @@ return [
         'edit' => 'ویرایش',
         'manage' => 'مدیریت',
         'info' => 'جزئیات',
+        'builder' => 'Page Builder',
+        'show' => 'نمایش',
     ],
     'setting' => [
         'title' => 'تنظیمات',
@@ -56,6 +58,15 @@ return [
         'edit' => 'ویرایش صفحه',
         'create' => 'ایجاد صفحه',
         'show' => 'نمایش صفحه',
+        'builder' => 'Page Builder',
+        'template' => [
+            'removed' => 'قالب حذف شد',
+            'remove' => 'حذف شود',
+            'add' => 'افزودن',
+            'exist' => 'قالب متصل است',
+            'not_exist' => 'قالب یافت نشد',
+            'connected' => 'قالب متصل شد',
+        ],
     ],
     'exam' => [
         'index' => 'آزمون ها',

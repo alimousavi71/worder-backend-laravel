@@ -17,4 +17,9 @@ class AcfConnect extends Model
     {
         return $this->morphTo();
     }
+
+    public function store()
+    {
+        return $this->belongsTo(AcfStore::class, 'acf_connect_id');
+    }
 }

@@ -37,7 +37,8 @@ class PageController extends Controller
                 })
                 ->addColumn('action', function ($page) {
                     $actions = Helper::btnMaker(BtnType::Warning, route('admin.page.edit', $page->id), trans('panel.action.edit'));
-                    $actions .= Helper::btnMaker(BtnType::Info, route('admin.page.show', $page->id), trans('panel.action.info'));
+                    $actions .= Helper::btnMaker(BtnType::Success, route('admin.builder', ['page', $page->id]), trans('panel.action.builder'));
+                    $actions .= Helper::btnMaker(BtnType::Info, route('admin.page.show', $page->id), trans('panel.action.show'));
 
                     return $actions;
                 })
@@ -82,17 +83,11 @@ class PageController extends Controller
 
     public function edit(Page $page)
     {
-        $page->load('acfTemplates');
-        $oldsTemplate = [];
-        if ($page->acfTemplates->isNotEmpty()) {
-            $oldsTemplate = $page->acfTemplates->pluck('id')->toArray();
-        }
         $title = trans('panel.page.edit');
         $routeUpdate = route('admin.page.update', $page->id);
         $routeDestroy = route('admin.page.destroy', $page->id);
-        $acfTemplates = AcfTemplate::query()->get();
 
-        return view('admin.page.edit', compact('title', 'routeUpdate', 'routeDestroy', 'page', 'acfTemplates', 'oldsTemplate'));
+        return view('admin.page.edit', compact('title', 'routeUpdate', 'routeDestroy', 'page'));
     }
 
     public function update(UpdateRequest $request, Page $page)

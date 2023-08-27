@@ -30,14 +30,6 @@
 
                         <x-admin.textarea identify="description" :title="trans('fields.category.description')" />
 
-                        <select name="templates[]" class="form-control mb-3" multiple>
-                            @if($acfTemplates->isNotEmpty())
-                                @foreach($acfTemplates as $acfTemplate)
-                                    <option value="{{ $acfTemplate->id }}">{{ $acfTemplate->title }}</option>
-                                @endforeach
-                            @endif
-                        </select>
-
                         <x-admin.button-submit/>
                     </form>
                 </div>

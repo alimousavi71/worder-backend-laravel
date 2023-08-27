@@ -11,16 +11,17 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('acf_store', function (Blueprint $table) {
+        Schema::create('acf_stores', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('acf_connect_id');
+            $table->morphs('target');
+            $table->unsignedBigInteger('acf_template_id');
             $table->unsignedBigInteger('acf_field_id');
 
             $table->text('value')->nullable();
 
-            $table->foreign('acf_connect_id')
+            $table->foreign('acf_template_id')
                 ->references('id')
-                ->on('acf_connects')
+                ->on('acf_templates')
                 ->cascadeOnDelete();
 
             $table->foreign('acf_field_id')
@@ -37,6 +38,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('acf_store');
+        Schema::dropIfExists('acf_stores');
     }
 };

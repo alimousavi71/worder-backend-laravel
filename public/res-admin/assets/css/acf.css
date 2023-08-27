@@ -166,3 +166,15 @@
     width: 100%;
     resize: none;
 }
+.row-acf-template{
+    background-color: rgba(10, 7, 44, 0.27);
+    border-radius: 15px;
+    padding: 20px;
+}
+.row-acf-template h4{
+    font-weight: bold;
+}
+.row-acf-template .btn-danger{
+    height: 30px;
+    margin-top: 1px;
+}

@@ -38,11 +38,8 @@ class Helper
     public static function renderExamType($type)
     {
         return match ($type) {
-            ExamType::Random => '<span class="badge bg-success">'.trans('panel.exam.type.random').'</span>',
-            ExamType::HardWord => '<span class="badge bg-success">'.trans('panel.exam.type.hard_word').'</span>',
-            ExamType::MyWord => '<span class="badge bg-success">'.trans('panel.exam.type.my_word').'</span>',
-            ExamType::Speed => '<span class="badge bg-success">'.trans('panel.exam.type.speed').'</span>',
-            ExamType::SpeedAndAccuracy => '<span class="badge bg-success">'.trans('panel.exam.type.speed_and_accuracy').'</span>',
+            ExamType::Normal => '<span class="badge bg-success">'.trans('panel.exam.type.normal').'</span>',
+            ExamType::Timer => '<span class="badge bg-warning">'.trans('panel.exam.type.timer').'</span>',
             default => '<span class="badge bg-danger">Not Found</span>',
         };
     }
@@ -88,22 +85,14 @@ class Helper
 
     public static function btnMaker($type, $route = '', $title = '')
     {
-        switch ($type) {
-            case BtnType::Warning:
+        return match ($type) {
+            BtnType::Warning => '<a target="_blank" href="'.$route.'" class="btn btn-sm btn-warning mx-1">'.$title.'</a>',
+            BtnType::Danger => '<a target="_blank" href="'.$route.'" class="btn btn-sm btn-danger mx-1">'.$title.'</a>',
+            BtnType::Info => '<a target="_blank" href="'.$route.'" class="btn btn-sm btn-info mx-1">'.$title.'</a>',
+            BtnType::Success => '<a target="_blank" href="'.$route.'" class="btn btn-sm btn-success mx-1">'.$title.'</a>',
+            default => '',
+        };
 
-                return '<a target="_blank" href="'.$route.'" class="btn btn-sm btn-warning mx-1">'.$title.'</a>';
-
-            case BtnType::Danger:
-
-                return '<a target="_blank" href="'.$route.'" class="btn btn-sm btn-danger mx-1">'.$title.'</a>';
-
-            case BtnType::Info:
-
-                return '<a target="_blank" href="'.$route.'" class="btn btn-sm btn-success mx-1">'.$title.'</a>';
-
-        }
-
-        return '';
     }
 
     /**

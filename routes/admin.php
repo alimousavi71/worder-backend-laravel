@@ -1,6 +1,7 @@
 <?php
 
 // Login
+use App\Http\Controllers\Admin\AcfBuilderController;
 use App\Http\Controllers\Admin\AcfFieldAttachController;
 use App\Http\Controllers\Admin\AcfTemplateController;
 use App\Http\Controllers\Admin\AdminController;
@@ -114,6 +115,20 @@ Route::group(['middleware' => ['admin.auth'/*,'acl'*/], 'guard' => 'admin'], fun
         Route::get('/page/{page}/show', 'show')->name('page.show');
         Route::patch('/page/{page}/update', 'update')->name('page.update');
         Route::delete('/page/{page}/destroy', 'destroy')->name('page.destroy');
+    });
+
+    Route::controller(AcfBuilderController::class)->group(function () {
+        Route::get('/builder/{model}/{id}', 'index')->name('builder')
+            ->whereNumber('id');
+        Route::get('/builder/{model}/{id}/{template}/add', 'addTemplate')->name('builder.template.add')
+            ->whereNumber('id')
+            ->whereNumber('template');
+        Route::get('/builder/{model}/{id}/{template}/remove', 'removeTemplate')->name('builder.template.remove')
+            ->whereNumber('id')
+            ->whereNumber('template');
+        Route::patch('/builder/{model}/{id}/save', 'save')->name('builder.save')
+            ->whereNumber('id')
+            ->whereNumber('template');
     });
 
     Route::controller(AcfTemplateController::class)->group(function () {
