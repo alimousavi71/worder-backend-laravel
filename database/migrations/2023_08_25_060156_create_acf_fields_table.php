@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('acf_template_fields', function (Blueprint $table) {
+        Schema::create('acf_fields', function (Blueprint $table) {
             $table->id();
             $table->string('label');
             $table->string('name');
@@ -36,6 +36,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('acf_template_fields');
+        Schema::dropIfExists('acf_fields');
     }
 };

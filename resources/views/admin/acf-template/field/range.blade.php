@@ -4,7 +4,7 @@
     if (!is_null($index)) $_index = $index;
     if (!is_null($index)) $_index_label = $index + 1;
 @endphp
-<div class="field-item-container">
+<div class="acf-field-item-container">
     @include('admin.acf-template.field.base')
     <input name="fields[{{ $_index }}][type]" value="Range" type="hidden">
     <div class="acf-table-container acf-hide">

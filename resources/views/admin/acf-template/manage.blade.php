@@ -4,127 +4,8 @@
     @include('admin.partial.loader.style',['load'=>[
        \App\Enums\Assets\StyleLoader::Toast(),
        \App\Enums\Assets\StyleLoader::Alert(),
-       \App\Enums\Assets\StyleLoader::Alert(),
+       \App\Enums\Assets\StyleLoader::Acf(),
    ]])
-    <link rel="stylesheet" href="{{ asset('res-admin/assets/plugins/jquery-ui-1.13.2/jquery-ui.min.css') }}">
-    <style>
-        .ul-header {
-            margin: 0;
-            padding: 0;
-            list-style: none;
-            display: flex;
-        }
-
-        .ul-header li {
-            width: 30%;
-            padding: 10px;
-            background-color: #1a1a3c;
-            font-weight: bold;
-            line-height: 20px;
-            color: white;
-            border: 1px solid #2b356e;
-        }
-
-        .ul-field {
-            margin: 0;
-            padding: 0;
-            list-style: none;
-            display: flex;
-        }
-
-        .ul-field li {
-            width: 30%;
-            padding: 10px;
-            background-color: #1a1a3c;
-            display: flex;
-            align-items: center;
-        }
-
-        .ul-field li.f-order .f-counter {
-            padding: 10px;
-            height: 30px;
-            width: 30px;
-            display: inline-block;
-            text-align: center;
-            border-radius: 50%;
-            line-height: 15px;
-            font-weight: bold;
-            border: 1px solid rgba(255, 255, 255, 0.55);
-        }
-
-        .ul-field li.f-title {
-            padding: 10px;
-            line-height: 10px;
-            font-weight: bold;
-            color: #00baff;
-            margin: 0;
-            cursor: pointer;
-        }
-
-        .ul-field li.f-title .required {
-            padding: 3px;
-            line-height: 10px;
-            font-weight: bold;
-            font-size: 24px;
-            color: #ff0000;
-            margin: 0;
-        }
-
-        .field-item-container {
-            border-bottom: 1px solid #2b356e;
-            border-left: 1px solid #2b356e;
-            border-right: 1px solid #2b356e;
-        }
-
-        .acf-table-field {
-            width: 100%;
-        }
-
-        .acf-table-field td {
-            padding: 20px;
-        }
-
-        .acf-table-field .acf-td-desc {
-            width: 40%;
-            background-color: rgba(57, 62, 67, 0.49);
-            border-left: 1px solid #2b356e;
-        }
-
-        .acf-table-field .acf-td-desc h4 {
-            font-weight: bold;
-            font-size: 18px;
-            margin: 0 0 5px 0;
-            padding: 0;
-        }
-
-        .acf-table-field .acf-td-desc p {
-            font-weight: normal;
-            font-size: 16px;
-            margin: 0 0 0 0;
-            padding: 0;
-        }
-
-        .acf-table-field .acf-td-field input[type="text"],
-        .acf-table-field .acf-td-field input[type="number"],
-        .acf-table-field .acf-td-field textarea {
-            padding: 10px;
-            border-radius: 5px;
-            font-size: 16px;
-            background-color: transparent;
-            color: white;
-            border: 2px solid rgba(255, 255, 255, 0.6);
-            width: 100%;
-            resize: none;
-        }
-
-        .acf-show {
-            display: block;
-        }
-
-        .acf-hide {
-            display: none;
-        }
-    </style>
 @endsection
 @section('content')
 
@@ -176,7 +57,7 @@
 
                         <div id="builder" class="mt-3">
                             <div>
-                                <ul class="ul-header">
+                                <ul class="acf-ul-header">
                                     <li>مرتب سازی</li>
                                     <li>لیبل</li>
                                     <li>نام</li>
@@ -185,8 +66,8 @@
                                 </ul>
                             </div>
                             <div id="fields">
-                                @if($acfTemplate->acfFields->isNotEmpty())
-                                    @foreach($acfTemplate->acfFields as $field)
+                                @if($acfTemplate->fields->isNotEmpty())
+                                    @foreach($acfTemplate->fields as $field)
                                         @switch($field->type)
                                             @case('Text')
                                                 @include('admin.acf-template.field.text',['type'=>'متنی','field' =>$field,'index'=>$loop->index])
@@ -205,6 +86,9 @@
                                             @break
                                             @case('Select')
                                                 @include('admin.acf-template.field.select',['type'=>'انتخابی','field' =>$field,'index'=>$loop->index])
+                                            @break
+                                            @case('Image')
+                                                @include('admin.acf-template.field.image',['type'=>'تصویر','field' =>$field,'index'=>$loop->index])
                                             @break
                                         @endswitch
                                     @endforeach
@@ -231,38 +115,33 @@
 
         const builder = $('#builder')
         const fields = $('#builder #fields')
-        let fieldCount = parseInt('@if ($acfTemplate->acfFields->count()){{$acfTemplate->acfFields->count()}}@else{{'0'}}@endif');
+        let fieldCount = parseInt('@if ($acfTemplate->fields->count()){{$acfTemplate->fields->count()}}@else{{'0'}}@endif');
 
         function init() {
+            $('.acf-table-container').fadeOut('fast');
             fields.on('click', '.acf-btn-delete', function () {
-                const target = $(this).closest('.field-item-container').remove();
+                const target = $(this).closest('.acf-field-item-container').remove();
                 fieldCount--;
                 updateFiledCounter();
             });
 
             fields.on('click', '.f-title', function () {
-                const target = $(this).closest('.field-item-container').find('.acf-table-container');
-                if (target.hasClass('acf-show')) {
-                    target.removeClass('acf-show');
-                    target.addClass('acf-hide');
-                } else {
-                    target.removeClass('acf-hide');
-                    target.addClass('acf-show');
-                }
+                const target = $(this).closest('.acf-field-item-container').find('.acf-table-container');
+                target.fadeToggle('fast');
             });
 
             fields.on('change', '.acf-inp-label', function () {
                 const target = $(this)
-                    .closest('.field-item-container')
-                    .find('.ul-field .f-title span')
+                    .closest('.acf-field-item-container')
+                    .find('.acf-ul-field .f-title span')
                     .eq(0);
                 target.text($(this).val())
             });
 
             fields.on('change', '.acf-inp-name', function () {
                 const target = $(this)
-                    .closest('.field-item-container')
-                    .find('.ul-field .f-name span');
+                    .closest('.acf-field-item-container')
+                    .find('.acf-ul-field .f-name span');
                 target.text($(this).val())
             });
 
@@ -275,8 +154,8 @@
 
             fields.on('change', '.acf-inp-required', function () {
                 const target = $(this)
-                    .closest('.field-item-container')
-                    .find('.ul-field .f-title span')
+                    .closest('.acf-field-item-container')
+                    .find('.acf-ul-field .f-title span')
                     .eq(1);
                 if ($(this).is(':checked')) {
                     target.text('*')
@@ -287,7 +166,7 @@
         }
 
         function updateFiledCounter() {
-            fields.children('.field-item-container').each(function (index, item) {
+            fields.children('.acf-field-item-container').each(function (index, item) {
                 $(item).find('.f-counter').text(index + 1);
             })
         }

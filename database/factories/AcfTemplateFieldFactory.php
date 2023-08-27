@@ -5,7 +5,7 @@ namespace Database\Factories;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\AcfTemplateField>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\AcfField>
  */
 class AcfTemplateFieldFactory extends Factory
 {

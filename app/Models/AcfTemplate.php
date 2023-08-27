@@ -17,8 +17,8 @@ class AcfTemplate extends Model
         'description',
     ];
 
-    public function acfFields()
+    public function fields()
     {
-        return $this->hasMany(AcfTemplateField::class, 'acf_template_id');
+        return $this->hasMany(AcfField::class, 'acf_template_id');
     }
 }

@@ -44,6 +44,13 @@ class AcfImageBuilder
         return $this;
     }
 
+    public function withAlt(?string $alt): self
+    {
+        $this->instance->alt = $alt;
+
+        return $this;
+    }
+
     public function withSize(int $size): self
     {
         $this->instance->size = $size;

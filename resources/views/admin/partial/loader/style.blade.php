@@ -25,3 +25,7 @@
 @if (in_array(\App\Enums\Assets\StyleLoader::Datepicker(),$load))
     <link rel="stylesheet" href="{{ asset('res-admin/assets/plugins/persian-datepicker/persian-datepicker.min.css') }}">
 @endif
+
+@if (in_array(\App\Enums\Assets\StyleLoader::Acf(),$load))
+    <link rel="stylesheet" href="{{ asset('res-admin/assets/css/acf.css') }}">
+@endif

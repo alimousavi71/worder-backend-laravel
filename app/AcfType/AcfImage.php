@@ -8,7 +8,7 @@ class AcfImage extends AcfBase
 
     public ?string $placeHolder;
 
-    public string $alt = '';
+    public ?string $alt = null;
 
     public int $size = 0;
 

@@ -14,7 +14,7 @@ class AcfFieldAttachController extends Controller
     {
         try {
 
-            $acfTemplate->acfFields()->delete();
+            $acfTemplate->fields()->delete();
 
             if (! count($request->get('fields', []))) {
                 return response()->json([
@@ -25,7 +25,7 @@ class AcfFieldAttachController extends Controller
             }
             foreach ($request->get('fields') as $field) {
 
-                $acfTemplate->acfFields()->create([
+                $acfTemplate->fields()->create([
                     'label' => $field['label'],
                     'name' => $field['name'],
                     'description' => $field['description'],
@@ -133,6 +133,7 @@ class AcfFieldAttachController extends Controller
                     ->withPlaceHolder($field['placeHolder'] ?? null)
                     ->withDefaultValue($field['defaultValue'] ?? null)
                     ->withDescription($field['description'] ?? null)
+                    ->withAlt($field['alt'] ?? null)
                     ->withSize($field['size'])
                     ->withWidth($field['width'] ?? null)
                     ->withHeight($field['height'] ?? null)

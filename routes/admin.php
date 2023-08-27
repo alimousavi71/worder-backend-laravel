@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\ContactController;
 use App\Http\Controllers\Admin\ExamController;
 use App\Http\Controllers\Admin\HomeController;
+use App\Http\Controllers\Admin\PageController;
 use App\Http\Controllers\Admin\PermissionController;
 use App\Http\Controllers\Admin\ProfileController;
 use App\Http\Controllers\Admin\RoleController;
@@ -98,10 +99,21 @@ Route::group(['middleware' => ['admin.auth'/*,'acl'*/], 'guard' => 'admin'], fun
         Route::get('/category/data', 'data')->name('category.data');
         Route::get('/category/create', 'create')->name('category.create');
         Route::post('/category/store', 'store')->name('category.store');
-        Route::get('/category/edit/{category}', 'edit')->name('category.edit');
-        Route::get('/category/show/{category}', 'show')->name('category.show');
-        Route::patch('/category/update/{category}', 'update')->name('category.update');
-        Route::delete('/category/destroy/{category}', 'destroy')->name('category.destroy');
+        Route::get('/category/{category}/edit', 'edit')->name('category.edit');
+        Route::get('/category/{category}/show', 'show')->name('category.show');
+        Route::patch('/category/{category}/update', 'update')->name('category.update');
+        Route::delete('/category/{category}/destroy', 'destroy')->name('category.destroy');
+    });
+
+    Route::controller(PageController::class)->group(function () {
+        Route::get('/page', 'index')->name('page.index');
+        Route::get('/page/data', 'data')->name('page.data');
+        Route::get('/page/create', 'create')->name('page.create');
+        Route::post('/page/store', 'store')->name('page.store');
+        Route::get('/page/{page}/edit', 'edit')->name('page.edit');
+        Route::get('/page/{page}/show', 'show')->name('page.show');
+        Route::patch('/page/{page}/update', 'update')->name('page.update');
+        Route::delete('/page/{page}/destroy', 'destroy')->name('page.destroy');
     });
 
     Route::controller(AcfTemplateController::class)->group(function () {

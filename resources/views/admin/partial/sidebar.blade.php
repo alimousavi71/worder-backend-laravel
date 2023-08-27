@@ -74,13 +74,25 @@
 
                 <li class="slide">
                     <a class="side-menu__item" data-bs-toggle="slide" href="javascript:void(0)" id="acfTemplate">
-                        <i class="side-menu__icon fal fa-list"></i>
+                        <i class="side-menu__icon fal fa-brush"></i>
                         <span class="side-menu__label">{{ trans('panel.acf-template.index') }}</span><i class="angle fal fa-angle-left"></i>
                     </a>
 
                     <ul class="slide-menu">
                         <li><a href="{{ route('admin.acf-template.index') }}" class="slide-item">{{ trans('panel.list') }}</a></li>
                         <li><a href="{{ route('admin.acf-template.create') }}" class="slide-item">{{ trans('panel.create') }}</a></li>
+                    </ul>
+                </li>
+
+                <li class="slide">
+                    <a class="side-menu__item" data-bs-toggle="slide" href="javascript:void(0)" id="navPage">
+                        <i class="side-menu__icon fal fa-file"></i>
+                        <span class="side-menu__label">{{ trans('panel.page.index') }}</span><i class="angle fal fa-angle-left"></i>
+                    </a>
+
+                    <ul class="slide-menu">
+                        <li><a href="{{ route('admin.page.index') }}" class="slide-item">{{ trans('panel.list') }}</a></li>
+                        <li><a href="{{ route('admin.page.create') }}" class="slide-item">{{ trans('panel.create') }}</a></li>
                     </ul>
                 </li>
 

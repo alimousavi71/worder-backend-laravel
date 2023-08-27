@@ -12,6 +12,7 @@ use BenSampo\Enum\Enum;
  * @method static static Select2()
  * @method static static Quill()
  * @method static static Datepicker()
+ * @method static static Acf()
  */
 final class StyleLoader extends Enum
 {
@@ -28,4 +29,6 @@ final class StyleLoader extends Enum
     const Quill = 6;
 
     const Datepicker = 7;
+
+    const Acf = 8;
 }

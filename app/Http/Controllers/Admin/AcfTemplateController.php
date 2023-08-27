@@ -112,7 +112,7 @@ class AcfTemplateController extends Controller
     public function manage(AcfTemplate $acfTemplate)
     {
 
-        $acfTemplate->load('acfFields');
+        $acfTemplate->load('fields');
         $availableTemplates = $this->getAvailableTemplates();
         $title = trans('panel.acf-template.builder');
         $routeUpdate = route('admin.acf-template.store-fields', $acfTemplate->id);

@@ -34,7 +34,7 @@
         <p>فیلد در زمان ویرایش اجباری باشد</p>
     </td>
     <td class="acf-td-field">
-        <label for="fields[{{ $_index }}][required]">
+        <label for="fields[{{ $_index }}][required]" class="acf-label-checkbox">
             <input class="acf-inp-required" id="fields[{{ $_index }}][required]" name="fields[{{ $_index }}][required]" @if(isset($field->props['required']) && $field->props['required']) checked @endif type="checkbox">
             <span>الزامی باشد</span>
         </label>

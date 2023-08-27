@@ -1,6 +1,12 @@
-<div class="field-item-container">
+@php
+    $_index = '__INDEX__';
+    $_index_label = '__INDEX__LABEL__';
+    if (!is_null($index)) $_index = $index;
+    if (!is_null($index)) $_index_label = $index + 1;
+@endphp
+<div class="acf-field-item-container">
     @include('admin.acf-template.field.base')
-    <input name="fields[__INDEX__][type]" value="Image" type="hidden">
+    <input name="fields[{{ $_index }}][type]" value="Image" type="hidden">
     <div class="acf-table-container acf-hide">
         <table class="acf-table-field">
             <tbody>
@@ -14,7 +20,8 @@
                     <p>نمایش placeholder فیلد</p>
                 </td>
                 <td class="acf-td-field">
-                    <input name="fields[__INDEX__][placeHolder]" type="text" value="Placeholder __INDEX__LABEL__">
+                    <input name="fields[{{ $_index }}][placeHolder]" type="text"
+                           value="@if(isset($field->props['placeHolder'])) {{ $field->props['placeHolder'] }}@endif">
                 </td>
             </tr>
 
@@ -26,7 +33,8 @@
                     <p>مقدار پیش فرض فیلد</p>
                 </td>
                 <td class="acf-td-field">
-                    <input name="fields[__INDEX__][defaultValue]" type="text" value="Default __INDEX__LABEL__">
+                    <input name="fields[{{ $_index }}][defaultValue]" type="text"
+                           value="@if(isset($field->props['defaultValue'])) {{ $field->props['defaultValue'] }}@endif">
                 </td>
             </tr>
 
@@ -38,7 +46,8 @@
                     <p>متن جایگزین یا alt</p>
                 </td>
                 <td class="acf-td-field">
-                    <input name="fields[__INDEX__][alt]" type="text" value="alt">
+                    <input name="fields[{{ $_index }}][alt]" type="text"
+                           value="@if(isset($field->props['alt'])){{ $field->props['alt'] }}@endif">
                 </td>
             </tr>
 
@@ -50,7 +59,8 @@
                     <p>حجم تصویر به Byte</p>
                 </td>
                 <td class="acf-td-field">
-                    <input name="fields[__INDEX__][size]" type="number" value="8000">
+                    <input name="fields[{{ $_index }}][size]" type="number"
+                           value="@if(isset($field->props['size'])){{ $field->props['size'] }}@endif">
                 </td>
             </tr>
 
@@ -62,7 +72,8 @@
                     <p>عرض تصویر به Pixel</p>
                 </td>
                 <td class="acf-td-field">
-                    <input name="fields[__INDEX__][width]" type="number" value="500">
+                    <input name="fields[{{ $_index }}][width]" type="number"
+                    value="@if(isset($field->props['width'])){{ $field->props['width'] }}@endif">
                 </td>
             </tr>
 
@@ -74,7 +85,8 @@
                     <p>ارتفاع تصویر به Pixel</p>
                 </td>
                 <td class="acf-td-field">
-                    <input name="fields[__INDEX__][height]" type="number" value="500">
+                    <input name="fields[{{ $_index }}][height]" type="number"
+                    value="@if(isset($field->props['height'])){{ $field->props['height'] }}@endif">
                 </td>
             </tr>
 
@@ -87,7 +99,8 @@
                     <p>jpg,png,jpeg</p>
                 </td>
                 <td class="acf-td-field">
-                    <input name="fields[__INDEX__][extensions]" type="text" value="jpg">
+                    <input name="fields[{{ $_index }}][extensions]" type="text"
+                           value="@if(isset($field->props['extensions']) && is_array($field->props['extensions'])){{ collect($field->props['extensions'])->implode(',') }}@endif">
                 </td>
             </tr>
 

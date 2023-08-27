@@ -10,7 +10,7 @@
     if (isset($field->props['label'])) $_label = $field->props['label'];
     if (isset($field->props['required']) && $field->props['required']) $_required = true;
 @endphp
-<ul class="ul-field">
+<ul class="acf-ul-field">
     <li class="f-order">
         <span class="f-counter">{{ $_index_label }}</span>
     </li>
