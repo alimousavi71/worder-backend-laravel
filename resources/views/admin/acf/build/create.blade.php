@@ -28,8 +28,6 @@
 
                         <x-admin.input identify="title" :title="trans('fields.acf.build.title')" type="text" />
 
-                        <x-admin.textarea identify="description" :title="trans('fields.acf.build.description')" />
-
                         <x-admin.button-submit/>
                     </form>
                 </div>

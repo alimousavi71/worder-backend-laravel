@@ -119,20 +119,6 @@ Route::group(['middleware' => ['admin.auth'/*,'acl'*/], 'guard' => 'admin'], fun
         Route::delete('/page/{page}/destroy', 'destroy')->name('page.destroy');
     });
 
-    Route::controller(BuilderController::class)->group(function () {
-        Route::get('/builder/{model}/{id}', 'index')->name('builder')
-            ->whereNumber('id');
-        Route::get('/builder/{model}/{id}/{template}/add', 'addTemplate')->name('builder.template.add')
-            ->whereNumber('id')
-            ->whereNumber('template');
-        Route::get('/builder/{model}/{id}/{template}/remove', 'removeTemplate')->name('builder.template.remove')
-            ->whereNumber('id')
-            ->whereNumber('template');
-        Route::patch('/builder/{model}/{id}/save', 'save')->name('builder.save')
-            ->whereNumber('id')
-            ->whereNumber('template');
-    });
-
     Route::group(['as' => 'acf.', 'prefix' => 'acf'], function () {
         Route::controller(TemplateController::class)->group(function () {
             Route::get('/template', 'index')->name('template.index');
@@ -163,6 +149,13 @@ Route::group(['middleware' => ['admin.auth'/*,'acl'*/], 'guard' => 'admin'], fun
             Route::get('/build/{build}/edit', 'edit')->name('build.edit');
             Route::patch('/build/{build}/update', 'update')->name('build.update');
             Route::delete('/build/{build}/destroy', 'destroy')->name('build.destroy');
+        });
+
+        Route::controller(BuilderController::class)->group(function () {
+            Route::get('/builder/{build}', 'index')->name('builder')->whereNumber('build');
+            Route::get('/builder/{build}/{template}/add', 'addTemplate')->name('builder.add')->whereNumber(['build', 'template']);
+            Route::get('/builder/{build}/{template}/remove', 'removeTemplate')->name('builder.remove')->whereNumber(['build', 'template']);
+            Route::patch('/builder/{build}/save', 'save')->name('builder.save')->whereNumber('build');
         });
     });
 

@@ -9,12 +9,12 @@
 @section('content')
 
     <div class="page-header">
-        <h1 class="page-title">{{ trans('panel.page.title') }}</h1>
+        <h1 class="page-title">{{ trans('panel.acf.build.title') }}</h1>
         <div>
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">{{ trans('panel.dashboard.title') }}</a></li>
-                <li class="breadcrumb-item"><a href="{{ route('admin.page.index') }}">{{ trans('panel.page.title') }}</a></li>
-                <li class="breadcrumb-item active">{{ trans('panel.page.edit') }}</li>
+                <li class="breadcrumb-item"><a href="{{ route('admin.acf.build.index') }}">{{ trans('panel.acf.build.title') }}</a></li>
+                <li class="breadcrumb-item active">{{ trans('panel.acf.build.edit') }}</li>
             </ol>
         </div>
     </div>
@@ -28,16 +28,13 @@
                         @csrf
                         @method('PATCH')
 
-                        <x-admin.input identify="id" title="id" type="hidden" :old="$page->id" />
+                        <x-admin.input identify="id" title="id" type="hidden" :old="$build->id" />
 
-                        <x-admin.input identify="title" :title="trans('fields.category.title')" type="text" :old="$page->title" />
-
-                        <x-admin.textarea identify="description" :title="trans('fields.category.description')" :old="$page->description" />
+                        <x-admin.input identify="title" :title="trans('fields.category.title')" type="text" :old="$build->title" />
 
                         <x-admin.button-submit title="{{ trans('panel.update') }}"/>
 
                         <x-admin.button-delete/>
-
 
                     </form>
 

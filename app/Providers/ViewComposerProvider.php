@@ -2,7 +2,6 @@
 
 namespace App\Providers;
 
-use App\Http\ViewComposers\Admin\User\UserComposer;
 use Illuminate\Support\ServiceProvider;
 
 class ViewComposerProvider extends ServiceProvider

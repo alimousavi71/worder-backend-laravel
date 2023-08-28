@@ -11,8 +11,7 @@ class AcfStore extends Model
     use HasFactory;
 
     protected $fillable = [
-        'target_id',
-        'target_type',
+        'acf_build_id',
         'acf_template_id',
         'acf_field_id',
         'value',

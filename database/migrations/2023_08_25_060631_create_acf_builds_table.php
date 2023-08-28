@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('acf_builds', function (Blueprint $table) {
             $table->id();
             $table->string('title');
-            $table->mediumText('description');
+            $table->mediumText('content')->nullable();
             $table->timestamps();
         });
     }

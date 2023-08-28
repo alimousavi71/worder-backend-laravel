@@ -29,16 +29,15 @@ class BuildController extends Controller
     {
 
         try {
-            $pages = AcfBuild::query();
+            $builds = AcfBuild::query();
 
-            return DataTables::of($pages)
-                ->editColumn('created_at', function ($page) {
-                    return $page->created_at->toJalali()->format('h:i Y-m-d');
+            return DataTables::of($builds)
+                ->editColumn('created_at', function ($build) {
+                    return $build->created_at->toJalali()->format('h:i Y-m-d');
                 })
-                ->addColumn('action', function ($page) {
-                    $actions = Helper::btnMaker(BtnType::Warning, route('admin.acf.build.edit', $page->id), trans('panel.action.edit'));
-                    $actions .= Helper::btnMaker(BtnType::Success, route('admin.builder', ['page', $page->id]), trans('panel.action.builder'));
-                    $actions .= Helper::btnMaker(BtnType::Info, route('admin.acf.build.show', $page->id), trans('panel.action.show'));
+                ->addColumn('action', function ($build) {
+                    $actions = Helper::btnMaker(BtnType::Warning, route('admin.acf.build.edit', $build->id), trans('panel.action.edit'));
+                    $actions .= Helper::btnMaker(BtnType::Success, route('admin.acf.builder', $build->id), trans('panel.action.builder'));
 
                     return $actions;
                 })
@@ -63,8 +62,8 @@ class BuildController extends Controller
     {
         try {
             $item = $this->itemProvider($request);
-            $page = AcfBuild::query()->create($item);
-            $this->syncTemplate($request, $page);
+            $build = AcfBuild::query()->create($item);
+            $this->syncTemplate($request, $build);
 
             return response()->json([
                 'result' => 'success',
@@ -81,21 +80,21 @@ class BuildController extends Controller
         }
     }
 
-    public function edit(AcfBuild $page)
+    public function edit(AcfBuild $build)
     {
         $title = trans('panel.acf.build.edit');
-        $routeUpdate = route('admin.acf.build.update', $page->id);
-        $routeDestroy = route('admin.acf.build.destroy', $page->id);
+        $routeUpdate = route('admin.acf.build.update', $build->id);
+        $routeDestroy = route('admin.acf.build.destroy', $build->id);
 
-        return view('admin.acf.build.edit', compact('title', 'routeUpdate', 'routeDestroy', 'page'));
+        return view('admin.acf.build.edit', compact('title', 'routeUpdate', 'routeDestroy', 'build'));
     }
 
-    public function update(UpdateRequest $request, AcfBuild $page)
+    public function update(UpdateRequest $request, AcfBuild $build)
     {
         try {
             $item = $this->itemProvider($request);
-            $page->update($item);
-            $this->syncTemplate($request, $page);
+            $build->update($item);
+            $this->syncTemplate($request, $build);
 
             return response()->json([
                 'result' => 'success',
@@ -111,10 +110,10 @@ class BuildController extends Controller
         }
     }
 
-    public function destroy(AcfBuild $page)
+    public function destroy(AcfBuild $build)
     {
         try {
-            $page->delete();
+            $build->delete();
 
             return redirect(route('admin.acf.build.index'))->with('success', trans('panel.success_delete'));
         } catch (Exception $e) {
@@ -124,25 +123,24 @@ class BuildController extends Controller
         }
     }
 
-    protected function itemProvider(Request $request, bool $editMode = false): array
+    protected function itemProvider(Request $request): array
     {
         $item['title'] = $request->get('title');
-        $item['description'] = $request->get('description');
         $item['type'] = $request->get('type');
         $item['icon'] = $request->get('icon');
 
         return $item;
     }
 
-    public function syncTemplate(Request $request, AcfBuild $page): void
+    public function syncTemplate(Request $request, AcfBuild $build): void
     {
         if (count($request->get('templates', []))) {
-            $page->acfConnects()->delete();
+            $build->acfConnects()->delete();
             foreach ($request->get('templates') as $templateId) {
                 $template = new AcfConnect([
                     'acf_template_id' => $templateId,
                 ]);
-                $page->acfConnects()->save($template);
+                $build->acfConnects()->save($template);
             }
         }
     }

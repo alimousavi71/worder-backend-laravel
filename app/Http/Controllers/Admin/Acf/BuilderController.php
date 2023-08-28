@@ -1,130 +1,113 @@
 <?php
 
-/** @noinspection PhpMultipleClassDeclarationsInspection */
-
 namespace App\Http\Controllers\Admin\Acf;
 
-use function app;
 use App\Http\Controllers\Controller;
+use App\Models\AcfBuild;
 use App\Models\AcfConnect;
 use App\Models\AcfStore;
 use App\Models\AcfTemplate;
-use function back;
 use Exception;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Validation\ValidationException;
-use function report;
-use function request;
-use function response;
-use function trans;
 use Validator;
-use function view;
 
 class BuilderController extends Controller
 {
-    private function makeModel($modelName): Model
-    {
-        $modelClassName = 'App\Models\\'.ucfirst($modelName);
-
-        return app($modelClassName);
-    }
-
-    public function index(string $model, int $id)
+    public function index(int $buildId)
     {
         try {
-            $modelMake = $this->makeModel($model);
-            $modelInstance = $modelMake::query()
-                ->with(['acfConnects'])
-                ->findOrFail($id);
-
+            $build = AcfBuild::query()
+                ->with('connects')
+                ->findOrFail($buildId);
             $title = trans('panel.builder.index');
-            $in = $modelInstance->acfConnects->pluck('acf_template_id')->toArray();
+
+            $in = $build->connects->pluck('acf_template_id')->toArray();
+
             $connectTemplates = AcfTemplate::query()
                 ->with(['fields', 'connected'])
                 ->whereIntegerInRaw('id', $in)
-                ->orderByRaw(sprintf('FIELD(%s, %s)', 'id', implode(',', $in)))
+                ->when(count($in), function ($q) use ($in) {
+                    $q->orderByRaw(sprintf('FIELD(%s, %s)', 'id', implode(',', $in)));
+                })
                 ->get();
 
             $selectTemplate = $connectTemplates->pluck('id')->toArray();
 
             $allTemplates = AcfTemplate::query()->get();
 
-            return view('admin.acf-builder.builder', compact('title', 'model', 'modelInstance', 'connectTemplates', 'allTemplates', 'selectTemplate'));
+            return view('admin.acf.builder.builder', compact('title', 'build', 'connectTemplates', 'allTemplates', 'selectTemplate'));
 
-        } catch (ModelNotFoundException|Exception $exception) {
-            return $exception->getMessage();
+        } catch (Exception $exception) {
+            return back()->with('danger', $exception->getMessage());
         }
 
     }
 
-    public function addTemplate(string $model, int $id, int $templateId)
+    public function addTemplate(int $buildId, int $templateId)
     {
         try {
             $template = AcfTemplate::query()->findOrFail($templateId);
-            $modelMake = $this->makeModel($model);
-            $modelInstance = $modelMake::query()
-                ->with(['acfTemplates.fields', 'acfStores'])
-                ->findOrFail($id);
+
+            $build = AcfBuild::query()
+                ->with('connects')
+                ->findOrFail($buildId);
 
             $checkConnected = AcfConnect::query()
+                ->where('acf_build_id', $build->id)
                 ->where('acf_template_id', $template->id)
-                ->where('target_id', $id)
-                ->where('target_type', $modelInstance::class)
                 ->exists();
 
             if ($checkConnected) {
-                return back()->with('warning', trans('panel.builder.template.exist'));
+                return back()->with('warning', trans('panel.acf.builder.template_exist'));
             }
 
-            $modelInstance->acfConnects()->create([
+            $build->connects()->create([
                 'acf_template_id' => $template->id,
             ]);
 
-            return back()->with('success', trans('panel.builder.template.connected'));
-        } catch (ModelNotFoundException|Exception $exception) {
+            return back()->with('success', trans('panel.acf.builder.template_connected'));
+        } catch (Exception $exception) {
             return back()->with('danger', $exception->getMessage());
         }
 
     }
 
-    public function removeTemplate(string $model, int $id, int $templateId)
+    public function removeTemplate(int $buildId, int $templateId)
     {
         try {
 
-            $modelMake = $this->makeModel($model);
-            $modelInstance = $modelMake::query()
-                ->with(['acfTemplates.fields', 'acfStores'])
-                ->findOrFail($id);
+            $build = AcfBuild::query()
+                ->with('connects')
+                ->findOrFail($buildId);
 
-            $template = AcfTemplate::query()->findOrFail($templateId);
+            $template = AcfTemplate::query()
+                ->findOrFail($templateId);
 
             $checkConnected = AcfConnect::query()
                 ->where('acf_template_id', $template->id)
-                ->where('target_id', $id)
-                ->where('target_type', $modelInstance::class)
+                ->where('acf_build_id', $buildId)
                 ->exists();
             if (! $checkConnected) {
-                return back()->with('warning', trans('panel.builder.template.not_exist'));
+                return back()->with('warning', trans('panel.acf.builder.template_404'));
             }
 
-            $modelInstance->acfConnects()->where('acf_template_id', $template->id)->delete();
-            $modelInstance->acfStores()->where('acf_template_id', $template->id)->delete();
+            $build->connects()->where('acf_template_id', $template->id)->delete();
+            $build->stores()->where('acf_template_id', $template->id)->delete();
 
-            return back()->with('success', trans('panel.builder.template.removed'));
+            return back()->with('success', trans('panel.acf.builder.template_removed'));
         } catch (ModelNotFoundException|Exception $exception) {
             return back()->with('danger', $exception->getMessage());
         }
 
     }
 
-    public function save(string $model, int $id)
+    public function save(int $buildId)
     {
         try {
 
-            $modelMake = $this->makeModel($model);
-            $modelInstance = $modelMake::query()
-                ->findOrFail($id);
+            $build = AcfBuild::query()
+                ->findOrFail($buildId);
 
             if (! count(request('template', []))) {
                 return response()->json([
@@ -135,12 +118,6 @@ class BuilderController extends Controller
 
             foreach (request('template') as $parentIndex => $item) {
                 $templateId = $item['template_id'];
-
-                AcfConnect::query()
-                    ->where('id', $item['connected_id'])
-                    ->update([
-                        'sort_position' => $item['sort_position'],
-                    ]);
 
                 foreach ($item['fields'] as $index => $field) {
                     $validationDecode = json_decode($field['validation']);
@@ -165,18 +142,22 @@ class BuilderController extends Controller
                     }
 
                     AcfStore::updateOrCreate([
-                        'target_type' => $modelInstance::class,
-                        'target_id' => $modelInstance->id,
+                        'acf_build_id' => $build->id,
                         'acf_template_id' => $templateId,
                         'acf_field_id' => $field['id'],
                     ], [
-                        'target_type' => $modelInstance::class,
-                        'target_id' => $modelInstance->id,
+                        'acf_build_id' => $build->id,
                         'acf_template_id' => $templateId,
                         'acf_field_id' => $field['id'],
                         'value' => $value,
                     ]);
                 }
+
+                AcfConnect::query()
+                    ->where('id', $item['connected_id'])
+                    ->update([
+                        'sort_position' => $item['sort_position'],
+                    ]);
             }
 
             return response()->json([

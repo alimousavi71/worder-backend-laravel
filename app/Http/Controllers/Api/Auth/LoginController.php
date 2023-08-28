@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Api\Auth;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\User\Auth\Normal\LoginRequest;
 use App\Http\Resources\Api\User\Auth\LoginResponse;
-use App\Models\User;
 use App\Repositories\IUserRepo;
 use App\Service\Response\ResponseService;
 use Exception;

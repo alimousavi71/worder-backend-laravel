@@ -61,18 +61,6 @@ return [
         'show' => 'نمایش صفحه',
 
     ],
-    'builder' => [
-        'index' => 'Page Builder',
-        'validation_error' => 'خطا در اعتبار سنجی فیلد ها بررسی کنید و مجدد ارسال کنید!',
-        'template' => [
-            'removed' => 'قالب حذف شد',
-            'remove' => 'حذف شود',
-            'add' => 'افزودن',
-            'exist' => 'قالب متصل است',
-            'not_exist' => 'قالب یافت نشد',
-            'connected' => 'قالب متصل شد',
-        ],
-    ],
     'exam' => [
         'index' => 'آزمون ها',
         'title' => 'آزمون ها',
@@ -121,6 +109,16 @@ return [
             'builder' => 'قالب - Builder',
             'create' => 'ایجاد بیلد',
             'show' => 'نمایش بیلد',
+        ],
+        'builder' => [
+            'index' => 'Page Builder',
+            'validation_error' => 'خطا در اعتبار سنجی فیلد ها بررسی کنید و مجدد ارسال کنید!',
+            'remove' => 'حذف شود',
+            'add' => 'افزودن',
+            'template_exist' => 'قالب متصل است',
+            'template_connected' => 'قالب متصل شد',
+            'template_404' => 'قالب یافت نشد',
+            'template_removed' => 'قالب حذف شد',
         ],
 
     ],

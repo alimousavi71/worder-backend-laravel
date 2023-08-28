@@ -13,4 +13,14 @@ class AcfBuild extends Model
         'title',
         'description',
     ];
+
+    public function connects()
+    {
+        return $this->hasMany(AcfConnect::class, 'acf_build_id');
+    }
+
+    public function stores()
+    {
+        return $this->hasMany(AcfStore::class, 'acf_build_id');
+    }
 }

@@ -10,7 +10,7 @@
 @section('content')
 
     <div class="page-header">
-        <h1 class="page-title">{{ trans('panel.builder.index') }}</h1>
+        <h1 class="page-title">{{ trans('panel.acf.builder.index') }}</h1>
     </div>
 
     <div class="row">
@@ -28,9 +28,9 @@
                                         <h4>{{ $template->title }}</h4>
                                         <div>
                                             @if(in_array($template->id,$selectTemplate))
-                                                <a href="{{ route('admin.builder.template.remove',[$model,$modelInstance->id,$template->id]) }}" class="btn btn-danger btn-sm">{{ trans('panel.builder.template.remove') }}</a>
+                                                <a href="{{ route('admin.acf.builder.remove',[$build->id,$template->id]) }}" class="btn btn-danger btn-sm">{{ trans('panel.acf.builder.remove') }}</a>
                                             @else
-                                                <a href="{{ route('admin.builder.template.add',[$model,$modelInstance->id,$template->id]) }}" class="btn btn-success btn-sm">{{ trans('panel.builder.template.add') }}</a>
+                                                <a href="{{ route('admin.acf.builder.add',[$build->id,$template->id]) }}" class="btn btn-success btn-sm">{{ trans('panel.acf.builder.add') }}</a>
                                             @endif
                                         </div>
                                     </div>
@@ -47,11 +47,11 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
-                    <form class="request-form forms-sample" method="post" action="{{ route('admin.builder.save',[$model,$modelInstance->id]) }}">
+                    <form class="request-form forms-sample" method="post" action="{{ route('admin.acf.builder.save',$build->id) }}">
                         @csrf
                         @method('PATCH')
 
-                        <x-admin.input identify="id" title="id" type="hidden" :old="$modelInstance->id" />
+                        <x-admin.input identify="id" title="id" type="hidden" :old="$build->id" />
 
                         <div id="builder">
                             @if($connectTemplates->isNotEmpty())
@@ -63,7 +63,7 @@
                                         <div class="acf-template-fields">
                                             @if($template->fields->isNotEmpty())
                                                 @foreach($template->fields as $field)
-                                                    @include('admin.acf.template.render.render',['index'=>$loop->index,'parentIndex'=>$loop->parent->index,'field'=>$field,'old'=>$modelInstance->acfStores->where('acf_field_id',$field->id)->first()])
+                                                    @include('admin.acf.template.render.render',['index'=>$loop->index,'parentIndex'=>$loop->parent->index,'field'=>$field,'old'=>$build->stores->where('acf_field_id',$field->id)->first()])
                                                 @endforeach
                                             @endif
                                         </div>

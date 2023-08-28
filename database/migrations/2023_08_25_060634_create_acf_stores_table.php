@@ -13,11 +13,16 @@ return new class extends Migration
     {
         Schema::create('acf_stores', function (Blueprint $table) {
             $table->id();
-            $table->morphs('target');
+            $table->unsignedBigInteger('acf_build_id');
             $table->unsignedBigInteger('acf_template_id');
             $table->unsignedBigInteger('acf_field_id');
 
             $table->text('value')->nullable();
+
+            $table->foreign('acf_build_id')
+                ->references('id')
+                ->on('acf_builds')
+                ->cascadeOnDelete();
 
             $table->foreign('acf_template_id')
                 ->references('id')

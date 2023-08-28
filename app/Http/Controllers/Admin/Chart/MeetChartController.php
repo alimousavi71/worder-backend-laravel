@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Models\Meet;
 use Carbon\Carbon;
 use CyrildeWit\EloquentViewable\Support\Period;
-use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 
 class MeetChartController extends Controller
