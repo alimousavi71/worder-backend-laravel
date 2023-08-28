@@ -23,23 +23,27 @@ class AcfBuilderController extends Controller
         return app($modelClassName);
     }
 
-    /** @noinspection PhpUndefinedFieldInspection */
     public function index(string $model, int $id)
     {
         try {
             $modelMake = $this->makeModel($model);
             $modelInstance = $modelMake::query()
-                ->with(['acfTemplates.fields', 'acfStores'])
+                ->with(['acfConnects'])
                 ->findOrFail($id);
 
-            $oldsTemplates = [];
-            if ($modelInstance->acfTemplates->isNotEmpty()) {
-                $oldsTemplates = $modelInstance->acfTemplates->pluck('id')->toArray();
-            }
             $title = trans('panel.builder.index');
-            $templates = AcfTemplate::query()->get();
+            $in = $modelInstance->acfConnects->pluck('acf_template_id')->toArray();
+            $connectTemplates = AcfTemplate::query()
+                ->with(['fields', 'connected'])
+                ->whereIntegerInRaw('id', $in)
+                ->orderByRaw(sprintf('FIELD(%s, %s)', 'id', implode(',', $in)))
+                ->get();
 
-            return view('admin.acf-builder.builder', compact('title', 'model', 'modelInstance', 'templates', 'oldsTemplates'));
+            $selectTemplate = $connectTemplates->pluck('id')->toArray();
+
+            $allTemplates = AcfTemplate::query()->get();
+
+            return view('admin.acf-builder.builder', compact('title', 'model', 'modelInstance', 'connectTemplates', 'allTemplates', 'selectTemplate'));
 
         } catch (ModelNotFoundException|Exception $exception) {
             return $exception->getMessage();
@@ -122,12 +126,14 @@ class AcfBuilderController extends Controller
                 ]);
             }
 
-            $modelInstance->acfStores()->delete();
-
             foreach (request('template') as $parentIndex => $item) {
-
                 $templateId = $item['template_id'];
-                $sortPosition = $item['sort_position'];
+
+                AcfConnect::query()
+                    ->where('id', $item['connected_id'])
+                    ->update([
+                        'sort_position' => $item['sort_position'],
+                    ]);
 
                 foreach ($item['fields'] as $index => $field) {
                     $validationDecode = json_decode($field['validation']);
@@ -151,13 +157,17 @@ class AcfBuilderController extends Controller
                         $value = $field['minimum'].'|'.$field['maximum'];
                     }
 
-                    AcfStore::create([
+                    AcfStore::updateOrCreate([
+                        'target_type' => $modelInstance::class,
+                        'target_id' => $modelInstance->id,
+                        'acf_template_id' => $templateId,
+                        'acf_field_id' => $field['id'],
+                    ], [
                         'target_type' => $modelInstance::class,
                         'target_id' => $modelInstance->id,
                         'acf_template_id' => $templateId,
                         'acf_field_id' => $field['id'],
                         'value' => $value,
-                        'sort_position' => $sortPosition,
                     ]);
                 }
             }

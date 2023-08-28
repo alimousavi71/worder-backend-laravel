@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->morphs('target');
             $table->unsignedBigInteger('acf_template_id');
+            $table->unsignedTinyInteger('sort_position')->default(0);
             $table->timestamps();
 
             $table->foreign('acf_template_id')

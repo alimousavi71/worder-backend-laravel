@@ -19,8 +19,6 @@ return new class extends Migration
 
             $table->text('value')->nullable();
 
-            $table->unsignedTinyInteger('sort_position')->default(0);
-
             $table->foreign('acf_template_id')
                 ->references('id')
                 ->on('acf_templates')

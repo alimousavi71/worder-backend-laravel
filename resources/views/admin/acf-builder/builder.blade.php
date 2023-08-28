@@ -21,13 +21,13 @@
                         <div class="col-12 mb-3">
                             @include('admin.partial.message')
                         </div>
-                        @if($templates->isNotEmpty())
-                            @foreach($templates as $template)
+                        @if($allTemplates->isNotEmpty())
+                            @foreach($allTemplates as $template)
                                 <div class="col-12 col-md-4 col-lg-3">
                                     <div class="row-acf-template">
                                         <h4>{{ $template->title }}</h4>
                                         <div>
-                                            @if(in_array($template->id,$oldsTemplates))
+                                            @if(in_array($template->id,$selectTemplate))
                                                 <a href="{{ route('admin.builder.template.remove',[$model,$modelInstance->id,$template->id]) }}" class="btn btn-danger btn-sm">{{ trans('panel.builder.template.remove') }}</a>
                                             @else
                                                 <a href="{{ route('admin.builder.template.add',[$model,$modelInstance->id,$template->id]) }}" class="btn btn-success btn-sm">{{ trans('panel.builder.template.add') }}</a>
@@ -54,10 +54,12 @@
                         <x-admin.input identify="id" title="id" type="hidden" :old="$modelInstance->id" />
 
                         <div id="builder">
-                            @if($modelInstance->acfTemplates->isNotEmpty())
-                                @foreach($modelInstance->acfTemplates as $template)
+                            @if($connectTemplates->isNotEmpty())
+                                @foreach($connectTemplates as $template)
                                     <div class="acf-template-container">
                                         <h4 class="acf-template-title">{{ $template->title }}</h4>
+                                        <input class="acf-sort-position" type="hidden" name="template[{{ $loop->index }}][sort_position]" value="">
+                                        <input type="hidden" name="template[{{ $loop->index }}][connected_id]" value="{{ $template->connected->id }}">
                                         <div class="acf-template-fields">
                                             @if($template->fields->isNotEmpty())
                                                 @foreach($template->fields as $field)
@@ -89,6 +91,7 @@
         $(document).ready(function () {
             init();
             sortFieldInit();
+            updateSortInput();
         })
 
         const builder = $('#builder')
@@ -102,13 +105,19 @@
             });
         }
 
+        function updateSortInput() {
+            builder.children('.acf-template-container').each(function (index, item) {
+                $(item).find('.acf-sort-position').val(index);
+            })
+        }
+
         function sortFieldInit() {
             builder.sortable({
                 connectWith: "acf-template-container",
                 axis: 'y',
                 forcePlaceholderSize: true,
                 update: function () {
-
+                    updateSortInput();
                 }
             });
         }

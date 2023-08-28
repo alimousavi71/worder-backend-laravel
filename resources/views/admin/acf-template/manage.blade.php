@@ -50,6 +50,7 @@
                                 <option value="Range">بازه عددی</option>
                                 <option value="Select">انتخابی</option>
                                 <option value="Image">تصویر</option>
+                                <option value="Number">عددی</option>
                             </select>
 
                             <button class="btn btn-success" type="button" onclick="addField()">افرودن فیلد</button>
@@ -225,6 +226,10 @@
                 }
                 case 'Image': {
                     url = '{{ route('admin.acf-template.render','Image') }}';
+                    break;
+                }
+                case 'Number': {
+                    url = '{{ route('admin.acf-template.render','Number') }}';
                     break;
                 }
             }

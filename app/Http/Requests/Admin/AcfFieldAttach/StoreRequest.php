@@ -28,7 +28,7 @@ class StoreRequest extends FormRequest
                 'fields' => 'required|array',
                 'fields.*.label' => 'required',
                 'fields.*.name' => 'required',
-                'fields.*.type' => 'required|in:Text,Textarea,Email,Url,Range,Select,Image',
+                'fields.*.type' => 'required|in:Text,Textarea,Email,Url,Range,Select,Image,Number',
             ];
         }
 

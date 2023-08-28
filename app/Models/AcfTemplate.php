@@ -22,4 +22,9 @@ class AcfTemplate extends Model
         return $this->hasMany(AcfField::class, 'acf_template_id')
             ->orderBy('sort_position');
     }
+
+    public function connected()
+    {
+        return $this->belongsTo(AcfConnect::class, 'id', 'acf_template_id');
+    }
 }

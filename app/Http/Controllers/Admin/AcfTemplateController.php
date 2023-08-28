@@ -34,6 +34,7 @@ class AcfTemplateController extends Controller
 
         return match ($type) {
             'Text' => View::make('admin.acf-template.field.text', ['type' => 'متنی', ...$share]),
+            'Number' => View::make('admin.acf-template.field.number', ['type' => 'عددی', ...$share]),
             'Textarea' => View::make('admin.acf-template.field.textarea', ['type' => 'متنی بزرگ', ...$share]),
             'Email' => View::make('admin.acf-template.field.email', ['type' => 'پست الکترونیکی', ...$share]),
             'Url' => View::make('admin.acf-template.field.url', ['type' => 'لینک', ...$share]),

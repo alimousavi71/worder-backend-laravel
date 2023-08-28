@@ -130,6 +130,19 @@ class AcfFieldController extends Controller
                     ->build()
                     ->toArray();
 
+            case 'Number':
+                if (empty($field['maximum']) || ! is_numeric($field['maximum'])) {
+                    throw new Exception('Enter maximum or not number');
+                }
+
+                return AcfTypeFactory::number($field['name'], $field['label'], $field['required'] ?? false)
+                    ->withPlaceHolder($field['placeHolder'] ?? null)
+                    ->withDefaultValue($field['defaultValue'] ?? null)
+                    ->withDescription($field['description'] ?? null)
+                    ->withMaximum($field['maximum'])
+                    ->build()
+                    ->toArray();
+
             case 'Image':
 
                 if (! is_int((int) $field['size']) || (int) $field['size'] <= 0) {
