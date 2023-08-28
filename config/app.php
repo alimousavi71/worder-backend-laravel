@@ -176,6 +176,7 @@ return [
         Intervention\Image\ImageServiceProvider::class,
         \App\Providers\RepositoryServiceProvider::class,
         \App\Providers\MacroServiceProvider::class,
+        \App\Providers\AcfProvider::class,
     ])->toArray(),
 
     /*

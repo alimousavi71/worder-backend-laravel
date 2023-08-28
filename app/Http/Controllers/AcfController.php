@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\AcfType\AcfTypeFactory;
+use App\Acf\Type\AcfTypeFactory;
 
 class AcfController extends Controller
 {

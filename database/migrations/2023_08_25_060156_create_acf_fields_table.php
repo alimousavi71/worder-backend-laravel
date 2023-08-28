@@ -20,7 +20,7 @@ return new class extends Migration
             $table->enum('type', ['Text', 'Url', 'Textarea', 'Range', 'Date', 'Image', 'Email', 'Number', 'File', 'Select', 'Repeater'])->default('Text');
             $table->unsignedBigInteger('parent')->nullable();
             $table->unsignedBigInteger('acf_template_id');
-            $table->mediumText('props')->nullable();
+            $table->text('props')->nullable();
             $table->unsignedTinyInteger('sort_position')->default(0);
 
             $table->foreign('acf_template_id')

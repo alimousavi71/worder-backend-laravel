@@ -27,13 +27,21 @@ return [
         'title' => 'عنوان',
         'description' => 'توضیحات',
     ],
-    'acf-template' => [
-        'id' => 'شناسه',
-        'title' => 'عنوان',
-        'photo' => 'تصویر',
-        'description' => 'توضیحات',
-        'template' => 'فایل قالب',
-        'created_at' => 'تاریخ ایجاد',
+
+    'acf' => [
+        'template' => [
+            'id' => 'شناسه',
+            'title' => 'عنوان',
+            'photo' => 'تصویر',
+            'description' => 'توضیحات',
+            'template' => 'فایل قالب',
+            'created_at' => 'تاریخ ایجاد',
+        ],
+        'build' => [
+            'id' => 'شناسه',
+            'title' => 'عنوان',
+            'description' => 'توضیحات',
+        ],
     ],
     'avatar' => [
         'id' => 'شناسه',

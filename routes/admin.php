@@ -1,9 +1,11 @@
 <?php
 
 // Login
-use App\Http\Controllers\Admin\AcfBuilderController;
-use App\Http\Controllers\Admin\AcfFieldController;
-use App\Http\Controllers\Admin\AcfTemplateController;
+use App\Http\Controllers\Admin\Acf\BuildController;
+use App\Http\Controllers\Admin\Acf\BuilderController;
+use App\Http\Controllers\Admin\Acf\FieldController;
+use App\Http\Controllers\Admin\Acf\RenderController;
+use App\Http\Controllers\Admin\Acf\TemplateController;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\AvatarController;
 use App\Http\Controllers\Admin\CategoryController;
@@ -117,7 +119,7 @@ Route::group(['middleware' => ['admin.auth'/*,'acl'*/], 'guard' => 'admin'], fun
         Route::delete('/page/{page}/destroy', 'destroy')->name('page.destroy');
     });
 
-    Route::controller(AcfBuilderController::class)->group(function () {
+    Route::controller(BuilderController::class)->group(function () {
         Route::get('/builder/{model}/{id}', 'index')->name('builder')
             ->whereNumber('id');
         Route::get('/builder/{model}/{id}/{template}/add', 'addTemplate')->name('builder.template.add')
@@ -131,22 +133,37 @@ Route::group(['middleware' => ['admin.auth'/*,'acl'*/], 'guard' => 'admin'], fun
             ->whereNumber('template');
     });
 
-    Route::controller(AcfTemplateController::class)->group(function () {
-        Route::get('/acf-template', 'index')->name('acf-template.index');
-        Route::get('/acf-template/data', 'data')->name('acf-template.data');
-        Route::get('/acf-template/create', 'create')->name('acf-template.create');
-        Route::post('/acf-template/store', 'store')->name('acf-template.store');
+    Route::group(['as' => 'acf.', 'prefix' => 'acf'], function () {
+        Route::controller(TemplateController::class)->group(function () {
+            Route::get('/template', 'index')->name('template.index');
+            Route::get('/template/data', 'data')->name('template.data');
+            Route::get('/template/create', 'create')->name('template.create');
+            Route::post('/template/store', 'store')->name('template.store');
+            Route::get('/template/{template}/manage', 'manage')->name('template.manage')->whereNumber('template');
+            Route::get('/template/{template}/edit', 'edit')->name('template.edit')->whereNumber('template');
+            Route::patch('/template/{template}/update', 'update')->name('template.update')->whereNumber('template');
+            Route::delete('/template/{template}/destroy', 'destroy')->name('template.destroy')->whereNumber('template');
+        });
 
-        Route::get('/acf-template/{type}/render', 'render')->name('acf-template.render');
-        Route::get('/acf-template/{acfTemplate}/edit', 'edit')->name('acf-template.edit');
-        Route::get('/acf-template/{acfTemplate}/manage', 'manage')->name('acf-template.manage');
-        Route::patch('/acf-template/{acfTemplate}/update', 'update')->name('acf-template.update');
-        Route::delete('/acf-template/{acfTemplate}/destroy', 'destroy')->name('acf-template.destroy');
-    });
+        Route::controller(RenderController::class)->group(function () {
+            Route::get('/template/{type}/render', 'render')->name('template.render');
+        });
 
-    Route::controller(AcfFieldController::class)->group(function () {
-        Route::patch('/acf-field/{acfTemplate}/attach', 'attach')->name('acf-field.attach');
-        Route::get('/acf-field/{fieldId}/delete', 'delete')->name('acf-field.delete')->whereNumber('fieldId');
+        Route::controller(FieldController::class)->group(function () {
+            Route::patch('/field/{template}/attach', 'attach')->name('field.attach');
+            Route::get('/field/{fieldId}/delete', 'delete')->name('field.delete')
+                ->whereNumber('fieldId');
+        });
+
+        Route::controller(BuildController::class)->group(function () {
+            Route::get('/build', 'index')->name('build.index');
+            Route::get('/build/data', 'data')->name('build.data');
+            Route::get('/build/create', 'create')->name('build.create');
+            Route::post('/build/store', 'store')->name('build.store');
+            Route::get('/build/{build}/edit', 'edit')->name('build.edit');
+            Route::patch('/build/{build}/update', 'update')->name('build.update');
+            Route::delete('/build/{build}/destroy', 'destroy')->name('build.destroy');
+        });
     });
 
     Route::controller(AvatarController::class)->group(function () {

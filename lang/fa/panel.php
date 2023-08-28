@@ -104,13 +104,25 @@ return [
             'total_view' => 'تعداد کاربران',
         ],
     ],
-    'acf-template' => [
-        'index' => 'قالب ها',
-        'title' => 'قالب ها',
-        'edit' => 'ویرایش قالب',
-        'builder' => 'قالب - Builder',
-        'create' => 'ایجاد قالب',
-        'show' => 'نمایش قالب',
+    'acf' => [
+        'index' => 'ACF',
+        'template' => [
+            'index' => 'قالب ها',
+            'title' => 'قالب ها',
+            'edit' => 'ویرایش قالب',
+            'builder' => 'قالب - Builder',
+            'create' => 'ایجاد قالب',
+            'show' => 'نمایش قالب',
+        ],
+        'build' => [
+            'index' => 'بیلد ها',
+            'title' => 'بیلد ها',
+            'edit' => 'ویرایش بیلد',
+            'builder' => 'قالب - Builder',
+            'create' => 'ایجاد بیلد',
+            'show' => 'نمایش بیلد',
+        ],
+
     ],
     'word' => [
         'index' => 'کلمه ها',
